@@ -1,12 +1,15 @@
 source "https://rubygems.org"
 
 gem "jekyll", "~> 4.4"
-gem "minima", "~> 2.5"
-gem "jekyll-scholar", "~> 7.0"
+gem "minima", "~> 2.5"          # the official GitHub Pages theme
+gem "jekyll-scholar", "~> 7.0"  # for {% bibliography %}
+
+# other plugins you need:
 gem "jekyll-feed"
 gem "jekyll-sitemap"
 gem "jekyll-seo-tag"
 gem "jekyll-redirect-from"
+
 
 # source "https://rubygems.org"
 
