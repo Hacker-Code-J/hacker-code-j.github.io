@@ -1,18 +1,17 @@
 ---
-layout: home
-title: "Your Name"
-hero:
-  background_image: "/assets/images/hero.jpg"
-  tagline: "Mathematics · Computer Science · Cryptography"
-  links:
-    - title: "About"
-      url: /about/
-    - title: "Publications"
-      url: /publications/
-    - title: "Projects"
-      url: /projects/
-    - title: "Blog"
-      url: /blog/
+layout: page
+title: "Ji, Yong Hyeon"
+permalink: /
 ---
 
-Welcome to my personal homepage! I’m a master’s student at **Your University**, studying cryptography, algorithms, and number theory. Feel free to explore my [about page](/about/), view my latest [publications](/publications/), check out my [projects](/projects/), or read my [blog](/blog/)
+# Ji, Yong Hyeon
+
+**Mathematics · Computer Science · Cryptography**
+
+Welcome to my personal homepage! I’m a master’s student at Koomin University, studying cryptography, algorithms, and number theory.
+
+- [About](/about/)
+- [Publications](/publications/)
+- [Projects](/projects/)
+- [Teaching](/teaching/)
+- [Blog](/blog/)
