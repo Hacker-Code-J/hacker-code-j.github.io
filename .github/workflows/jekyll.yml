@@ -5,33 +5,31 @@ permissions:
 
 on:
   push:
-    branches: [ main ]    # or your default branch
+    branches: [ main ]    # your default branch
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        persist-credentials: true
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
 
-    - name: Install dependencies
-      run: bundle install
+      - name: Install dependencies
+        run: bundle install
 
-    - name: Build site
-      run: |
-        bundle exec jekyll build --destination public
-        # Prevent GitHub from re-running Jekyll on the deployed files:
-        touch public/.nojekyll
+      - name: Build site
+        run: |
+          bundle exec jekyll build --destination public
+          touch public/.nojekyll
 
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: public
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public

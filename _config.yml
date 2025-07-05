@@ -32,16 +32,14 @@ url: "https://github.com/Hacker-Code-J" # the base hostname & protocol for your 
 github_username:  Hacker-Code-J
 youtube_username: Code-J
 
-# Theme
+# Theme & Plugins
 theme: minima
-
-# Plugins
 plugins:
+  - jekyll-scholar
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-redirect-from
-  - jekyll-scholar
 
 # BibTeX plugin settings
 scholar:
@@ -55,9 +53,6 @@ kramdown:
 
 # Syntax highlighting
 highlighter: rouge
-
-# Permalinks
-permalink: /:categories/:year/:month/:day/:title/
 
 # # Navigation
 # top_level_nav:
