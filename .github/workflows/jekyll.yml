@@ -1,18 +1,29 @@
 name: build & deploy
+
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]    # or master
+
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-ruby@v1
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
-      - run: bundle install
-      - run: bundle exec jekyll build --destination public
-      - uses: peaceiris/actions-gh-pages@v3
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Build site
+        run: bundle exec jekyll build --destination public
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: public
