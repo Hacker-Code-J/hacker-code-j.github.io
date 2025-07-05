@@ -41,7 +41,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-redirect-from
-  - jekyll-scholarm
+  - jekyll-scholar
 
 # BibTeX plugin settings
 scholar:
