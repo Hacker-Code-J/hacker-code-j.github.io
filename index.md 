@@ -1,0 +1,18 @@
+---
+layout: home
+title: "Your Name"
+hero:
+  background_image: "/assets/images/hero.jpg"
+  tagline: "Mathematics · Computer Science · Cryptography"
+  links:
+    - title: "About"
+      url: /about/
+    - title: "Publications"
+      url: /publications/
+    - title: "Projects"
+      url: /projects/
+    - title: "Blog"
+      url: /blog/
+---
+
+Welcome to my personal homepage! I’m a master’s student at **Your University**, studying cryptography, algorithms, and number theory. Feel free to explore my [about page](/about/), view my latest [publications](/publications/), check out my [projects](/projects/), or read my [blog](/blog/)

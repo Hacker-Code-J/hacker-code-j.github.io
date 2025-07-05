@@ -1,0 +1,6 @@
+- name: "Alice Smith"
+  affiliation: "Your University"
+  url: "https://yourusername.github.io"
+- name: "Bob Jones"
+  affiliation: "Collaborator Institute"
+  url: "https://example.com/bob"
