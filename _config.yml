@@ -18,8 +18,8 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Ji, Yong Hyeon
-email: hacker3740@gmail.com
+title:  Ji, Yong Hyeon
+logo:   /assets/images/profile.jpg
 description: >- # this means to ignore newlines until "baseurl:"
   I'm Ji Yong-Hyeon, a graduate student deeply interested in mathematics and cryptography. 
   I focus on blending theoretical insights with practical solutions, designing and implementing cryptographic systems.
@@ -28,28 +28,81 @@ description: >- # this means to ignore newlines until "baseurl:"
   I'm always open to collaborations that challenge and expand our understanding of cryptography and mathematics.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://github.com/Hacker-Code-J" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+github_username:  Hacker-Code-J
+youtube_username: Code-J
 
-# Build settings
+# ----------------------------------------
+# Theme
+# ----------------------------------------
 theme: minima
-plugins:
-  - jekyll-feed
 
+minima:
+  skin: auto
+  social_links:
+    - title: GitHub
+      icon: github
+      url: "https://github.com/Hacker-Code-J"
+    - title: YouTube
+      icon: youtube
+      url: "https://www.youtube.com/@hacker-code-j"
+
+# ----------------------------------------
+# Author
+# ----------------------------------------
 author:
-  name:      Ji, Yong Hyeon
-  avatar:    /assets/images/profile.jpg
-  email:     hacker3740@gmail.com
-  bio:       >-
-    I'm Ji Yong-Hyeon, a graduate student deeply interested in mathematics and cryptography.
-  links:
-    - label: GitHub
-      url:   https://github.com/Hacker-Code-J
-    - label: YouTube
-      url:   https://www.youtube.com/@hacker-code-j
+  name:  Ji, Yong Hyeon
+  email: hacker3740@gmail.com
 
+# ----------------------------------------
+# Top navigation pages (create these files)
+# ----------------------------------------
+header_pages:
+  - about.md
+  - experience.md
+  - education.md
+  - projects.md
+  - contact.md
+
+# ----------------------------------------
+# Ignore these dirs/files
+# ----------------------------------------
 exclude:
   - oldsrc
+  - .bundle
+  - vendor/
+  - node_modules/
+  - Gemfile
+  - Gemfile.lock
+  - _site/
+
+# ----------------------------------------
+# (Optional) Collections
+# ----------------------------------------
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+  publications:
+    output: true
+    sort_by: year
+
+# # Build settings
+# theme: minima
+# plugins:
+#   - jekyll-feed
+
+# author:
+#   name:      Ji, Yong Hyeon
+#   avatar:    /assets/images/profile.jpg
+#   email:     hacker3740@gmail.com
+#   bio:       >-
+#     I'm Ji Yong-Hyeon, a graduate student deeply interested in mathematics and cryptography.
+#   links:
+#     - label: GitHub
+#       url:   https://github.com/Hacker-Code-J
+#     - label: YouTube
+#       url:   https://www.youtube.com/@hacker-code-j
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
