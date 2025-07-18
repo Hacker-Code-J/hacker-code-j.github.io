@@ -1,0 +1,109 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: Ji, Yong Hyeon
+email: hacker3740@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  I'm Ji Yong-Hyeon, a graduate student deeply interested in mathematics and cryptography. 
+  I focus on blending theoretical insights with practical solutions, designing and implementing cryptographic systems.
+  My goal is to advance both the theory and engineering of cryptography through research and real-world projects.
+  On my GitHub, you'll find contributions ranging from theoretical work to secure algorithms and systems.
+  I'm always open to collaborations that challenge and expand our understanding of cryptography and mathematics.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://github.com/Hacker-Code-J" # the base hostname & protocol for your site, e.g. http://example.com
+# twitter_username: jekyllrb
+github_username:  Hacker-Code-J
+youtube_username: Code-J
+
+# Theme & Plugins
+theme: minima
+plugins:
+  - jekyll-scholar
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
+
+# BibTeX plugin settings
+scholar:
+  style: ieee
+  source: _bibliography
+
+# Markdown & math
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+
+# Syntax highlighting
+highlighter: rouge
+
+permalink: /:categories/:year/:month/:day/:title/
+# # Navigation
+# top_level_nav:
+#   - title: "About"
+#     url: "/about/"
+#   - title: "Publications"
+#     url: "/publications/"
+#   - title: "Projects"
+#     url: "/projects/"
+#   - title: "Teaching"
+#     url: "/teaching/"
+#   - title: "Blog"
+#     url: "/blog/"
+
+footer:
+  links:
+    - title: GitHub
+      url: https://github.com/Hacker-Code-J
+    - title: Youtube
+      url: https://www.youtube.com/@hacker-code-j
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# markdown: kramdown
+# kramdown:
+#   math_engine: mathjax
+# highlighter: rouge
+
+
+#
+
+# plugins:
+#   - jekyll-seo-tag
+#   - jekyll-feed
+#   - jekyll-sitemap

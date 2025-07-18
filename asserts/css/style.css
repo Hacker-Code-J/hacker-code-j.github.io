@@ -1,0 +1,13 @@
+---
+# Only the front matter matters; SCSS below will be processed.
+---
+
+@import "minima";
+
+/* Your custom styles */
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+.site-header {
+  background-color: #004466;
+}
