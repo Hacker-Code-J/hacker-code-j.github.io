@@ -1,6 +1,8 @@
 ---
-title: About
 layout: page
+title: About
 permalink: /about/
 ---
-Introduce yourself: background, interests, what you’re looking for…
+
+
+This is an about page. Describe your mission here.
