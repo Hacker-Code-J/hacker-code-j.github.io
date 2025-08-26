@@ -1,6 +1,6 @@
 ---
 year: 2025
-title: Preprint: New Results
+title: Preprint - New Results
 layout: page
 ---
 

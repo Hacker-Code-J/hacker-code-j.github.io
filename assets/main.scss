@@ -1,0 +1,18 @@
+---
+---
+/* then paste CSS from above */
+@import "{{ site.theme }}";
+
+// Widen the main content container(s)
+.inner, .wrapper, section, .container {
+  max-width: 1000px;  // adjust to taste
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Keep paragraphs at a comfy reading width */
+main, section, article {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}

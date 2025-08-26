@@ -1,12 +1,11 @@
-title: Your Site Title
+title: Code-J
 logo: /assets/logos/logo1.png
 description: >-
-  A short description of your site goes here. It can span multiple lines
-  thanks to the folded block scalar.
+  I’m Ji Yong-Hyeon, pursuing cryptology where mathematics meets computer science — turning theory into secure, practical systems through hands-on research and projects.
 
 # For a user/organization site (username.github.io):
 baseurl: "" # no leading slash
-url: "https://username.github.io"
+url: "https://hacker-code-j.github.io"
 
 # For a project site (e.g., github.com/username/my-github-blog):
 # baseurl: "/my-github-blog" # repo name prefixed with a slash
@@ -20,25 +19,35 @@ minima:
   social_links:
     - title: Github
       icon: github
-      url: "https://github.com/username/"
-    - title: Gitlab
-      icon: gitlab
-      url: "https://gitlab.com/username/"
+      url: "https://github.com/hacker-code-j/"
+    - title: Youtube
+      icon: youtube
+      url: "https://www.youtube.com/@hacker-code-j"
 
+# sass:
+#   silence_deprecations: [import, global-builtin, color-functions]
 sass:
-  silence_deprecations: [import, global-builtin, color-functions]
+  style: compressed
+  load_paths:
+    - _sass
+    - assets
+defaults:
+  - scope:
+      path: "assets/main.scss"
+    values:
+      layout: null
 
 author:
-  name: Your Name or Team Name
-  email: "you@example.com"
+  name: Ji, Yong-Hyeon
+  email: "hacker3740@gmail.com"
 
 header_pages:
   - news.markdown
-  - people.markdown
-  - tools.markdown
   - projects.markdown
   - publications.markdown
-  - support.markdown
+  - tools.markdown
+  - talks.markdown
+  - life.markdown
 
 # Exclude from processing.
 exclude:
@@ -52,39 +61,86 @@ exclude:
   - node_modules/
   - vendor/
   - _site/
-  - _funding/sample.markdown
-  - _news/2022-03-29-sample.markdown
 
 # Collections
 collections:
-  people:
-    sort_by: name
-  former_members:
-    sort_by: name
-  tools:
+  news:
+    sort_by: date
     output: true
-    permalink: /:collection/:name
+    permalink: /:collection/:year-:month-:day/:title
   projects:
     output: true
     permalink: /:collection/:name
   publications:
+    output: true
     sort_by: year
   theses:
     sort_by: year
   preprints:
     sort_by: year
-  funding:
-  supporters:
-    sort_by: name
-  institutions:
-    sort_by: name
-  news:
-    sort_by: date
+  tools:
     output: true
-    permalink: /:collection/:year-:month-:day/:title
+    permalink: /:collection/:name
+  talks:
+    output: true
+    permalink: /talks/:title/
+  life:
+    output: true
+    permalink: /life/:title/
+# collections:
+# research:
+# output: true
+# permalink: /research/:title/
+# projects:
+# output: true
+# permalink: /projects/:title/
+# notes:
+# output: true
+# permalink: /notes/:title/
+# tutorials:
+# output: true
+# permalink: /tutorials/:title/
+defaults:
+  - scope: { path: "", type: "projects" }
+    values: { layout: page, permalink: /projects/:name/ }
+  - scope: { path: "", type: "publications" }
+    values: { layout: page, permalink: /publications/:name/ }
+
+# # Apply a default top-level category of "professional"
+# defaults:
+#   - scope:
+#     path: ""
+#     values:
+#     layout: post
+#     categories: [professional]
+#   - scope:
+#     path: "_research"
+#     type: research
+#     values:
+#     categories: [professional, research]
+#   - scope:
+#     path: "_projects"
+#     type: projects
+#     values:
+#     categories: [professional, projects]
+#   - scope:
+#     path: "_notes"
+#     type: notes
+#     values:
+#     categories: [professional, notes]
+#   - scope:
+#     path: "_tutorials"
+#     type: tutorials
+#     values:
+#     categories: [professional, tutorials]
+#   - scope:
+#     path: "_talks"
+#     type: talks
+#     values:
+#     categories: [professional, talks]
 
 # Markdown + plugins (optional but commonly used)
-markdown: kramdown
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
+# markdown: kramdown
+# plugins:
+#   - jekyll-feed
+#   - jekyll-seo-tag

@@ -8,3 +8,4 @@ _site/
 .bundle/
 node_modules/
 .DS_Store
+.venv/

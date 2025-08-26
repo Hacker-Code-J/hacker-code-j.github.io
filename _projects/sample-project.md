@@ -1,8 +1,8 @@
----
+<!-- ---
 layout: page
 title: Sample Project
 permalink: /projects/sample-project/
 ---
 
 
-Describe your project here.
+Describe your project here. -->

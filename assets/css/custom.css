@@ -1,0 +1,33 @@
+$right-sidebar-width-narrow: 200px !default;  // default: 200
+$right-sidebar-width: 350px !default;         // default: 300,
+$right-sidebar-width-wide: 200px !default;    // default: 400
+
+
+/* Register your self-hosted bold */
+@font-face{
+  font-family: "URWGothic";
+  src: url("/assets/fonts/URWGothic.woff2") format("woff2");
+  font-weight: 700;            /* this file is bold only */
+  font-style: normal;
+  font-display: swap;
+}
+
+:root{
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
+  --font-urw: "URWGothic", var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Body stays in a readable normal-weight sans */
+html, body { font-family: var(--font-body); }
+
+/* Headings/brand in URW Gothic Bold */
+h1, h2, h3, .logo, .site-title {
+  font-family: var(--font-urw);
+  font-weight: 750;
+  letter-spacing: -0.01em;     /* optional Avant Garde-like tightness */
+}
+
+/* Keep code monospace */
+code, pre, kbd, samp { font-family: var(--font-mono) !important; }
+
