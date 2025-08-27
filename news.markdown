@@ -4,8 +4,11 @@ title: News
 permalink: /news/
 ---
 
+<link rel="stylesheet" href="/assets/css/custom.css">
 
-<ul>
+
+
+<ul class="full-width">
     {%- assign posts = site.news | sort: 'date' | reverse -%}
     {%- for item in posts -%}
     <li>
@@ -14,3 +17,4 @@ permalink: /news/
     </li>
     {%- endfor -%}
 </ul>
+
