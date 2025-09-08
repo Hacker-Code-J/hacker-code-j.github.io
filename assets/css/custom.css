@@ -36,3 +36,35 @@ h1, h2, h3, .logo, .site-title {
 /* Keep code monospace */
 code, pre, kbd, samp { font-family: var(--font-mono) !important; }
 
+
+/* Right-align the author/name in blockquotes
+   Usage in Markdown/HTML:
+   <blockquote>
+     <p>Your quoted text...</p>
+     <footer>— Author Name</footer>
+   </blockquote>
+   or
+   <blockquote>
+     <p>Your quoted text...</p>
+     <cite>Author Name</cite>
+   </blockquote>
+*/
+blockquote footer,
+blockquote cite,
+blockquote .quote-author {
+  display: block;
+  text-align: right;
+  margin-top: 0.5rem;
+  color: #6b6b6b; /* slightly muted */
+  font-style: normal;
+  font-size: 0.95em;
+}
+
+/* optional: add an em-dash automatically if you prefer */
+blockquote footer:before,
+blockquote cite:before,
+blockquote .quote-author:before {
+  content: "—\00a0"; /* em-dash + non-breaking space */
+  font-weight: 600;
+}
+

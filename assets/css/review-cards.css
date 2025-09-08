@@ -1,0 +1,15 @@
+/* Minimal card/grid styles for reviews */
+.reviews { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin: 1.5rem 0; }
+.reviews-header { grid-column: 1/-1; margin-bottom: 0.5rem; }
+.reviews .lead { color: #555; margin-top: 0.25rem; }
+
+.review-card {
+  background: var(--card-bg, #fff);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 6px rgba(8,10,20,0.04);
+  border-left: 4px solid var(--accent, #2b8cff);
+}
+
+.review-card .meta { font-weight: 600; font-size: 0.9rem; color: #222; margin-bottom: 0.5rem; }
+.review-card blockquote { margin: 0; color: #333; line-height: 1.5; font-size: 0.95rem; }

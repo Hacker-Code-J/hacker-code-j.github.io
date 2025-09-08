@@ -4,14 +4,17 @@ layout: home
 <link rel="stylesheet" href="/assets/css/custom.css">
 
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
-  <div style="flex: 0 0 150px;">
+  <!-- <div style="flex: 0 0 150px;">
   <img src="/assets/jyh/20240113.jpg" alt="Profile Image" style="width: 150px; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;">
+  </div> -->
+  <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
+    <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 150px; height: 225px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
   </div>
   <div style="flex: 1;">
     <h2>Ji, Yong-Hyeon</h2>
     <p>M.S. Student <br>
     <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a> <br>
-    <b>Research:</b> Formal Verification for Cryptographic Algorithm <br>
+    <b>Interests:</b> Formal Verification, Algebraic Geometry, Algebraic Topology, Differential Geometry, Complex Analysis, Algebraic Coding Theory, Quantum Computing <br>
     <b>Contact:</b> <a href="mailto:hacker3740@kookmin.ac.kr">hacker3740@kookmin.ac.kr</a> <br>
     <b>Github:</b> <a href="https://github.com/Hacker-Code-J">Hacker-Code-J</a> <br>
     <!-- <b>Youtube:</b> <a href="https://www.youtube.com/@hacker-code-j">Code-J</a> <br> -->
@@ -127,8 +130,45 @@ layout: home
 <!-- - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
 {{ project.short }} -->
 
-[Tools]({% link tools.markdown %})
+
+[Techniques]({% link techniques.markdown %})
 ====
+
+{% assign orderedTech = site.techniques | reverse %}
+{% for techniques in orderedTech limit:5 %}
+- [**{{ techniques.categories }}**] [{{ techniques.title }}]({{ techniques.url | relative_url }})<br/>
+  {{ project.short }}
+{% endfor %}
+
+[Notes]({% link notes.markdown %})
+===
+
+{% assign orderedNotes = site.notes | reverse %}
+{% for n in orderedNotes limit:5 %}
+- [**{{ n.categories }}**] [{{ n.title }}]({{ n.url | relative_url }})<br/>
+  {{ n.tag }}
+{% endfor %}
+
+[Codes]({% link codes.markdown %})
+====
+
+<ul>
+  {% assign recent = site.codes | sort: "date" | reverse %}
+  {% for code in recent limit:5 %}
+    <li>
+            <!-- {% if code.github_url %}
+        &middot; <a href="{{ code.github_url }}" target="_blank" rel="noopener"><svg width="24" height="24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.01c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98.01 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.7.42.36.79 1.09.79 2.2v3.26c0 .31.21.67.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg></a>
+      {% elsif code.source_path and site.github %}
+        {% assign gh = 'https://github.com/' | append: site.github.user | append: '/' | append: site.github.repo | append: '/blob/' | append: site.github.branch | append: '/' | append: code.source_path %}
+        &middot; <a href="{{ gh }}" target="_blank" rel="noopener">GitHub</a>
+      {% endif %} -->
+      <a href="{{ code.url }}">{{ code.title }}</a>
+      {% if code.description %} — {{ code.description }}{% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+<!-- <p><a href="/codes/">Browse all snippets →</a></p> -->
 
 [Talks]({% link talks.markdown %})
 ====

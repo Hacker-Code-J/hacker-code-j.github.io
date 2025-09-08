@@ -1,0 +1,11 @@
+{% comment %}Renders a “View on GitHub” link from either page.github_url or page.source_path{% endcomment %}
+{% if page.github_url %}
+  <p class="source-link">
+    <a href="{{ page.github_url }}" target="_blank" rel="noopener">View on GitHub</a>
+  </p>
+{% elsif page.source_path and site.github %}
+  {% assign gh = 'https://github.com/' | append: site.github.user | append: '/' | append: site.github.repo | append: '/blob/' | append: site.github.branch | append: '/' | append: page.source_path %}
+  <p class="source-link">
+    <a href="{{ gh }}" target="_blank" rel="noopener">View on GitHub</a>
+  </p>
+{% endif %}

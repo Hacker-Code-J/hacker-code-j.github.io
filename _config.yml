@@ -1,5 +1,5 @@
 title: Code-J
-logo: /assets/logos/logo1.png
+logo: /assets/logos/banner2.png
 description: >-
   I’m Ji Yong-Hyeon, pursuing cryptology where mathematics meets computer science — turning theory into secure, practical systems through hands-on research and projects.
 
@@ -24,7 +24,8 @@ minima:
       icon: youtube
       url: "https://www.youtube.com/@hacker-code-j"
 
-# sass:
+markdown: kramdown 
+
 #   silence_deprecations: [import, global-builtin, color-functions]
 sass:
   style: compressed
@@ -45,7 +46,9 @@ header_pages:
   - news.markdown
   - projects.markdown
   - publications.markdown
-  - tools.markdown
+  - techniques.markdown
+  - notes.markdown
+  - codes.markdown
   - talks.markdown
   - life.markdown
 
@@ -78,9 +81,15 @@ collections:
     sort_by: year
   preprints:
     sort_by: year
-  tools:
+  techniques:
     output: true
     permalink: /:collection/:name
+  notes:
+    output: true
+    permalink: /:collection/:name
+  codes:
+    output: true
+    permalink: /codes/:name/
   talks:
     output: true
     permalink: /talks/:title/
@@ -100,11 +109,18 @@ collections:
 # tutorials:
 # output: true
 # permalink: /tutorials/:title/
+
+github:
+  user: your-github-username
+  repo: your-repo-name
+  branch: main
+
 defaults:
   - scope: { path: "", type: "projects" }
     values: { layout: page, permalink: /projects/:name/ }
   - scope: { path: "", type: "publications" }
-    values: { layout: page, permalink: /publications/:name/ }
+    values: { layout: page, permalink: /publications/:name/}
+
 
 # # Apply a default top-level category of "professional"
 # defaults:

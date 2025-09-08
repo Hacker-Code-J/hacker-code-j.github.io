@@ -37,7 +37,7 @@ permalink: /life/
 	<!-- Right: Foods -->
 	<div style="flex: 1; min-width: 300px;">
 		<h2>Foods</h2>
-		<h4>2025-07</h4>
+		<!-- <h4>2025-07</h4>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/life/foods/20250706.jpg" target="_blank"><img src="/assets/life/foods/20250706.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 		</div>
@@ -49,14 +49,14 @@ permalink: /life/
 		<h4>2024-05</h4>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/life/foods/20240511.jpg" target="_blank"><img src="/assets/life/foods/20240511.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
-		</div>
+		</div> -->
         <h4>2024-03</h4>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/life/foods/20240321.jpg" target="_blank"><img src="/assets/life/foods/20240321.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 			<a href="/assets/life/foods/20240321-2.jpg" target="_blank"><img src="/assets/life/foods/20240321-2.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 			<a href="/assets/life/foods/20240331.jpg" target="_blank"><img src="/assets/life/foods/20240331.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 		</div>
-		<h4>2024-02</h4>
+		<!-- <h4>2024-02</h4>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/life/foods/20240220.jpg" target="_blank"><img src="/assets/life/foods/20240220.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 			<a href="/assets/life/foods/20240225.jpg" target="_blank"><img src="/assets/life/foods/20240225.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
@@ -68,7 +68,7 @@ permalink: /life/
 		<h4>2023-06</h4>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/life/foods/20230623.jpg" target="_blank"><img src="/assets/life/foods/20230623.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
-		</div>
+		</div> -->
 		<h4>2023-05</h4>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/life/foods/20230513-2.jpg" target="_blank"><img src="/assets/life/foods/20230513-2.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
