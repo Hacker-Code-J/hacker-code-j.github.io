@@ -8,13 +8,21 @@ layout: home
   <img src="/assets/jyh/20240113.jpg" alt="Profile Image" style="width: 150px; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;">
   </div> -->
   <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
-    <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 150px; height: 225px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
+    <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
   </div>
   <div style="flex: 1;">
-    <h2>Ji, Yong-Hyeon</h2>
-    <p>M.S. Student <br>
-    <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a> <br>
-    <b>Interests:</b> Formal Verification, Algebraic Geometry, Algebraic Topology, Differential Geometry, Complex Analysis, Algebraic Coding Theory, Quantum Computing <br>
+    <h2>Ji, Yong-Hyeon 
+    <a href="https://myhits.vercel.app"><img src="https://myhits.vercel.app/api/hit/https%3A%2F%2Fhacker-code-j.github.io%2F?color=purple&label=Hits&size=medium" alt="Hits" /></a>
+    </h2> 
+    <p><b>Position:</b> M.S. Student in <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a>. <br>
+    <b>Interests:</b> 
+    <ul style="margin: 0.5em 0; padding-left: 1.5em;">
+      <li>Formal Verification, Machine-checked Proof</li>
+      <li>Provable Security, Functional Correctness</li>
+      <li>Algebraic Geometry, Algebraic Topology, Complex Analysis</li>
+      <li>Algebraic Geometry Code</li>
+      <li>Quantum Error-correcting Code, Surface Code</li>
+    </ul>
     <b>Contact:</b> <a href="mailto:hacker3740@kookmin.ac.kr">hacker3740@kookmin.ac.kr</a> <br>
     <b>Github:</b> <a href="https://github.com/Hacker-Code-J">Hacker-Code-J</a> <br>
     <!-- <b>Youtube:</b> <a href="https://www.youtube.com/@hacker-code-j">Code-J</a> <br> -->
@@ -42,10 +50,10 @@ layout: home
 
 <h3 style="margin-top:2em;">Education</h3>
 <ul style="margin-bottom:2em;">
-  <li><b>Mar. 2025 – Present:</b> M.S. Student, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a></li>
+  <li><b>Mar. 2025 – Present:</b> M.S. Student in <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a></li>
     <ul>
       <li>Thesis: TBA.</li>
-      <li>Advisor: TBA.</li>
+      <!-- <li>Advisor: TBA.</li> -->
     </ul>
   <li><b>Mar. 2019 – Feb. 2025:</b> B.S. in <a href="https://cns.kookmin.ac.kr/cns/index.do">Department of Information, Security, Cryptology and Mathematics, Kookmin University</a></li>
     <!-- <details>
@@ -113,6 +121,11 @@ layout: home
 
 <!-- [See news.]({% link news.markdown %}) -->
 
+[Publications]({% link publications.markdown %})
+====
+<!-- - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
+{{ project.short }} -->
+
 
 [Projects]({% link projects.markdown %})
 ====
@@ -125,10 +138,7 @@ layout: home
 {% endfor %}
 
 
-[Publications]({% link publications.markdown %})
-====
-<!-- - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
-{{ project.short }} -->
+
 
 
 [Techniques]({% link techniques.markdown %})
