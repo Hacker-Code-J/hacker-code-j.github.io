@@ -21,7 +21,7 @@ layout: home
       <li>Provable Security, Functional Correctness</li>
       <li>Algebraic Geometry, Algebraic Topology, Complex Analysis</li>
       <li>Algebraic Geometry Code</li>
-      <li>Quantum Error-correcting Code, Surface Code</li>
+      <li>Quantum Error-correction, Surface Code</li>
     </ul>
     <b>Contact:</b> <a href="mailto:hacker3740@kookmin.ac.kr">hacker3740@kookmin.ac.kr</a> <br>
     <b>Github:</b> <a href="https://github.com/Hacker-Code-J">Hacker-Code-J</a> <br>

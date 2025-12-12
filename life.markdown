@@ -9,10 +9,10 @@ permalink: /life/
 <!-- Left: Places -->
 <div style="flex: 1; min-width: 300px;">
 	<h2>Places</h2>
-	<h4>2024-03</h4>
+	<!-- <h4>2024-03</h4>
 	<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 		<a href="/assets/life/places/20240331.jpg" target="_blank"><img src="/assets/life/places/20240331.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
-	</div>
+	</div> -->
 	<h4>2023-07</h4>
 	<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 		<a href="/assets/life/places/20230703.jpg" target="_blank"><img src="/assets/life/places/20230703.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
@@ -50,12 +50,12 @@ permalink: /life/
 	<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 		<a href="/assets/life/foods/20240511.jpg" target="_blank"><img src="/assets/life/foods/20240511.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 	</div> -->
-	<h4>2024-03</h4>
+	<!-- <h4>2024-03</h4>
 	<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 		<a href="/assets/life/foods/20240321.jpg" target="_blank"><img src="/assets/life/foods/20240321.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 		<a href="/assets/life/foods/20240321-2.jpg" target="_blank"><img src="/assets/life/foods/20240321-2.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
 		<a href="/assets/life/foods/20240331.jpg" target="_blank"><img src="/assets/life/foods/20240331.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
-	</div>
+	</div> -->
 	<!-- <h4>2024-02</h4>
 	<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 		<a href="/assets/life/foods/20240220.jpg" target="_blank"><img src="/assets/life/foods/20240220.jpg" style="width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;"></a>
