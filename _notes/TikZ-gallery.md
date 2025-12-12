@@ -152,14 +152,7 @@ tags: study
 			<a href="/assets/TikZ/abstract-algebra/abstract-algebra-2.png" target="_blank"><img src="/assets/TikZ/abstract-algebra/abstract-algebra-2.png" style="border-radius: 8px; border: 1px solid #ccc;"></a>
 		</div>
 	</details>
-  <b></b>
-	<details>
-		<summary style="cursor: pointer; font-weight: bold; margin-bottom: 1em;">Determinant as a Natural Transform</summary>
-		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
-			<a href="/assets/TikZ/category-theory/category-theory-2.png" target="_blank"><img src="/assets/TikZ/category-theory/category-theory-2.png" style="border-radius: 8px; border: 1px solid #ccc;"></a>
-		</div>
-	</details>
-  <b></b>
+  	<b></b>
 	<h2>Commutative Algebra</h2>
 	<details>
 		<summary style="cursor: pointer; font-weight: bold; margin-bottom: 1em;">Evaluation Mapping</summary>
@@ -179,6 +172,12 @@ tags: study
 		<summary style="cursor: pointer; font-weight: bold; margin-bottom: 1em;">Category, Functor, and Natural Transform</summary>
 		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
 			<a href="/assets/TikZ/category-theory/category-theory-1.png" target="_blank"><img src="/assets/TikZ/category-theory/category-theory-1.png" style="border-radius: 8px; border: 1px solid #ccc;"></a>
+		</div>
+	</details>
+	<details>
+		<summary style="cursor: pointer; font-weight: bold; margin-bottom: 1em;">Determinant as a Natural Transform</summary>
+		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
+			<a href="/assets/TikZ/category-theory/category-theory-2.png" target="_blank"><img src="/assets/TikZ/category-theory/category-theory-2.png" style="border-radius: 8px; border: 1px solid #ccc;"></a>
 		</div>
 	</details>
 </div>
