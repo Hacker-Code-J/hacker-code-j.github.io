@@ -79,6 +79,12 @@ tags: study
 			<a href="/assets/TikZ/calculus/calculus-5.png" target="_blank"><img src="/assets/TikZ/calculus/calculus-5.png" style="border-radius: 8px; border: 1px solid #ccc;"></a>
 		</div>
 	</details>
+	<details>
+		<summary style="cursor: pointer; font-weight: bold; margin-bottom: 1em;">Tangent Space</summary>
+		<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
+			<a href="/assets/TikZ/calculus/calculus-6.png" target="_blank"><img src="/assets/TikZ/calculus/calculus-6.png" style="border-radius: 8px; border: 1px solid #ccc;"></a>
+		</div>
+	</details>
   <b></b>
 	<h2>Linear Algebra</h2>
 	<details>
