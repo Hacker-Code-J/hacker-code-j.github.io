@@ -8,7 +8,8 @@ tags: study
 ---
 
 <div style="flex: 1; min-width: 300px;">
-<h1> TikZ Gallery created by J.YH </h1>
+<h1> TikZ Gallery created by J.YH </h1> 
+<h4> (last update: 25. 12. 12) </h4>
 </div>
 <div style="display: flex; gap: 32px; align-items: flex-start; margin-top: 2em;">
 
