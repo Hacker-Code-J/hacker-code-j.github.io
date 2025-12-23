@@ -48,7 +48,20 @@ layout: home
 > I’m **Ji Yong-Hyeon**, and my main interests lie in **Mathematics** and **Cryptography**.  
 > My academic work is motivated by the elegance of modern cryptography and the challenge of bridging theoretical ideas with practical implementations.
 
-<h3 style="margin-top:2em;">Education</h3>
+<nav style="position: sticky; top: 0; z-index: 100; background: var(--background-color, #fff); border-bottom: 2px solid #ddd; padding: 0.8rem 0; margin: 2rem -1rem 1rem -1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
+    <a href="#education" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Education</a>
+    <a href="#news" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">News</a>
+    <a href="#publications" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Publications</a>
+    <a href="#projects" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Projects</a>
+    <a href="#techniques" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Techniques</a>
+    <a href="#notes" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Notes</a>
+    <a href="#codes" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Codes</a>
+    <a href="#talks" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Talks</a>
+  </div>
+</nav>
+
+<h3 id="education" style="margin-top:2em;">Education</h3>
 <ul style="margin-bottom:2em;">
   <li><b>Mar. 2025 – Present:</b> M.S. Student in <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a></li>
     <ul>
@@ -107,9 +120,10 @@ layout: home
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
 </div>
 
+
+
 {% if site.news != empty %}
-[News]({% link news.markdown %})
-====
+<h2 id="news"><a href="{% link news.markdown %}">News</a></h2>
 
 {% assign orderedNews = site.news | reverse %}
 {% for item in orderedNews limit:5 %}
@@ -121,16 +135,14 @@ layout: home
 
 <!-- [See news.]({% link news.markdown %}) -->
 
-[Publications]({% link publications.markdown %})
-====
+<h2 id="publications"><a href="{% link publications.markdown %}">Publications</a></h2>
 <!-- - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
 {{ project.short }} -->
 
 
-[Projects]({% link projects.markdown %})
-====
+<h2 id="projects"><a href="{% link projects.markdown %}">Projects</a></h2>
 
-{% for project in site.projects %}
+{% for project in site.projects reversed  %}
 <!-- - [**{{ project.project }}**]({{ project.url | relative_url }}) — [Repository]({{ project.git }})<br/>
   {{ project.short }} -->
 - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
@@ -141,8 +153,7 @@ layout: home
 
 
 
-[Techniques]({% link techniques.markdown %})
-====
+<h2 id="techniques"><a href="{% link techniques.markdown %}">Techniques</a></h2>
 
 {% assign orderedTech = site.techniques | reverse %}
 {% for techniques in orderedTech limit:5 %}
@@ -150,8 +161,7 @@ layout: home
   {{ project.short }}
 {% endfor %}
 
-[Notes]({% link notes.markdown %})
-===
+<h2 id="notes"><a href="{% link notes.markdown %}">Notes</a></h2>
 
 {% assign orderedNotes = site.notes | reverse %}
 {% for n in orderedNotes limit:5 %}
@@ -159,8 +169,7 @@ layout: home
   {{ n.tag }}
 {% endfor %}
 
-[Codes]({% link codes.markdown %})
-====
+<h2 id="codes"><a href="{% link codes.markdown %}">Codes</a></h2>
 
 <ul>
   {% assign recent = site.codes | sort: "date" | reverse %}
@@ -180,8 +189,7 @@ layout: home
 
 <!-- <p><a href="/codes/">Browse all snippets →</a></p> -->
 
-[Talks]({% link talks.markdown %})
-====
+<h2 id="talks"><a href="{% link talks.markdown %}">Talks</a></h2>
 
 
 

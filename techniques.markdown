@@ -88,6 +88,14 @@ permalink: /techniques/
 
 <div class="main-content"> -->
 
+<nav style="position: sticky; top: 0; z-index: 100; background: var(--background-color, #fff); border-bottom: 2px solid #ddd; padding: 0.8rem 0; margin: 2rem -1rem 1rem -1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 15rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
+    <a href="#mathematics" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Mathematics</a>
+    <a href="#cryptography" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Cryptography</a>
+    <a href="#programming" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Programming</a>
+  </div>
+</nav>
+
 # Mathematics
 
 $$\int_a^b f'(x)\; dx = f(b) - f(a),\quad\quad\quad\frac{d}{dx}\left(\int_a^x f(t)\; dt\right)=f(x)$$
