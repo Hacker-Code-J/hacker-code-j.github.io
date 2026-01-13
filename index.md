@@ -14,8 +14,8 @@ layout: home
     <h2>Ji, Yong-Hyeon 
     <a href="https://myhits.vercel.app"><img src="https://myhits.vercel.app/api/hit/https%3A%2F%2Fhacker-code-j.github.io%2F?color=purple&label=Hits&size=medium" alt="Hits" /></a>
     </h2> 
-    <p><b>Position:</b> M.S. Student in <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a>. <br>
-    <b>Interests:</b> 
+    <p><b>Position:</b> Master's Student, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a> <br>
+    <b>Research Interests:</b> 
     <ul style="margin: 0.5em 0; padding-left: 1.5em;">
       <li>Formal Verification, Machine-checked Proof</li>
       <li>Provable Security, Functional Correctness</li>
@@ -45,8 +45,8 @@ layout: home
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
 </div>
 
-> I’m **Ji Yong-Hyeon**, and my main interests lie in **Mathematics** and **Cryptography**.  
-> My academic work is motivated by the elegance of modern cryptography and the challenge of bridging theoretical ideas with practical implementations.
+> My research focuses on the intersection of **Mathematics** and **Cryptography**, with particular emphasis on formal verification, provable security, and algebraic structures in cryptographic systems.  
+> I am dedicated to advancing both the theoretical foundations and practical implementations of secure cryptographic protocols, bridging rigorous mathematical analysis with real-world applications.
 
 <nav style="position: sticky; top: 0; z-index: 100; background: var(--background-color, #fff); border-bottom: 2px solid #ddd; padding: 0.8rem 0; margin: 2rem -1rem 1rem -1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
@@ -63,12 +63,12 @@ layout: home
 
 <h3 id="education" style="margin-top:2em;">Education</h3>
 <ul style="margin-bottom:2em;">
-  <li><b>Mar. 2025 – Present:</b> M.S. Student in <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a></li>
+  <li><b>Mar. 2025 – Present:</b> M.S. in Cyber Security, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Kookmin University</a></li>
     <ul>
-      <li>Thesis: TBA.</li>
+      <li>Thesis Topic: To Be Announced</li>
       <!-- <li>Advisor: TBA.</li> -->
     </ul>
-  <li><b>Mar. 2019 – Feb. 2025:</b> B.S. in <a href="https://cns.kookmin.ac.kr/cns/index.do">Department of Information, Security, Cryptology and Mathematics, Kookmin University</a></li>
+  <li><b>Mar. 2019 – Feb. 2025:</b> B.S. in Information Security, Cryptology and Mathematics, <a href="https://cns.kookmin.ac.kr/cns/index.do">Kookmin University</a></li>
     <!-- <details>
       <summary><b>Mathematics</b></summary>
       <ul>
@@ -136,17 +136,27 @@ layout: home
 <!-- [See news.]({% link news.markdown %}) -->
 
 <h2 id="publications"><a href="{% link publications.markdown %}">Publications</a></h2>
-<!-- - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
-{{ project.short }} -->
+{% if site.publications != empty %}
+{% for publication in site.publications reversed %}
+- [{{ publication.year }}] [**{{ publication.title }}**]({{ publication.url | relative_url }})<br/>
+  <!-- {{ publication.authors }}<br/> -->
+  {% if publication.link %}<a href="{{ publication.link }}" target="_blank" rel="noopener">[https://arxiv.org/abs/2601.06868](https://arxiv.org/abs/2601.06868)</a> | {% endif %}
+  <em>{{ publication.short }}</em>
+{% endfor %}
+{% else %}
+<p><em>Publications forthcoming.</em></p>
+{% endif %}
 
 
-<h2 id="projects"><a href="{% link projects.markdown %}">Projects</a></h2>
+
+
+<h2 id="projects"><a href="{% link projects.markdown %}">Research Projects</a></h2>
 
 {% for project in site.projects reversed  %}
 <!-- - [**{{ project.project }}**]({{ project.url | relative_url }}) — [Repository]({{ project.git }})<br/>
   {{ project.short }} -->
 - [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
-  {{ project.short }}
+  <em>{{ project.short }}</em>
 {% endfor %}
 
 
