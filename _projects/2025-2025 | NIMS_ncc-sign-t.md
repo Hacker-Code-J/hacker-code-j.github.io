@@ -1,8 +1,8 @@
 ---
 layout: page
-title: 2025-2025 | [ARMv8-A] NCC-SIGN-T
+title: 2025.04 - 2025.11 | NCC-SIGN Trinomial (ARMv8)
 year: 2025.04 - 2025.11
-project: PQC-SIG | NCC-SIGN-T in ARMv8-A
+project: Optimized implementation of NCC-SIGN Trinomial on ARMv8
 # git: 
 short: >-
   A study on a quantum-safe, hard-to-solve public-key cryptographic algorithm.

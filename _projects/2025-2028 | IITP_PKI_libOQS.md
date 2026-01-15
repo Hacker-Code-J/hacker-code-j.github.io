@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Development and Demonstration of PQC-based Joint Certificate PKI Technology
+title: 2025.04 - 2028.12 | Development and Demonstration of PQC-based Joint Certificate PKI Technology
 year: 2025.04 - 2028.12
-project: PQC-Library | Development of libOQS-based PQC Library
+project: Development of libOQS-based PQC-KEM/SIG Library
 # git: 
 short: >-
   We develop the libOQS-based library for ML-KEM/DSA and Falcon.

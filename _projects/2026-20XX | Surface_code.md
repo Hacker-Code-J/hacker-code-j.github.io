@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Surface Code
-year: 2026.XX - 20XX.XX
-project: Quantum Computing | Surface Code
+title: 2026.xx - 20xx.xx | Surface Code
+year: 2026.xx - 20xx.xx
+project: Surface Code for Quantum Error-correction
 # git: 
 short: >-
   TBA

@@ -11,7 +11,7 @@ layout: home
     <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
   </div>
   <div style="flex: 1;">
-    <h2>Ji, Yong-Hyeon 
+    <h2>Ji, Yonghyeon 
     <a href="https://myhits.vercel.app"><img src="https://myhits.vercel.app/api/hit/https%3A%2F%2Fhacker-code-j.github.io%2F?color=purple&label=Hits&size=medium" alt="Hits" /></a>
     </h2> 
     <p><b>Position:</b> Master's Student, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a> <br>
@@ -65,7 +65,7 @@ layout: home
 <ul style="margin-bottom:2em;">
   <li><b>Mar. 2025 – Present:</b> M.S. in Cyber Security, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Kookmin University</a></li>
     <ul>
-      <li>Thesis Topic: To Be Announced</li>
+      <li>Thesis: TBA</li>
       <!-- <li>Advisor: TBA.</li> -->
     </ul>
   <li><b>Mar. 2019 – Feb. 2025:</b> B.S. in Information Security, Cryptology and Mathematics, <a href="https://cns.kookmin.ac.kr/cns/index.do">Kookmin University</a></li>
@@ -136,28 +136,53 @@ layout: home
 <!-- [See news.]({% link news.markdown %}) -->
 
 <h2 id="publications"><a href="{% link publications.markdown %}">Publications</a></h2>
-{% if site.publications != empty %}
-{% for publication in site.publications reversed %}
-- [{{ publication.year }}] [**{{ publication.title }}**]({{ publication.url | relative_url }})<br/>
-  <!-- {{ publication.authors }}<br/> -->
-  {% if publication.link %}<a href="{{ publication.link }}" target="_blank" rel="noopener">[https://arxiv.org/abs/2601.06868](https://arxiv.org/abs/2601.06868)</a> | {% endif %}
-  <em>{{ publication.short }}</em>
+<!-- {% if site.publications != empty %}
+{% for pub in site.publications reversed %}
+- [{{ pub.year }}] [**{{ pub.title }}**]({{ pub.url | relative_url }}) <br/>
+{% if pub.link %}
+  See: &nbsp;<a href="{{ pub.link }}" target="_blank">**https://arxiv.org/abs/2601.06868**</a>
+{% endif %}
+  <em>{{ pub.short }}</em>
 {% endfor %}
 {% else %}
+<p><em>Publications forthcoming.</em></p>
+{% endif %} -->
+
+{% if site.publications != empty %}
+{% for pub in site.publications reversed %}
+  <!-- {% if pub.authors %}<strong>{{ pub.authors }}</strong><br/>{% endif %} -->
+- <strong>[{{ pub.year }}]</strong>  <a href="{{ pub.url | relative_url }}" style="font-size: 1.1em;">**{{ pub.title }}**</a><br/>
+  <!-- {% if pub.venue %}<em>{{ pub.venue }}</em>, {% endif %} -->
+  <em> {{ pub.short }}</em><br/>
+  {% if pub.link %} See: <a href="{{ pub.link }}" target="_blank">{{pub.link}}</a>{% endif %}
+  {% if pub.pdf %} | <a href="{{ pub.pdf }}" target="_blank">[PDF]</a>{% endif %}
+  {% if pub.doi %} | <a href="https://doi.org/{{ pub.doi }}" target="_blank">[DOI]</a>{% endif %}
+  {% endfor %}
+  {% else %}
 <p><em>Publications forthcoming.</em></p>
 {% endif %}
 
 
 
 
-<h2 id="projects"><a href="{% link projects.markdown %}">Research Projects</a></h2>
-
+<h2 id="projects"><a href="{% link projects.markdown %}">Projects</a></h2>
 {% for project in site.projects reversed  %}
-<!-- - [**{{ project.project }}**]({{ project.url | relative_url }}) — [Repository]({{ project.git }})<br/>
-  {{ project.short }} -->
-- [{{ project.year }}] [**{{ project.project }}**]({{ project.url | relative_url }})<br/>
+- <strong>[{{ project.year }}]</strong> <a href="{{ project.url | relative_url }}" style="font-size: 1.1em;">**{{ project.project }}**</a><br/>
+  <!-- [**{{ project.project }}**]({{ project.url | relative_url }})<br/> -->
   <em>{{ project.short }}</em>
 {% endfor %}
+
+<!-- <ul style="list-style-type: none; padding-left: 0;">
+{% for project in site.projects reversed  %}
+  <li style="margin-bottom: 1.5em;">
+    <div>
+      <strong>{{ project.year }}</strong> — <a href="{{ project.url | relative_url }}" style="font-size: 1.05em;">{{ project.project }}</a><br/>
+      <em>{{ project.short }}</em>
+      {% if project.git %} | <a href="{{ project.git }}" target="_blank">[Repository]</a>{% endif %}
+    </div>
+  </li>
+{% endfor %}
+</ul> -->
 
 
 

@@ -10,7 +10,13 @@ permalink: /publications/
 <ul class="full-width">
     {%- assign pubs = site.publications | sort: 'year' | reverse -%}
     {%- for pub in pubs -%}
-    <li>{{ pub.year }} — <a href="{{ pub.url | relative_url }}">{{ pub.title }}</a></li>
+    <li>
+      {{ pub.year }} — 
+      {%- if pub.link -%}
+        &nbsp;[<a href="{{ pub.link }}" target="_blank">arXiv</a>]
+      <a href="{{ pub.url | relative_url }}">{{ pub.title }}</a>
+      {%- endif -%}
+    </li>
     {%- endfor -%}
 </ul>
 

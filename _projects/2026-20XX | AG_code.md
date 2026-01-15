@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Algebraic Geometry Code
-year: 2026.XX - 20XX.XX
-project: Algebraic Geometry | Algebraic Geometry Code
+title: 2026.xx - 20xx.xx | Algebraic Geometry Code
+year: 2026.xx - 20xx.xx
+project: Algebraic Geometry Code
 # git: 
 short: >-
   TBA
