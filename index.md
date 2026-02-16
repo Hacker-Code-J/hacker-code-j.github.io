@@ -3,6 +3,13 @@ layout: home
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 
+<!-- Main Banner -->
+<!-- <div style="width: 100%; margin: 0 0 2rem 0; position: relative; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+  <img src="/assets/image/Grothentick-RR.webp" alt="Welcome Banner" style="width: 100%; height: auto; display: block; object-fit: contain;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
+  </div>
+</div> -->
+
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
   <!-- <div style="flex: 0 0 150px;">
   <img src="/assets/jyh/20240113.jpg" alt="Profile Image" style="width: 150px; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;">
@@ -61,7 +68,10 @@ layout: home
   </div>
 </nav>
 
-<h3 id="education" style="margin-top:2em;">Education</h3>
+<h2 id="education" style="color: #0066cc; margin-top:2em;">Education</h2>
+
+<!-- <h2 id="news"><a href="{% link news.markdown %}">News</a></h2> -->
+
 <ul style="margin-bottom:2em;">
   <li><b>Mar. 2025 – Present:</b> M.S. in Cyber Security, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Kookmin University</a></li>
     <ul>
