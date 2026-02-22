@@ -2,8 +2,7 @@
 title: One-form
 layout: page
 categories: Mathematics
-date: 2025-08-27
-tags: 1-form, integral, FTC
+topics: 1-form, integral, FTC
 ---
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 

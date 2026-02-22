@@ -1,13 +1,10 @@
 ---
+title: (EM-KDS) Linear Algebra to Abstract Algebra
 layout: page
-title: Development for Cryptographic Library with Rust 
-list: 2025.01 - 2025.08 | Development for Cryptographic Library with Rust
-year: 2025.01 - 2025.08
-project: Development for Cryptographic Library with Rust
-# git: 
-short: >-
-  TBA
+categories: Mathematics
+topics: Subgroup,Homomorphism, Isomorphism, Kernel and Image
 ---
+
 <link rel="stylesheet" href="/assets/css/custom.css">
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 

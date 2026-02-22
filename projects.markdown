@@ -7,6 +7,6 @@ permalink: /projects/
 
 <ul class="full-width">
     {%- for p in site.projects reversed -%}
-    <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>
+    <li><a href="{{ p.url | relative_url }}">{{ p.list }}</a></li>
     {%- endfor -%}
 </ul>

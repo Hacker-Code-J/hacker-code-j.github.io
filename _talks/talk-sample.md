@@ -6,7 +6,7 @@ location: "(City/Online)"
 slides: S
 recording: S
 categories: [professional, talks]
-tags: [zero-knowledge]
+tags: [algebraic geometry]
 layout: page
 ---
 

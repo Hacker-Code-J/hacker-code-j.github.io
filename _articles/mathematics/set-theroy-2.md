@@ -1,12 +1,8 @@
 ---
+title: (EM-KDS) Set Theory I
 layout: page
-title: Development for Cryptographic Library with Rust 
-list: 2025.01 - 2025.08 | Development for Cryptographic Library with Rust
-year: 2025.01 - 2025.08
-project: Development for Cryptographic Library with Rust
-# git: 
-short: >-
-  TBA
+categories: Mathematics
+topics: Set, Subset, Power set, Cartesian product, Union, Intersection, Function, Injectivity, Surjectivity, Axiom of Choice
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

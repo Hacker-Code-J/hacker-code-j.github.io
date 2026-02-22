@@ -22,7 +22,7 @@ permalink: /talks/
         {% if item.recording %}<b>Recording:</b> <a href="{{ item.recording }}" target="_blank">Watch Recording</a><br>{% endif %}
         <b>Categories:</b> {{ item.categories | join: ', ' }}<br>
         <b>Tags:</b> {% for tag in item.tags %}<span style="background:#e3e3e3; border-radius:4px; padding:2px 8px; margin-right:4px;">{{ tag }}</span>{% endfor %}<br>
-        <b>Layout:</b> {{ item.layout }}
+        <!-- <b>Layout:</b> {{ item.layout }} -->
       </p>
     </div>
   {%- endfor -%}

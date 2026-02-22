@@ -7,8 +7,7 @@
 title: Riemann–Roch
 layout: page
 categories: Mathematics
-date: 2026-01-13
-tags: [riemann-roch, riemann-surfaces, algebraic-geometry, divisors, line-bundles, sheaf-cohomology, serre-duality]
+topics: riemann-roch, riemann-surfaces, algebraic-geometry, divisors, line-bundles, sheaf-cohomology, serre-duality
 ---
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -162,7 +161,7 @@ $$
 = \deg(D)+1-g.
 $$
 
----
+<!-- ---
 
 ## Citation (BibTeX)
 
@@ -176,4 +175,4 @@ $$
   primaryClass = {math.CV},
   note         = {Version 1}
 }
-```
+``` -->
