@@ -20,9 +20,9 @@ minima:
     - title: Github
       icon: github
       url: "https://github.com/hacker-code-j/"
-    - title: Youtube
-      icon: youtube
-      url: "https://www.youtube.com/@hacker-code-j"
+    # - title: Youtube
+    #   icon: youtube
+    #   url: "https://www.youtube.com/@hacker-code-j"
 
 markdown: kramdown 
 
@@ -46,8 +46,7 @@ header_pages:
   - news.markdown
   - publications.markdown
   - projects.markdown
-  - techniques.markdown
-  - notes.markdown
+  - articles.markdown
   - codes.markdown
   - talks.markdown
   - life.markdown
@@ -81,9 +80,9 @@ collections:
     sort_by: year
   preprints:
     sort_by: year
-  techniques:
+  articles:
     output: true
-    permalink: /:collection/:name
+    permalink: /articles/:title/
   notes:
     output: true
     permalink: /:collection/:name

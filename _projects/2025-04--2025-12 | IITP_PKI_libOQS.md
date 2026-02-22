@@ -1,7 +1,7 @@
 ---
 layout: page
-title: 2025.04 - 2028.12 | Development and Demonstration of PQC-based Joint Certificate PKI Technology
-year: 2025.04 - 2028.12
+title: 2025.04 - 2025.12 | Development and Demonstration of PQC-based Joint Certificate PKI Technology
+year: 2025.04 - 2025.12
 project: Development of libOQS-based PQC-KEM/SIG Library
 # git: 
 short: >-

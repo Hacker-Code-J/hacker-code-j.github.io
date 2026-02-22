@@ -1,92 +1,10 @@
 ---
 layout: page
-title: Techniques
-permalink: /techniques/
+title: Articles
+permalink: /articles/
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-<!-- <style>
-.page-container {
-  display: flex;
-  gap: 2rem;
-  position: relative;
-}
-
-.toc-sidebar {
-  position: sticky;
-  top: 2rem;
-  width: 200px;
-  height: fit-content;
-  flex-shrink: 0;
-}
-
-.toc-sidebar nav {
-  background: #f8f8f8;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-.toc-sidebar h3 {
-  margin: 0 0 0.75rem 0;
-  font-size: 1rem;
-  color: #333;
-}
-
-.toc-sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.toc-sidebar li {
-  margin: 0.5rem 0;
-}
-
-.toc-sidebar a {
-  text-decoration: none;
-  color: #0366d6;
-  font-size: 0.9rem;
-  transition: color 0.2s;
-}
-
-.toc-sidebar a:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.main-content {
-  flex: 1;
-  min-width: 0;
-}
-
-@media (max-width: 768px) {
-  .page-container {
-    flex-direction: column;
-  }
-  
-  .toc-sidebar {
-    position: static;
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-}
-</style>
-
-<div class="page-container">
-  <aside class="toc-sidebar">
-    <nav>
-      <h3>Contents</h3>
-      <ul>
-        <li><a href="#mathematics">Mathematics</a></li>
-        <li><a href="#cryptography">Cryptography</a></li>
-        <li><a href="#programming">Programming</a></li>
-      </ul>
-    </nav>
-  </aside>
-
-<div class="main-content"> -->
 
 <nav style="position: sticky; top: 0; z-index: 100; background: var(--background-color, #fff); border-bottom: 2px solid #ddd; padding: 0.8rem 0; margin: 2rem -1rem 1rem -1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 15rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
@@ -106,8 +24,8 @@ $$\int_a^b f'(x)\; dx = f(b) - f(a),\quad\quad\quad\frac{d}{dx}\left(\int_a^x f(
 </blockquote>
 
 <ul class="full-width">		
-    {%- assign math_techniques = site.techniques | where_exp: "item", "item.path contains '/mathematics/'" | sort: 'title' -%}
-    {%- for item in math_techniques -%}
+    {%- assign math_articles = site.articles | where_exp: "item", "item.path contains '/mathematics/'" | sort: 'title' -%}
+    {%- for item in math_articles -%}
         <li>
             <a href="{{ item.url | relative_url }}"><b>{{ item.title }}</b></a><br>
             <b>Category:</b> {{ item.category }}<br>
@@ -131,8 +49,8 @@ $$
 </blockquote>
 
 <ul class="full-width">		
-    {%- assign crypto_techniques = site.techniques | where_exp: "item", "item.path contains '/cryptography/'" | sort: 'title' -%}
-    {%- for item in crypto_techniques -%}
+    {%- assign crypto_articles = site.articles | where_exp: "item", "item.path contains '/cryptography/'" | sort: 'title' -%}
+    {%- for item in crypto_articles -%}
         <li><!-- <a href="{{ item.url | relative_url }}"><b>{{ item.title }}</b></a><br> -->
         <details><summary><a href="{{ item.url | relative_url }}"><b>{{ item.title }}</b></a></summary>
             <b>Category:</b> {{ item.category }}<br>
@@ -173,8 +91,8 @@ $$
 </blockquote> -->
 
 <ul class="full-width">		
-    {%- assign prog_techniques = site.techniques | where_exp: "item", "item.path contains '/programmings/'" | sort: 'title' -%}
-    {%- for item in prog_techniques -%}
+    {%- assign prog_articles = site.articles | where_exp: "item", "item.path contains '/programmings/'" | sort: 'title' -%}
+    {%- for item in prog_articles -%}
         <li>
             <details><summary><a href="{{ item.url | relative_url }}"><b>{{ item.title }}</b></a></summary>
             <b>Category:</b> {{ item.category }}<br>

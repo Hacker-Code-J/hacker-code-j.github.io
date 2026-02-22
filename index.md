@@ -3,17 +3,7 @@ layout: home
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 
-<!-- Main Banner -->
-<!-- <div style="width: 100%; margin: 0 0 2rem 0; position: relative; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-  <img src="/assets/image/Grothentick-RR.webp" alt="Welcome Banner" style="width: 100%; height: auto; display: block; object-fit: contain;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-  </div>
-</div> -->
-
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
-  <!-- <div style="flex: 0 0 150px;">
-  <img src="/assets/jyh/20240113.jpg" alt="Profile Image" style="width: 150px; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;">
-  </div> -->
   <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
     <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
   </div>
@@ -24,10 +14,10 @@ layout: home
     <p><b>Position:</b> Master's Student, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a> <br>
     <b>Research Interests:</b> 
     <ul style="margin: 0.5em 0; padding-left: 1.5em;">
-      <li>Formal Verification, Machine-checked Proof</li>
-      <li>Provable Security, Functional Correctness</li>
       <li>Algebraic Geometry, Algebraic Topology, Complex Analysis</li>
       <li>Algebraic Geometry Code</li>
+      <li>Formal Verification, Machine-checked Proof</li>
+      <li>Provable Security, Functional Correctness</li>
       <li>Quantum Error-correction, Surface Code</li>
     </ul>
     <b>Contact:</b> <a href="mailto:hacker3740@kookmin.ac.kr">hacker3740@kookmin.ac.kr</a> <br>
@@ -49,24 +39,24 @@ layout: home
   </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
-</div>
-
-> My research focuses on the intersection of **Mathematics** and **Cryptography**, with particular emphasis on formal verification, provable security, and algebraic structures in cryptographic systems.  
-> I am dedicated to advancing both the theoretical foundations and practical implementations of secure cryptographic protocols, bridging rigorous mathematical analysis with real-world applications.
-
 <nav style="position: sticky; top: 0; z-index: 100; background: var(--background-color, #fff); border-bottom: 2px solid #ddd; padding: 0.8rem 0; margin: 2rem -1rem 1rem -1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
     <a href="#education" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Education</a>
     <a href="#news" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">News</a>
     <a href="#publications" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Publications</a>
     <a href="#projects" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Projects</a>
-    <a href="#techniques" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Techniques</a>
-    <a href="#notes" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Notes</a>
+    <a href="#articles" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Articles</a>
     <a href="#codes" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Codes</a>
     <a href="#talks" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Talks</a>
   </div>
 </nav>
+
+<div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
+</div>
+
+> My research focuses on **Cryptography** at the intersection of **Mathematics** and **Computer Science**. I’m particularly interested in how algebraic and geometric structures show up in cryptographic systems.
+> 
+> I work on both the **theoretical foundations** and the **practical implementation** of secure cryptography, connecting rigorous mathematical analysis with real-world applications.
 
 <h2 id="education" style="color: #0066cc; margin-top:2em;">Education</h2>
 
@@ -198,21 +188,21 @@ layout: home
 
 
 
-<h2 id="techniques"><a href="{% link techniques.markdown %}">Techniques</a></h2>
+<h2 id="articles"><a href="{% link articles.markdown %}">Articles</a></h2>
 
-{% assign orderedTech = site.techniques | reverse %}
-{% for techniques in orderedTech limit:5 %}
-- [**{{ techniques.categories }}**] [{{ techniques.title }}]({{ techniques.url | relative_url }})<br/>
-  {{ project.short }}
+{% assign orderedTech = site.articles | reverse %}
+{% for articles in orderedTech limit:5 %}
+- [**{{ articles.categories }}**] [{{ articles.title }}]({{ articles.url | relative_url }})<br/>
+  {{ articles.short }}
 {% endfor %}
 
-<h2 id="notes"><a href="{% link notes.markdown %}">Notes</a></h2>
+<!-- <h2 id="notes"><a href="{% link notes.markdown %}">Notes</a></h2>
 
 {% assign orderedNotes = site.notes | reverse %}
 {% for n in orderedNotes limit:5 %}
 - [**{{ n.categories }}**] [{{ n.title }}]({{ n.url | relative_url }})<br/>
   {{ n.tag }}
-{% endfor %}
+{% endfor %} -->
 
 <h2 id="codes"><a href="{% link codes.markdown %}">Codes</a></h2>
 
