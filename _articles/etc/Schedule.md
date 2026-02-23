@@ -7,7 +7,7 @@ date: 2026-02-23
 ---
 
 <h1> Schedule for J.YH </h1> 
-<h4> (last update: 26. 02. 23 15:00) </h4>
+<h4> (last update: 26. 02. 23 17:22) </h4>
 
 
 ![Schedule 1](/assets/image/Schedule-1.png)
