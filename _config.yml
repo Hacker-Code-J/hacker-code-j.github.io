@@ -44,7 +44,7 @@ author:
 
 header_pages:
   - news.markdown
-  - publications.markdown
+  - preprints.markdown
   - projects.markdown
   - articles.markdown
   - codes.markdown
@@ -70,15 +70,15 @@ collections:
     sort_by: date
     output: true
     permalink: /:collection/:year-:month-:day/:title
-  publications:
+  preprints:
     output: true
+    sort_by: year
+  publications:
     sort_by: year
   projects:
     output: true
     permalink: /:collection/:name
   theses:
-    sort_by: year
-  preprints:
     sort_by: year
   articles:
     output: true

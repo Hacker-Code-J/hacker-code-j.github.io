@@ -43,7 +43,7 @@ layout: home
   <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
     <a href="#education" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Education</a>
     <a href="#news" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">News</a>
-    <a href="#publications" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Publications</a>
+    <a href="#preprints" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Preprints</a>
     <a href="#projects" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Projects</a>
     <a href="#articles" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Articles</a>
     <a href="#codes" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Codes</a>
@@ -135,7 +135,7 @@ layout: home
 
 <!-- [See news.]({% link news.markdown %}) -->
 
-<h2 id="publications"><a href="{% link publications.markdown %}">Publications</a></h2>
+<!-- <h2 id="publications"><a href="{% link publications.markdown %}">Publications</a></h2> -->
 <!-- {% if site.publications != empty %}
 {% for pub in site.publications reversed %}
 - [{{ pub.year }}] [**{{ pub.title }}**]({{ pub.url | relative_url }}) <br/>
@@ -148,8 +148,23 @@ layout: home
 <p><em>Publications forthcoming.</em></p>
 {% endif %} -->
 
-{% if site.publications != empty %}
-{% for pub in site.publications reversed %}
+<!-- {% if site.publications != empty %} -->
+<!-- {% for pub in site.publications reversed %} -->
+  <!-- {% if pub.authors %}<strong>{{ pub.authors }}</strong><br/>{% endif %} -->
+<!-- - <strong>[{{ pub.year }}]</strong>  <a href="{{ pub.url | relative_url }}" style="font-size: 1.1em;">**{{ pub.title }}**</a><br/> -->
+  <!-- {% if pub.venue %}<em>{{ pub.venue }}</em>, {% endif %} -->
+  <!-- <em> {{ pub.short }}</em><br/> -->
+  <!-- {% if pub.link %} See: <a href="{{ pub.link }}" target="_blank">{{pub.link}}</a>{% endif %} -->
+  <!-- {% if pub.pdf %} | <a href="{{ pub.pdf }}" target="_blank">[PDF]</a>{% endif %} -->
+  <!-- {% if pub.doi %} | <a href="https://doi.org/{{ pub.doi }}" target="_blank">[DOI]</a>{% endif %} -->
+  <!-- {% endfor %} -->
+  <!-- {% else %} -->
+<!-- <p><em>Publications forthcoming.</em></p> -->
+<!-- {% endif %} -->
+
+<h2 id="preprints"><a href="{% link preprints.markdown %}">Preprints</a></h2>
+{% if site.preprints != empty %}
+{% for pub in site.preprints reversed %}
   <!-- {% if pub.authors %}<strong>{{ pub.authors }}</strong><br/>{% endif %} -->
 - <strong>[{{ pub.year }}]</strong>  <a href="{{ pub.url | relative_url }}" style="font-size: 1.1em;">**{{ pub.title }}**</a><br/>
   <!-- {% if pub.venue %}<em>{{ pub.venue }}</em>, {% endif %} -->
