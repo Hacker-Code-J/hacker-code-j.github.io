@@ -3,277 +3,419 @@ layout: home
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 
+<style>
+/* ── Design tokens ───────────────────────────────────── */
+:root {
+  --c-accent : #2563eb;
+  --c-navy   : #1e3a5f;
+  --c-muted  : #6b7280;
+  --c-border : #e5e7eb;
+  --c-soft   : #f8fafc;
+}
 
-<div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
-  <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
-    <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
+/* ── Profile ─────────────────────────────────────────── */
+.idx-name {
+  margin: 0 0 .1rem; font-size: 1.6rem; color: var(--c-navy);
+  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+}
+
+/* ── Research-interest badges ────────────────────────── */
+.idx-badge {
+  display: inline-block; border-radius: 20px;
+  padding: .18rem .65rem; font-size: .78em; font-weight: 600;
+  border: 1px solid transparent;
+}
+.badge-math { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+.badge-code { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.badge-sec  { background: #fce7f3; color: #9d174d; border-color: #f9a8d4; }
+.badge-qec  { background: #e0f2fe; color: #075985; border-color: #7dd3fc; }
+
+/* ── Social / contact buttons ────────────────────────── */
+.idx-social { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.idx-social a {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .3rem .75rem; border-radius: 6px; font-size: .84em;
+  font-weight: 500; text-decoration: none; color: #374151;
+  border: 1px solid var(--c-border);
+  transition: background .2s, color .2s, border-color .2s;
+}
+.idx-social a:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+
+/* ── Sticky nav ──────────────────────────────────────── */
+.idx-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: .25rem; padding: 0 1rem; }
+.idx-nav a {
+  text-decoration: none; font-weight: 600; font-size: .86em;
+  color: var(--c-muted); padding: .3rem .85rem; border-radius: 20px;
+  transition: color .2s, background .2s;
+}
+.idx-nav a:hover { color: var(--c-accent); background: #eff6ff; }
+
+/* ── Section headings ────────────────────────────────── */
+.idx-h2 {
+  display: flex; align-items: center; gap: .55rem;
+  margin-top: 2rem; margin-bottom: 0;
+  padding-bottom: .35rem; border-bottom: 1px solid var(--c-border);
+  color: var(--c-navy);
+}
+.idx-h2::before {
+  content: ''; display: inline-block; flex-shrink: 0;
+  width: 4px; height: 1.1em; border-radius: 2px;
+  background: var(--c-accent);
+}
+.idx-h2 a { text-decoration: none; color: inherit; }
+.idx-h2 a:hover { color: var(--c-accent); }
+
+/* ── Entry cards ─────────────────────────────────────── */
+.idx-entry {
+  padding: .45rem .8rem; margin: .3rem 0;
+  border-left: 3px solid var(--c-border);
+  border-radius: 0 6px 6px 0;
+  transition: border-color .2s, background .2s;
+}
+.idx-entry:hover { border-left-color: var(--c-accent); background: #f5f9ff; }
+
+.entry-year {
+  display: inline-block; font-size: .72em; font-weight: 700;
+  background: #eff6ff; color: var(--c-accent); border: 1px solid #bfdbfe;
+  border-radius: 4px; padding: .03rem .35rem; margin-right: .3rem;
+  vertical-align: middle;
+}
+.entry-title { font-weight: 600; font-size: .95em; text-decoration: none; color: var(--c-navy); }
+.entry-title:hover { color: var(--c-accent); text-decoration: underline; }
+.entry-short { color: var(--c-muted); font-size: .84em; margin-top: .1rem; }
+.entry-links { margin-top: .25rem; }
+.entry-links a {
+  font-size: .76em; font-weight: 600;
+  padding: .05rem .38rem; margin-right: .25rem;
+  border: 1px solid var(--c-border); border-radius: 4px;
+  text-decoration: none; color: #374151;
+  transition: background .15s, color .15s;
+}
+.entry-links a:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+
+/* ── Education timeline ──────────────────────────────── */
+.edu-item   { display: flex; gap: .85rem; margin-bottom: .7rem; align-items: flex-start; }
+.edu-dot    {
+  flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--c-accent); margin-top: .42em;
+  box-shadow: 0 0 0 3px #bfdbfe;
+}
+.edu-dot.muted { background: #9ca3af; box-shadow: 0 0 0 3px #e5e7eb; }
+.edu-period { font-size: .78em; font-weight: 700; color: var(--c-accent);
+              text-transform: uppercase; letter-spacing: .04em; }
+.edu-period.muted { color: #9ca3af; }
+.edu-degree { font-weight: 600; color: var(--c-navy); margin: .1rem 0 0; font-size: .97em; }
+.edu-sub    { font-size: .85em; color: var(--c-muted); margin: .1rem 0 0; }
+
+/* ── Intro split layout ──────────────────────────────── */
+.idx-intro-split {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.2rem 0 2rem;
+  flex-wrap: wrap;
+}
+.idx-intro-text {
+  flex: 1 1 420px;
+  padding: .8rem 1.2rem;
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-soft);
+  border-radius: 0 8px 8px 0;
+  font-size: .92em;
+  line-height: 1.7;
+  color: #374151;
+}
+.idx-intro-sign {
+  flex: 0 1 260px;
+  max-width: 320px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.idx-intro-sign img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 720px) {
+  .idx-intro-split {
+    gap: 1rem;
+  }
+
+  .idx-intro-sign {
+    max-width: 220px;
+  }
+}
+
+/* ── Back-to-top ─────────────────────────────────────── */
+#back-to-top {
+  display: none; position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+  width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+  background: var(--c-accent); color: #fff; font-size: 1.15rem;
+  box-shadow: 0 4px 14px rgba(37,99,235,.35);
+  transition: transform .2s, box-shadow .2s;
+}
+#back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(37,99,235,.45); }
+</style>
+
+<!-- ════════════════════════════════════════════════════
+     PROFILE
+     ════════════════════════════════════════════════════ -->
+<div style="display:flex; align-items:flex-start; gap:2rem; margin-top:1.8rem; flex-wrap:wrap;">
+
+  <div style="flex-shrink:0;">
+    <a href="/assets/jyh/20240113.jpg" target="_blank">
+      <img src="/assets/jyh/20240113.jpg" alt="Ji, Yonghyeon"
+           style="width:200px; height:300px; object-fit:cover;
+                  border-radius:12px; border:3px solid #dbeafe;
+                  box-shadow:0 4px 16px rgba(30,58,95,.14);">
+    </a>
   </div>
-  <div style="flex: 1;">
-    <h2>Ji, Yonghyeon 
-    <a href="https://myhits.vercel.app"><img src="https://myhits.vercel.app/api/hit/https%3A%2F%2Fhacker-code-j.github.io%2F?color=purple&label=Hits&size=medium" alt="Hits" /></a>
-    </h2> 
-    <p><b>Position:</b> Master's Student, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Department of Cyber Security, Kookmin University</a> <br>
-    <b>Research Interests:</b> 
-    <ul style="margin: 0.5em 0; padding-left: 1.5em;">
-      <li>Algebraic Geometry, Algebraic Topology, Complex Analysis</li>
-      <li>Algebraic Geometry Code</li>
-      <li>Formal Verification, Machine-checked Proof</li>
-      <li>Provable Security, Functional Correctness</li>
-      <li>Quantum Error-correction, Surface Code</li>
-    </ul>
-    <b>Contact:</b> <a href="mailto:hacker3740@kookmin.ac.kr">hacker3740@kookmin.ac.kr</a> <br>
-    <b>Github:</b> <a href="https://github.com/Hacker-Code-J">Hacker-Code-J</a> <br>
-    <!-- <b>Youtube:</b> <a href="https://www.youtube.com/@hacker-code-j">Code-J</a> <br> -->
-    <!-- Email -->
-<a href="mailto:hacker3740@kookmin.ac.kr" title="Email">
-  <svg width="24" height="24" fill="currentColor"><path d="M2 4h20v16H2V4zm2 2v12h16V6H4zm8 5l8-5H4l8 5zm0 2l-8-5v10h16V8l-8 5z"/></svg>
-</a>
-<!-- GitHub -->
-<a href="https://github.com/Hacker-Code-J" target="_blank" title="GitHub">
-  <svg width="24" height="24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.01c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98.01 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.7.42.36.79 1.09.79 2.2v3.26c0 .31.21.67.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
-</a>
-<!-- YouTube -->
-<!-- <a href="https://www.youtube.com/@hacker-code-j" target="_blank" title="YouTube">
-  <svg width="24" height="24" fill="currentColor"><path d="M23.5 6.5s-.2-1.7-.8-2.4c-.7-.8-1.5-.8-1.9-.9C17.1 3 12 3 12 3h-.1s-5.1 0-8.8.2c-.4 0-1.2.1-1.9.9-.6.7-.8 2.4-.8 2.4S0 8.3 0 10.1v1.8c0 1.8.2 3.6.2 3.6s.2 1.7.8 2.4c.7.8 1.7.8 2.1.9 1.5.1 6.7.2 6.7.2s5.1 0 8.8-.2c.4 0 1.2-.1 1.9-.9.6-.7.8-2.4.8-2.4s.2-1.8.2-3.6v-1.8c0-1.8-.2-3.6-.2-3.6zM9.5 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>
-</a> -->
+
+  <div style="flex:1; min-width:240px;">
+
+    <h1 class="idx-name">Ji, Yonghyeon
+      <a href="https://myhits.vercel.app">
+        <img src="https://myhits.vercel.app/api/hit/https%3A%2F%2Fhacker-code-j.github.io%2F?color=blue&label=Hits&size=small"
+             alt="Hits" style="vertical-align:middle;">
+      </a>
+    </h1>
+
+    <p style="margin:.15rem 0 .7rem; font-size:.9em; color:var(--c-muted);">
+      M.S. Student &nbsp;·&nbsp;
+      <a href="https://gdse.kookmin.ac.kr/department/join/financial"
+         style="color:var(--c-accent); text-decoration:none; font-weight:500;">
+        Dept. of Cyber Security, Kookmin University
+      </a>
+      &nbsp;·&nbsp; Seoul, Korea
     </p>
+
+    <div style="margin-bottom:.75rem;">
+      <div style="font-size:.72em; text-transform:uppercase; letter-spacing:.07em;
+                  color:#9ca3af; font-weight:700; margin-bottom:.3rem;">Research Interests</div>
+      <div style="display:flex; flex-wrap:wrap; gap:.3rem;">
+        <span class="idx-badge badge-math">Algebraic Geometry</span>
+        <span class="idx-badge badge-math">Algebraic Topology</span>
+        <span class="idx-badge badge-math">Complex Analysis</span>
+        <span class="idx-badge badge-code">Algebraic Geometry Codes</span>
+        <span class="idx-badge badge-sec">Formal Verification</span>
+        <span class="idx-badge badge-sec">Provable Security</span>
+        <span class="idx-badge badge-qec">Quantum Error-Correction</span>
+      </div>
+    </div>
+
+    <div class="idx-social">
+      <a href="mailto:hacker3740@kookmin.ac.kr" title="Email">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        Email
+      </a>
+      <a href="https://github.com/Hacker-Code-J" target="_blank" title="GitHub">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.01c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98.01 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.7.42.36.79 1.09.79 2.2v3.26c0 .31.21.67.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+
+
   </div>
 </div>
 
-<nav style="position: sticky; top: 0; z-index: 100; background: var(--background-color, #fff); border-bottom: 2px solid #ddd; padding: 0.8rem 0; margin: 2rem -1rem 1rem -1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
-    <a href="#education" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Education</a>
-    <a href="#news" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">News</a>
-    <a href="#preprints" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Preprints</a>
-    <a href="#projects" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Projects</a>
-    <a href="#articles" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Articles</a>
-    <a href="#codes" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Codes</a>
-    <a href="#talks" style="text-decoration: none; font-weight: 600; color: #0066cc; padding: 0.3rem 0.8rem; border-radius: 4px; transition: all 0.3s;">Talks</a>
-  </div>
-</nav>
-
-<div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
+<!-- ════════════════════════════════════════════════════
+     STICKY NAV
+     ════════════════════════════════════════════════════ -->
+<div style="position:sticky; top:0; z-index:100;
+            background:var(--background-color,#fff);
+            border-bottom:1px solid var(--c-border);
+            padding:.45rem 0; margin:1.5rem -1rem 0 -1rem;
+            box-shadow:0 2px 10px rgba(0,0,0,.05);">
+  <nav class="idx-nav">
+    <a href="#education">Education</a>
+    <!-- <a href="#news">News</a> -->
+    <a href="#preprints">Preprints</a>
+    <a href="#projects">Projects</a>
+    <a href="#articles">Articles</a>
+    <a href="#codes">Codes</a>
+    <a href="#talks">Talks</a>
+  </nav>
 </div>
 
-<!-- Main Banner -->
-<!-- <div style="width: 90%; margin: 0 0 2rem 0; position: relative; overflow: hidden; border-radius: 10px;">
-  <img src="/assets/image/handwriting_sign.png" alt="Welcome Banner" style="width: 100%; height: auto; display: block; object-fit: contain;">
-  <!-- <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);"> -->
+<!-- ════════════════════════════════════════════════════
+     RESEARCH STATEMENT
+     ════════════════════════════════════════════════════ -->
+<div class="idx-intro-split">
+  <div class="idx-intro-text">
+    My research focuses on <strong>Cryptography</strong> at the intersection of
+    <strong>Mathematics</strong> and <strong>Computer Science</strong> — particularly
+    how algebraic and geometric structures arise in cryptographic systems.
+    I work on both the <strong>theoretical foundations</strong> and the
+    <strong>practical implementation</strong> of secure cryptography,
+    connecting rigorous mathematical analysis with real-world applications.
   </div>
-</div> -->
-
-> My research focuses on **Cryptography** at the intersection of **Mathematics** and **Computer Science**. I’m particularly interested in how algebraic and geometric structures show up in cryptographic systems.
-> 
-> I work on both the **theoretical foundations** and the **practical implementation** of secure cryptography, connecting rigorous mathematical analysis with real-world applications.
-
-<h2 id="education" style="color: #0066cc; margin-top:2em;">Education</h2>
-
-<!-- <h2 id="news"><a href="{% link news.markdown %}">News</a></h2> -->
-
-<ul style="margin-bottom:2em;">
-  <li><b>Mar. 2025 – Present:</b> M.S. in Cyber Security, <a href="https://gdse.kookmin.ac.kr/department/join/financial">Kookmin University</a></li>
-    <ul>
-      <li>Thesis: TBA</li>
-      <!-- <li>Advisor: TBA.</li> -->
-    </ul>
-  <li><b>Mar. 2019 – Feb. 2025:</b> B.S. in Information Security, Cryptology and Mathematics, <a href="https://cns.kookmin.ac.kr/cns/index.do">Kookmin University</a></li>
-    <!-- <details>
-      <summary><b>Mathematics</b></summary>
-      <ul>
-        <li>Set Theory</li>
-        <li>Number Theory</li>
-        <li>Calculus I, II</li>
-        <li>Vector Analysis</li>
-        <li>Linear Algebra</li>
-        <li>Analysis I, II</li>
-        <li>Discrete Mathematics (Combinatorics and Graph Theory)</li>
-        <li>Mathematical Statistics</li>
-        <li>Probability Theory</li>
-        <li>Abstract Algebra I, II</li>
-        <li>Complex Analysis</li>
-        <li>Algorithm Analysis</li>
-      </ul>
-    </details>
-    <details>
-      <summary><b>Cryptology</b></summary>
-      <ul>
-        <li>Introduction to Information Security</li>
-        <li>Symmetric Key Cryptography</li>
-        <li>Public Key Cryptography</li>
-        <li>Introductory Theory of Random Number Generation</li>
-        <li>Advanced Cryptology (Elliptic Curve Cryptography)</li>
-        <li>Introduction to Cryptanalysis (Difference / Linear)</li>
-        <li>Side Channel Attacks and Countermeasures</li>
-      </ul>
-    </details>
-    <details>
-      <summary><b>Implementations</b></summary>
-      <ul>
-        <li>Computer Programming (C)</li>
-        <li>Advanced Application Programming (Big Number Arithmetic)</li>
-        <li>Secure Network Programming (Socket)</li>
-      </ul>
-    </details>
-    <details>
-      <summary><b>Physics</b></summary>
-      <ul>
-        <li>Electromagnetics I</li>
-        <li>Modern Physics</li>
-      </ul>
-    </details> -->
-  <li><b>2016 - 2017:</b> Institute of Information Security Education for the Gifted, Kongju National University </li>
-  <!-- Add more career items below as you progress -->
-</ul>
-
-<div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
+  <div class="idx-intro-sign">
+    <img src="/assets/image/handwriting_sign.png" alt="Welcome Banner">
+  </div>
 </div>
 
 
+<!-- ════════════════════════════════════════════════════
+     EDUCATION
+     ════════════════════════════════════════════════════ -->
+<h2 id="education" class="idx-h2">Education</h2>
 
-{% if site.news != empty %}
-<h2 id="news"><a href="{% link news.markdown %}">News</a></h2>
+<div style="margin:.6rem 0 1.2rem; padding-left:.1rem;">
 
+  <div class="edu-item">
+    <div class="edu-dot"></div>
+    <div>
+      <div class="edu-period">Mar. 2025 – Present</div>
+      <div class="edu-degree">M.S. in Cyber Security</div>
+      <p class="edu-sub">
+        <a href="https://gdse.kookmin.ac.kr/department/join/financial">Kookmin University</a>
+        &nbsp;·&nbsp; Thesis: TBA
+      </p>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-dot"></div>
+    <div>
+      <div class="edu-period">Mar. 2019 – Feb. 2025</div>
+      <div class="edu-degree">B.S. in Information Security, Cryptology &amp; Mathematics</div>
+      <p class="edu-sub">
+        <a href="https://cns.kookmin.ac.kr/cns/index.do">Kookmin University</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-dot muted"></div>
+    <div>
+      <div class="edu-period muted">2016 – 2017</div>
+      <div class="edu-degree">Institute of Information Security Education for the Gifted</div>
+      <p class="edu-sub">Kongju National University</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     NEWS
+     ════════════════════════════════════════════════════ -->
+<!-- {% if site.news != empty %}
+<h2 id="news" class="idx-h2">
+  <a href="{% link news.markdown %}">News</a>
+</h2>
+<div style="margin:.5rem 0 1rem;">
 {% assign orderedNews = site.news | reverse %}
 {% for item in orderedNews limit:5 %}
-- ({{ item.date | date: '%B' }} {{ item.date | date : '%d' | plus:'0' }}{{ item.date | date : ', %Y' }}) [**{{ item.title }}**]({{ item.url | relative_url }}) <br/>
+- ({{ item.date | date: '%B %d, %Y' }}) [**{{ item.title }}**]({{ item.url | relative_url }}) <br/>
   {% capture link %} [{{ item.linkback }}]({{ item.url | relative_url }}){% endcapture %}
   {{ item.summary | append:link | markdownify | strip_newlines }}
 {% endfor %}
-{% endif %}
-
-<!-- [See news.]({% link news.markdown %}) -->
-
-<!-- <h2 id="publications"><a href="{% link publications.markdown %}">Publications</a></h2> -->
-<!-- {% if site.publications != empty %}
-{% for pub in site.publications reversed %}
-- [{{ pub.year }}] [**{{ pub.title }}**]({{ pub.url | relative_url }}) <br/>
-{% if pub.link %}
-  See: &nbsp;<a href="{{ pub.link }}" target="_blank">**https://arxiv.org/abs/2601.06868**</a>
-{% endif %}
-  <em>{{ pub.short }}</em>
-{% endfor %}
-{% else %}
-<p><em>Publications forthcoming.</em></p>
+</div>
 {% endif %} -->
 
-<!-- {% if site.publications != empty %} -->
-<!-- {% for pub in site.publications reversed %} -->
-  <!-- {% if pub.authors %}<strong>{{ pub.authors }}</strong><br/>{% endif %} -->
-<!-- - <strong>[{{ pub.year }}]</strong>  <a href="{{ pub.url | relative_url }}" style="font-size: 1.1em;">**{{ pub.title }}**</a><br/> -->
-  <!-- {% if pub.venue %}<em>{{ pub.venue }}</em>, {% endif %} -->
-  <!-- <em> {{ pub.short }}</em><br/> -->
-  <!-- {% if pub.link %} See: <a href="{{ pub.link }}" target="_blank">{{pub.link}}</a>{% endif %} -->
-  <!-- {% if pub.pdf %} | <a href="{{ pub.pdf }}" target="_blank">[PDF]</a>{% endif %} -->
-  <!-- {% if pub.doi %} | <a href="https://doi.org/{{ pub.doi }}" target="_blank">[DOI]</a>{% endif %} -->
-  <!-- {% endfor %} -->
-  <!-- {% else %} -->
-<!-- <p><em>Publications forthcoming.</em></p> -->
-<!-- {% endif %} -->
+<!-- ════════════════════════════════════════════════════
+     PREPRINTS
+     ════════════════════════════════════════════════════ -->
+<h2 id="preprints" class="idx-h2">
+  <a href="{% link preprints.markdown %}">Preprints</a>
+</h2>
 
-<h2 id="preprints"><a href="{% link preprints.markdown %}">Preprints</a></h2>
+<div style="margin:.5rem 0 1rem;">
 {% if site.preprints != empty %}
 {% for pub in site.preprints reversed %}
-  <!-- {% if pub.authors %}<strong>{{ pub.authors }}</strong><br/>{% endif %} -->
-- <strong>[{{ pub.year }}]</strong>  <a href="{{ pub.url | relative_url }}" style="font-size: 1.1em;">**{{ pub.title }}**</a><br/>
-  <!-- {% if pub.venue %}<em>{{ pub.venue }}</em>, {% endif %} -->
-  <em> {{ pub.short }}</em><br/>
-  {% if pub.link %} See: <a href="{{ pub.link }}" target="_blank">{{pub.link}}</a>{% endif %}
-  {% if pub.pdf %} | <a href="{{ pub.pdf }}" target="_blank">[PDF]</a>{% endif %}
-  {% if pub.doi %} | <a href="https://doi.org/{{ pub.doi }}" target="_blank">[DOI]</a>{% endif %}
-  {% endfor %}
-  {% else %}
-<p><em>Publications forthcoming.</em></p>
+<div class="idx-entry">
+  <div>
+    <span class="entry-year">{{ pub.year }}</span>
+    <a href="{{ pub.url | relative_url }}" class="entry-title">{{ pub.title }}</a>
+  </div>
+  <div class="entry-short">{{ pub.short }}</div>
+  <div class="entry-links">
+    {% if pub.link %}<a href="{{ pub.link }}" target="_blank">arXiv</a>{% endif %}
+    {% if pub.pdf %}<a href="{{ pub.pdf }}" target="_blank">PDF</a>{% endif %}
+    {% if pub.doi %}<a href="https://doi.org/{{ pub.doi }}" target="_blank">DOI</a>{% endif %}
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<p style="color:var(--c-muted); font-style:italic; font-size:.93em; margin:.5rem 0;">
+  Preprints forthcoming.
+</p>
 {% endif %}
+</div>
 
+<!-- ════════════════════════════════════════════════════
+     PROJECTS
+     ════════════════════════════════════════════════════ -->
+<h2 id="projects" class="idx-h2">
+  <a href="{% link projects.markdown %}">Projects</a>
+</h2>
 
-
-
-<h2 id="projects"><a href="{% link projects.markdown %}">Projects</a></h2>
-{% for project in site.projects reversed  %}
-- <strong>[{{ project.year }}]</strong> <a href="{{ project.url | relative_url }}" style="font-size: 1.1em;">**{{ project.project }}**</a><br/>
-  <!-- [**{{ project.project }}**]({{ project.url | relative_url }})<br/> -->
-  <em>{{ project.short }}</em>
+<div style="margin:.5rem 0 1rem;">
+{% for project in site.projects reversed %}
+<div class="idx-entry">
+  <div>
+    <span class="entry-year">{{ project.year }}</span>
+    <a href="{{ project.url | relative_url }}" class="entry-title">{{ project.project }}</a>
+  </div>
+  <div class="entry-short">{{ project.short }}</div>
+</div>
 {% endfor %}
+</div>
 
-<!-- <ul style="list-style-type: none; padding-left: 0;">
-{% for project in site.projects reversed  %}
-  <li style="margin-bottom: 1.5em;">
-    <div>
-      <strong>{{ project.year }}</strong> — <a href="{{ project.url | relative_url }}" style="font-size: 1.05em;">{{ project.project }}</a><br/>
-      <em>{{ project.short }}</em>
-      {% if project.git %} | <a href="{{ project.git }}" target="_blank">[Repository]</a>{% endif %}
-    </div>
-  </li>
-{% endfor %}
-</ul> -->
+<!-- ════════════════════════════════════════════════════
+     ARTICLES
+     ════════════════════════════════════════════════════ -->
+<h2 id="articles" class="idx-h2">
+  <a href="{% link articles.markdown %}">Articles</a>
+</h2>
 
-
-
-
-
-<h2 id="articles"><a href="{% link articles.markdown %}">Articles</a></h2>
-
+<div style="margin:.5rem 0 1rem;">
 {% assign orderedTech = site.articles | reverse %}
 {% for articles in orderedTech limit:5 %}
-- [**{{ articles.categories }}**] [{{ articles.title }}]({{ articles.url | relative_url }})<br/>
-  {{ articles.short }}
+<div class="idx-entry">
+  <div>
+    <span class="entry-year" style="background:#f0fdf4; color:#166534; border-color:#bbf7d0;">{{ articles.categories }}</span>
+    <a href="{{ articles.url | relative_url }}" class="entry-title">{{ articles.title }}</a>
+  </div>
+  <div class="entry-short">{{ articles.short }}</div>
+</div>
 {% endfor %}
+</div>
 
-<!-- <h2 id="notes"><a href="{% link notes.markdown %}">Notes</a></h2>
+<!-- ════════════════════════════════════════════════════
+     CODES
+     ════════════════════════════════════════════════════ -->
+<h2 id="codes" class="idx-h2">
+  <a href="{% link codes.markdown %}">Codes</a>
+</h2>
 
-{% assign orderedNotes = site.notes | reverse %}
-{% for n in orderedNotes limit:5 %}
-- [**{{ n.categories }}**] [{{ n.title }}]({{ n.url | relative_url }})<br/>
-  {{ n.tag }}
-{% endfor %} -->
+<!-- ════════════════════════════════════════════════════
+     TALKS
+     ════════════════════════════════════════════════════ -->
+<h2 id="talks" class="idx-h2">
+  <a href="{% link talks.markdown %}">Talks</a>
+</h2>
 
-<h2 id="codes"><a href="{% link codes.markdown %}">Codes</a></h2>
+<!-- ════════════════════════════════════════════════════
+     BACK TO TOP
+     ════════════════════════════════════════════════════ -->
+<button id="back-to-top"
+        onclick="window.scrollTo({top:0, behavior:'smooth'})"
+        title="Back to top">&#8679;</button>
 
-<!-- <ul>
-  {% assign recent = site.codes | sort: "date" | reverse %}
-  {% for code in recent limit:5 %}
-    <li>
-      <a href="{{ code.url }}">{{ code.title }}</a>
-      {% if code.description %} — {{ code.description }}{% endif %}
-    </li>
-  {% endfor %}
-</ul> -->
-
-<!-- <p><a href="/codes/">Browse all snippets →</a></p> -->
-
-<h2 id="talks"><a href="{% link talks.markdown %}">Talks</a></h2>
-
-
-
-<!-- <!-- ## 📖 Research Interests
-- Mathematical foundations of cryptography  
-- Secure design and analysis of cryptographic algorithms  
-- Bridging theoretical models with real-world implementations  
-
-What inspires me most is the **design and implementation of cryptography**, where theoretical insight can directly shape secure, practical solutions.  
-
----
-
-## 📚 Publications & Work
-I aim to contribute to both the **theoretical** understanding of cryptography and its **engineering applications**.  
-You can explore more in the [publications](/publications) section.  
-
----
-
-## 🛠️ Projects
-On my [GitHub](https://github.com/username), I share projects that span:  
-- Cryptographic protocol implementations  
-- Algorithm design and evaluation  
-- Experimental systems that combine mathematical rigor with practical deployment  
-
----
-
-## 🤝 Collaboration
-I actively seek collaborations with researchers and developers who share an interest in advancing cryptographic methods.  
-Feel free to connect or reach me at [you@example.com](mailto:you@example.com).  
-
----
-
-Thank you for visiting my research space.
-
---- -->
+<script>
+(function () {
+  var btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function () {
+    btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  });
+})();
+</script>
