@@ -3,6 +3,7 @@ layout: home
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 
+
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
   <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1em;">
     <a href="/assets/jyh/20240113.jpg" target="_blank"><img src="/assets/jyh/20240113.jpg" style="width: 200px; height: 300px; object-fit: cover; border-radius: 10px; border: 2px solid #ccc;"></a>
@@ -53,6 +54,13 @@ layout: home
 
 <div style="display: flex; align-items: flex-start; gap: 2rem; margin-top: 2rem;">
 </div>
+
+<!-- Main Banner -->
+<!-- <div style="width: 90%; margin: 0 0 2rem 0; position: relative; overflow: hidden; border-radius: 10px;">
+  <img src="/assets/image/handwriting_sign.png" alt="Welcome Banner" style="width: 100%; height: auto; display: block; object-fit: contain;">
+  <!-- <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);"> -->
+  </div>
+</div> -->
 
 > My research focuses on **Cryptography** at the intersection of **Mathematics** and **Computer Science**. I’m particularly interested in how algebraic and geometric structures show up in cryptographic systems.
 > 
