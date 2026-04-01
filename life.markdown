@@ -144,133 +144,133 @@ permalink: /life/
 <!-- ════════════════════════════════════
      2025
      ════════════════════════════════════ -->
-<div class="diary-year"><span>2025</span></div>
+<!-- <div class="diary-year"><span>2025</span></div> -->
 
 <!-- <div class="diary-note">Write about 2025 here.</div> -->
 
-<div class="diary-columns">
+<!-- <div class="diary-columns"> -->
 
   <!-- ── Places ── -->
-  <div class="diary-col">
+  <!-- <div class="diary-col">
     <div class="diary-label">Places</div>
     <div class="diary-gallery">
-      <!-- <div class="diary-photo-wrap">...</div> -->
+      <div class="diary-photo-wrap">...</div> 
     </div>
-  </div>
+  </div> -->
 
   <!-- ── Food ── -->
-  <div class="diary-col">
+  <!-- <div class="diary-col">
     <div class="diary-label">Food</div>
-    <div class="diary-gallery">
+    <div class="diary-gallery"> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20250706.jpg" target="_blank">
-          <img src="/assets/life/foods/20250706.jpg" alt="Food · 2025-07-06">
-        </a>
-        <div class="diary-photo-date">Jul 6</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20250706.jpg" target="_blank">
+      <img src="/assets/life/foods/20250706.jpg" alt="Food · 2025-07-06">
+    </a>
+    <div class="diary-photo-date">Jul 6</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20250118.jpg" target="_blank">
-          <img src="/assets/life/foods/20250118.jpg" alt="Food · 2025-01-18">
-        </a>
-        <div class="diary-photo-date">Jan 18</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20250118.jpg" target="_blank">
+      <img src="/assets/life/foods/20250118.jpg" alt="Food · 2025-01-18">
+    </a>
+    <div class="diary-photo-date">Jan 18</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20250118-2.jpg" target="_blank">
-          <img src="/assets/life/foods/20250118-2.jpg" alt="Food · 2025-01-18">
-        </a>
-        <div class="diary-photo-date">Jan 18</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20250118-2.jpg" target="_blank">
+      <img src="/assets/life/foods/20250118-2.jpg" alt="Food · 2025-01-18">
+    </a>
+    <div class="diary-photo-date">Jan 18</div>
+  </div> -->
 
-    </div>
-  </div>
+  <!-- </div> -->
+  <!-- </div> -->
 
-</div>
+<!-- </div> -->
 
 <!-- ════════════════════════════════════
      2024
      ════════════════════════════════════ -->
-<div class="diary-year"><span>2024</span></div>
+<!-- <div class="diary-year"><span>2024</span></div> -->
 
 <!-- <div class="diary-note">Write about 2024 here.</div> -->
 
-<div class="diary-columns">
+<!-- <div class="diary-columns"> -->
 
   <!-- ── Places ── -->
-  <div class="diary-col">
+  <!-- <div class="diary-col">
     <div class="diary-label">Places</div>
-    <div class="diary-gallery">
+    <div class="diary-gallery"> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20240331.jpg" target="_blank">
-          <img src="/assets/life/places/20240331.jpg" alt="Place · 2024-03-31">
-        </a>
-        <div class="diary-photo-date">Mar 31</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/places/20240331.jpg" target="_blank">
+      <img src="/assets/life/places/20240331.jpg" alt="Place · 2024-03-31">
+    </a>
+    <div class="diary-photo-date">Mar 31</div>
+  </div> -->
 
-    </div>
-  </div>
+  <!-- </div> -->
+  <!-- </div> -->
 
   <!-- ── Food ── -->
-  <div class="diary-col">
+  <!-- <div class="diary-col">
     <div class="diary-label">Food</div>
-    <div class="diary-gallery">
+    <div class="diary-gallery"> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240511.jpg" target="_blank">
-          <img src="/assets/life/foods/20240511.jpg" alt="Food · 2024-05-11">
-        </a>
-        <div class="diary-photo-date">May 11</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240511.jpg" target="_blank">
+      <img src="/assets/life/foods/20240511.jpg" alt="Food · 2024-05-11">
+    </a>
+    <div class="diary-photo-date">May 11</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240331.jpg" target="_blank">
-          <img src="/assets/life/foods/20240331.jpg" alt="Food · 2024-03-31">
-        </a>
-        <div class="diary-photo-date">Mar 31</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240331.jpg" target="_blank">
+      <img src="/assets/life/foods/20240331.jpg" alt="Food · 2024-03-31">
+    </a>
+    <div class="diary-photo-date">Mar 31</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240321.jpg" target="_blank">
-          <img src="/assets/life/foods/20240321.jpg" alt="Food · 2024-03-21">
-        </a>
-        <div class="diary-photo-date">Mar 21</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240321.jpg" target="_blank">
+      <img src="/assets/life/foods/20240321.jpg" alt="Food · 2024-03-21">
+    </a>
+    <div class="diary-photo-date">Mar 21</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240321-2.jpg" target="_blank">
-          <img src="/assets/life/foods/20240321-2.jpg" alt="Food · 2024-03-21">
-        </a>
-        <div class="diary-photo-date">Mar 21</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240321-2.jpg" target="_blank">
+      <img src="/assets/life/foods/20240321-2.jpg" alt="Food · 2024-03-21">
+    </a>
+    <div class="diary-photo-date">Mar 21</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240225.jpg" target="_blank">
-          <img src="/assets/life/foods/20240225.jpg" alt="Food · 2024-02-25">
-        </a>
-        <div class="diary-photo-date">Feb 25</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240225.jpg" target="_blank">
+      <img src="/assets/life/foods/20240225.jpg" alt="Food · 2024-02-25">
+    </a>
+    <div class="diary-photo-date">Feb 25</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240220.jpg" target="_blank">
-          <img src="/assets/life/foods/20240220.jpg" alt="Food · 2024-02-20">
-        </a>
-        <div class="diary-photo-date">Feb 20</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240220.jpg" target="_blank">
+      <img src="/assets/life/foods/20240220.jpg" alt="Food · 2024-02-20">
+    </a>
+    <div class="diary-photo-date">Feb 20</div>
+  </div> -->
 
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20240113.jpg" target="_blank">
-          <img src="/assets/life/foods/20240113.jpg" alt="Food · 2024-01-13">
-        </a>
-        <div class="diary-photo-date">Jan 13</div>
-      </div>
+  <!-- <div class="diary-photo-wrap">
+    <a href="/assets/life/foods/20240113.jpg" target="_blank">
+      <img src="/assets/life/foods/20240113.jpg" alt="Food · 2024-01-13">
+    </a>
+    <div class="diary-photo-date">Jan 13</div>
+  </div> -->
 
-    </div>
-  </div>
+  <!-- </div> -->
+  <!-- </div> -->
 
-</div>
+<!-- </div> -->
 
 <!-- ════════════════════════════════════
      2023
