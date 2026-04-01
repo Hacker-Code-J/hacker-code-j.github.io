@@ -1,6 +1,6 @@
 ---
-title: "(Talk Title) A"
-date: 2024-08-21
+title: "(Talk Title) B"
+date: 2025-08-21
 event: "(Seminar/Conference)"
 location: "(City/Online)"
 slides: S

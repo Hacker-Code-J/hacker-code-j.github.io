@@ -43,7 +43,6 @@ author:
   email: "hacker3740@gmail.com"
 
 header_pages:
-  - news.markdown
   - preprints.markdown
   - projects.markdown
   - articles.markdown
@@ -66,10 +65,6 @@ exclude:
 
 # Collections
 collections:
-  news:
-    sort_by: date
-    output: true
-    permalink: /:collection/:year-:month-:day/:title
   preprints:
     output: true
     sort_by: year
@@ -86,6 +81,10 @@ collections:
   notes:
     output: true
     permalink: /:collection/:name
+  news:
+    sort_by: date
+    output: true
+    permalink: /:collection/:year-:month-:day/:title
   codes:
     output: true
     permalink: /codes/:name/
