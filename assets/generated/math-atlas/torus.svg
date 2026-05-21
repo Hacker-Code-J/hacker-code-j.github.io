@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" role="img" aria-label="Complex Torus C/Lambda">
+  <rect width="300" height="220" rx="8" fill="#ffffff"/>
+  <path d="M28 132 C80 34 136 184 196 76 S266 104 276 48" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+  <path d="M42 54 C92 114 148 20 228 138" fill="none" stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 7"/>
+  <circle cx="88" cy="104" r="28" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <circle cx="203" cy="110" r="38" fill="#f8fafc" stroke="#14b8a6" stroke-width="2"/>
+  <text x="24" y="30" fill="#1e3a5f" font-size="18" font-weight="800" font-family="system-ui, sans-serif">Complex Torus C/Lambda</text>
+  <text x="24" y="52" fill="#64748b" font-size="11" font-family="ui-monospace, monospace">Lambda=&lt;1,tau&gt;, tau=0.38+1.18i</text>
+  <text x="26" y="188" fill="#475569" font-size="10" font-family="system-ui, sans-serif">25 lattice points</text><text x="108" y="188" fill="#475569" font-size="10" font-family="system-ui, sans-serif">a,b edge pairs</text><text x="190" y="188" fill="#475569" font-size="10" font-family="system-ui, sans-serif">projected torus mesh</text>
+</svg>
