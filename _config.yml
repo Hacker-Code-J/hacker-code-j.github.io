@@ -114,6 +114,8 @@ github:
   branch: main
 
 defaults:
+  - scope: { path: "", type: "articles" }
+    values: { layout: page }
   - scope: { path: "", type: "projects" }
     values: { layout: page, permalink: /projects/:name/ }
   - scope: { path: "", type: "publications" }

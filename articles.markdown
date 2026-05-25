@@ -7,42 +7,93 @@ permalink: /articles/
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
-/* ── Sticky nav ── */
+.page-content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.page-content > .wrapper,
+.post,
+.post-content,
+.art-library,
+.art-nav,
+.art-content,
+.art-section,
+.art-equation,
+.art-quote,
+.art-list,
+.art-row {
+  box-sizing: border-box;
+  min-width: 0;
+}
+.post,
+.post-content,
+.art-library,
+.art-nav,
+.art-content,
+.art-section,
+.art-equation,
+.art-quote,
+.art-list,
+.art-row {
+  max-width: 100%;
+}
+
+/* ── Scalable article navigator ── */
+.art-library {
+  display: grid;
+  grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
+  gap: 1.8rem;
+  align-items: start;
+  margin-top: 1.2rem;
+}
 .art-nav {
   position: sticky;
-  top: 0;
+  top: 0.75rem;
   z-index: 50;
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid #e5e7eb;
-  margin: 0 -1rem 0 -1rem;
-  padding: 0 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.85rem;
+  box-shadow: 0 10px 28px rgba(31,41,55,0.05);
 }
 .art-nav-inner {
   display: flex;
-  align-items: center;
-  gap: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
 }
-.art-nav-inner::-webkit-scrollbar { display: none; }
+.art-nav-group { display: grid; gap: 0.18rem; }
+.art-nav-group-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  padding: 0 0.45rem 0.12rem;
+}
 .art-nav-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.35em;
-  padding: 0.6rem 0.85rem;
+  padding: 0.42rem 0.5rem;
   font-size: 0.73rem;
   font-weight: 600;
   color: #6b7280;
   text-decoration: none;
   letter-spacing: 0.04em;
-  border-bottom: 2px solid transparent;
+  border-left: 3px solid transparent;
+  border-radius: 5px;
   white-space: nowrap;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
-.art-nav-link:hover { color: #1f2937; border-bottom-color: #d1d5db; }
-.art-nav-link.active { color: #0066cc; border-bottom-color: #0066cc; }
+.art-nav-link:hover { color: #1f2937; background: #f8fafc; border-left-color: #d1d5db; }
+.art-nav-link.active { color: #0066cc; background: #f0f6ff; border-left-color: #0066cc; }
 .art-nav-link .nav-count {
   font-family: var(--font-mono, monospace);
   font-size: 0.60rem;
@@ -55,10 +106,42 @@ permalink: /articles/
   line-height: 1.5;
 }
 .art-nav-link.active .nav-count { background: #dbeafe; border-color: #bfdbfe; color: #2563eb; }
+.art-category-field { display: none; }
+.art-category-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+.art-category-select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 2.45rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  background: #fff;
+  color: #1f2937;
+  font-size: 0.86rem;
+}
+.art-content { min-width: 0; }
 
 /* ── Articles page ─────────────────────────────────────────────────────── */
 .art-section { margin-top: 2.2rem; }
 .art-section:first-of-type { margin-top: 1.5rem; }
+.js-tabs-enabled .art-section[hidden] { display: none; }
+.js-tabs-enabled .art-section { animation: artPanelIn 0.18s ease-out; }
+@keyframes artPanelIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-tabs-enabled .art-section { animation: none; }
+}
+
 
 /* ── Section header ── */
 .art-section-header {
@@ -215,46 +298,172 @@ permalink: /articles/
   .art-right { grid-column: 1; grid-row: auto; flex-direction: row; flex-wrap: wrap; align-items: center; margin-top: 0.25rem; }
   .art-topics { white-space: normal; }
 }
+@media (max-width: 760px) {
+  .art-library {
+    display: block;
+    margin-top: 0.75rem;
+  }
+  .art-nav {
+    top: 0;
+    margin: 0 0 1.1rem;
+    padding: 0.75rem 1rem;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .js-tabs-enabled .art-nav-inner { display: none; }
+  .js-tabs-enabled .art-category-field { display: block; }
+}
 </style>
 
 {%- assign math_articles   = site.articles | where_exp: "item", "item.path contains '/mathematics/'"  | sort: 'title' -%}
+{%- assign df_articles     = site.articles | where_exp: "item", "item.path contains '/differential-forms/'" | sort: 'title' -%}
+{%- assign sc_articles     = site.articles | where_exp: "item", "item.path contains '/sheaf-cohomology/'" | sort: 'title' -%}
+{%- assign rr_articles     = site.articles | where_exp: "item", "item.path contains '/riemann-roch/'" | sort: 'title' -%}
 {%- assign crypto_articles = site.articles | where_exp: "item", "item.path contains '/cryptography/'" | sort: 'title' -%}
+{%- assign ps_articles     = site.articles | where_exp: "item", "item.path contains '/provable-security/'" | sort: 'title' -%}
+{%- assign ct_articles     = site.articles | where_exp: "item", "item.path contains '/coding-theory/'" | sort: 'title' -%}
+{%- assign bn_articles     = site.articles | where_exp: "item", "item.path contains '/bignum-arithmetic/'" | sort: 'title' -%}
+{%- assign ec_articles     = site.articles | where_exp: "item", "item.path contains '/elliptic-arithmetic/'" | sort: 'title' -%}
 {%- assign prog_articles   = site.articles | where_exp: "item", "item.path contains '/programmings/'" | sort: 'title' -%}
 {%- assign etc_articles    = site.articles | where_exp: "item", "item.path contains '/etc/'"          | sort: 'title' -%}
 
+<div class="art-library">
 <nav class="art-nav" aria-label="Article sections">
-  <div class="art-nav-inner">
-    <a class="art-nav-link" href="#mathematics">Mathematics <span class="nav-count">{{ math_articles | size }}</span></a>
-    <a class="art-nav-link" href="#cryptography">Cryptography <span class="nav-count">{{ crypto_articles | size }}</span></a>
-    <a class="art-nav-link" href="#programming">Programming <span class="nav-count">{{ prog_articles | size }}</span></a>
-    <a class="art-nav-link" href="#etc">E.T.C. <span class="nav-count">{{ etc_articles | size }}</span></a>
+  <div class="art-category-field">
+    <label class="art-category-label" for="art-category-select">Category</label>
+    <select class="art-category-select" id="art-category-select" aria-label="Article category">
+      <optgroup label="Mathematics">
+        <option value="mathematics">Mathematics ({{ math_articles | size }})</option>
+        <option value="differential-forms">Differential Forms ({{ df_articles | size }})</option>
+        <option value="sheaf-cohomology">Sheaf Cohomology ({{ sc_articles | size }})</option>
+        <option value="riemann-roch">Riemann-Roch ({{ rr_articles | size }})</option>
+      </optgroup>
+      <optgroup label="Cryptography">
+        <option value="cryptography">Cryptography ({{ crypto_articles | size }})</option>
+        <option value="provable-security">Provable Security ({{ ps_articles | size }})</option>
+        <option value="coding-theory">Coding Theory ({{ ct_articles | size }})</option>
+      </optgroup>
+      <optgroup label="Computing">
+        <option value="bignum-arithmetic">Bignum Arithmetic ({{ bn_articles | size }})</option>
+        <option value="elliptic-arithmetic">Elliptic Arithmetic ({{ ec_articles | size }})</option>
+        <option value="programming">Programming ({{ prog_articles | size }})</option>
+      </optgroup>
+      <optgroup label="Miscellaneous">
+        <option value="etc">E.T.C. ({{ etc_articles | size }})</option>
+      </optgroup>
+    </select>
+  </div>
+  <div class="art-nav-inner" role="tablist" aria-label="Article categories">
+    <div class="art-nav-group">
+      <span class="art-nav-group-label">Mathematics</span>
+      <a class="art-nav-link active" id="tab-mathematics" role="tab" aria-selected="true" aria-controls="mathematics" href="#mathematics">Mathematics <span class="nav-count">{{ math_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-differential-forms" role="tab" aria-selected="false" aria-controls="differential-forms" href="#differential-forms">Differential Forms <span class="nav-count">{{ df_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-sheaf-cohomology" role="tab" aria-selected="false" aria-controls="sheaf-cohomology" href="#sheaf-cohomology">Sheaf Cohomology <span class="nav-count">{{ sc_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-riemann-roch" role="tab" aria-selected="false" aria-controls="riemann-roch" href="#riemann-roch">Riemann-Roch <span class="nav-count">{{ rr_articles | size }}</span></a>
+    </div>
+    <div class="art-nav-group">
+      <span class="art-nav-group-label">Cryptography</span>
+      <a class="art-nav-link" id="tab-cryptography" role="tab" aria-selected="false" aria-controls="cryptography" href="#cryptography">Cryptography <span class="nav-count">{{ crypto_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-provable-security" role="tab" aria-selected="false" aria-controls="provable-security" href="#provable-security">Provable Security <span class="nav-count">{{ ps_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-coding-theory" role="tab" aria-selected="false" aria-controls="coding-theory" href="#coding-theory">Coding Theory <span class="nav-count">{{ ct_articles | size }}</span></a>
+    </div>
+    <div class="art-nav-group">
+      <span class="art-nav-group-label">Computing</span>
+      <a class="art-nav-link" id="tab-bignum-arithmetic" role="tab" aria-selected="false" aria-controls="bignum-arithmetic" href="#bignum-arithmetic">Bignum Arithmetic <span class="nav-count">{{ bn_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-elliptic-arithmetic" role="tab" aria-selected="false" aria-controls="elliptic-arithmetic" href="#elliptic-arithmetic">Elliptic Arithmetic <span class="nav-count">{{ ec_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-programming" role="tab" aria-selected="false" aria-controls="programming" href="#programming">Programming <span class="nav-count">{{ prog_articles | size }}</span></a>
+    </div>
+    <div class="art-nav-group">
+      <span class="art-nav-group-label">Miscellaneous</span>
+      <a class="art-nav-link" id="tab-etc" role="tab" aria-selected="false" aria-controls="etc" href="#etc">E.T.C. <span class="nav-count">{{ etc_articles | size }}</span></a>
+    </div>
   </div>
 </nav>
+<div class="art-content">
 
 <script>
 (function () {
-  const links = document.querySelectorAll('.art-nav-link');
-  const ids = ['mathematics','cryptography','programming','etc'];
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        links.forEach(l => l.classList.remove('active'));
-        const a = document.querySelector('.art-nav-link[href="#' + e.target.id + '"]');
-        if (a) a.classList.add('active');
+  const ids = ["mathematics", "differential-forms", "sheaf-cohomology", "riemann-roch", "cryptography", "provable-security", "coding-theory", "bignum-arithmetic", "elliptic-arithmetic", "programming", "etc"];
+  const links = Array.from(document.querySelectorAll(".art-nav-link[role=tab]"));
+  const categorySelect = document.getElementById("art-category-select");
+
+  function setActive(id, updateHash) {
+    if (!ids.includes(id)) id = ids[0];
+
+    ids.forEach(panelId => {
+      const panel = document.getElementById(panelId);
+      const isActive = panelId === id;
+      if (panel) {
+        panel.hidden = !isActive;
+        panel.setAttribute("aria-hidden", String(!isActive));
       }
     });
-  }, { rootMargin: '-20% 0px -75% 0px' });
-  document.addEventListener('DOMContentLoaded', () => {
-    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    if (links.length) links[0].classList.add('active');
+
+    links.forEach(link => {
+      const isActive = link.getAttribute("href") === "#" + id;
+      link.classList.toggle("active", isActive);
+      link.setAttribute("aria-selected", String(isActive));
+      link.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
+    if (categorySelect && categorySelect.value !== id) {
+      categorySelect.value = id;
+    }
+
+    if (updateHash) {
+      history.replaceState(null, "", "#" + id);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.documentElement.classList.add("js-tabs-enabled");
+    ids.forEach(id => {
+      const panel = document.getElementById(id);
+      if (panel) {
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("aria-labelledby", "tab-" + id);
+      }
+    });
+
+    const initial = ids.includes(location.hash.slice(1)) ? location.hash.slice(1) : ids[0];
+    setActive(initial, false);
   });
-  links.forEach(l => l.addEventListener('click', e => {
-    const id = l.getAttribute('href').slice(1);
-    const target = document.getElementById(id);
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  }));
+  window.addEventListener("hashchange", () => {
+    setActive(location.hash.slice(1), false);
+  });
+
+
+  links.forEach((link, index) => {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      setActive(link.getAttribute("href").slice(1), true);
+    });
+
+    link.addEventListener("keydown", event => {
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+
+      let nextIndex = index;
+      if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + links.length) % links.length;
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % links.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = links.length - 1;
+
+      const next = links[nextIndex];
+      setActive(next.getAttribute("href").slice(1), true);
+      next.focus();
+    });
+  });
+
+  if (categorySelect) {
+    categorySelect.addEventListener("change", event => {
+      setActive(event.target.value, true);
+    });
+  }
 })();
 </script>
+
 
 <!-- ── Mathematics ────────────────────────────────────────────────────── -->
 <div class="art-section" id="mathematics">
@@ -283,6 +492,71 @@ permalink: /articles/
         <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
         {%- endif -%}
         <!-- {%- if item.date -%}<span class="art-date">{{ item.date | date: "%Y-%m-%d" }}</span>{%- endif -%} -->
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+<!-- ── Differential Forms ─────────────────────────────────────────────── -->
+<div class="art-section" id="differential-forms">
+  <div class="art-section-header">
+    <span class="art-section-title">Differential Forms</span>
+  </div>
+
+  <div class="art-equation">
+    $$\int_{\partial M}\omega=\int_M d\omega, \qquad d^2=0$$
+  </div>
+
+  <div class="art-quote">
+    <p>Differential forms turn orientation, boundary, and change of variables into one calculus: the exterior derivative records what a form contributes on the boundary.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in df_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% include sheaf_cohomology_articles_tab.html %}
+
+<!-- ── Riemann-Roch ───────────────────────────────────────────────────── -->
+
+<div class="art-section" id="riemann-roch">
+  <div class="art-section-header">
+    <span class="art-section-title">Riemann-Roch</span>
+  </div>
+
+  <div class="art-equation">
+    $$\ell(D)-\ell(K-D)=\deg(D)+1-g$$
+  </div>
+
+  <div class="art-quote">
+    <p>A divisor records the requested zeros and allowed poles; Riemann-Roch turns that data, together with the genus, into an exact dimension count.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in rr_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
       </div>
     </li>
     {%- endfor -%}
@@ -321,6 +595,124 @@ permalink: /articles/
   </ul>
 </div>
 
+
+<!-- -- Provable Security -------------------------------------------------- -->
+<div class="art-section" id="provable-security">
+  <div class="art-section-header">
+    <span class="art-section-title">Provable Security</span>
+  </div>
+
+  <div class="art-equation">
+    $$\operatorname{Adv}^{\mathsf{scheme}}_{A}(\lambda)\le q(\lambda)\operatorname{Adv}^{\mathsf{assumption}}_{B}(\lambda)+\varepsilon(\lambda)$$
+  </div>
+
+  <div class="art-quote">
+    <p>A proof in cryptography is a reduction: it states which attack game is being ruled out, which assumption is being invoked, and how much quantitative security is lost in the translation.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in ps_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+
+<!-- -- Coding Theory -------------------------------------------------- -->
+<div class="art-section" id="coding-theory">
+  <div class="art-section-header">
+    <span class="art-section-title">Coding Theory</span>
+  </div>
+
+  <div class="art-equation">
+    $$C_L(D,G)=\{(f(P_1),\ldots,f(P_n)): f\in L(G)\}, \qquad C_\Omega(D,G)=C_L(D,G)^\perp$$
+  </div>
+
+  <div class="art-quote">
+    <p>Error-correcting codes become geometric when codewords are evaluations of functions and parity checks are residues of differentials.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in ct_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+<!-- -- Bignum Arithmetic -------------------------------------------------- -->
+<div class="art-section" id="bignum-arithmetic">
+  <div class="art-section-header">
+    <span class="art-section-title">Bignum Arithmetic</span>
+  </div>
+  <div class="art-equation">
+    $$\operatorname{val}_B(a)=\sum_{i=0}^{n-1}a_iB^i,\qquad B=2^{16}$$
+  </div>
+  <div class="art-quote">
+    <p>A cryptographic bignum primitive is a proof-carrying C program: every word operation must preserve the integer invariant and the leakage boundary.</p>
+  </div>
+  <ul class="art-list">
+    {%- for item in bn_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
+<!-- -- Elliptic Arithmetic -------------------------------------------------- -->
+<div class="art-section" id="elliptic-arithmetic">
+  <div class="art-section-header">
+    <span class="art-section-title">Elliptic Arithmetic</span>
+  </div>
+  <div class="art-equation">
+    $$E/\mathbb F_p:\ y^2=x^3+ax+b,\qquad [k]P=P+\cdots+P$$
+  </div>
+  <div class="art-quote">
+    <p>Elliptic-curve arithmetic is the group-law layer above bignum field arithmetic: words implement residues, residues implement points, and points implement public-key primitives.</p>
+  </div>
+  <ul class="art-list">
+    {%- for item in ec_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
 <!-- ── Programming ───────────────────────────────────────────────────── -->
 <div class="art-section" id="programming">
   <div class="art-section-header">
@@ -376,4 +768,7 @@ permalink: /articles/
     </li>
     {%- endfor -%}
   </ul>
+</div>
+
+</div>
 </div>

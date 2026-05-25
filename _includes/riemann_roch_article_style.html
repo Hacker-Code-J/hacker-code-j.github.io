@@ -1,0 +1,175 @@
+<style>
+.post-title { display: none; }
+.page-content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.page-content > .wrapper,
+.post,
+.post-content {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.rr-note {
+  --rr-ink: #172033;
+  --rr-muted: #64748b;
+  --rr-rule: #d8dee8;
+  --rr-soft: #f7f9fc;
+  --rr-accent: #234f84;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--rr-ink);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+.rr-note *,
+.rr-note *::before,
+.rr-note *::after { box-sizing: border-box; }
+.rr-note-02 { --rr-accent: #7a4b16; }
+.rr-note-03 { --rr-accent: #6841a5; }
+.rr-note-04 { --rr-accent: #11635f; }
+.rr-note-05 { --rr-accent: #23324d; }
+.rr-note-06 { --rr-accent: #276338; }
+.rr-note-07 { --rr-accent: #37398f; }
+.rr-note-08 { --rr-accent: #8b2944; }
+.rr-note-09 { --rr-accent: #46515f; }
+.rr-note-10 { --rr-accent: #08758d; }
+.rr-note-11 { --rr-accent: #9a4b18; }
+.rr-note-12 { --rr-accent: #1f5f73; }
+.rr-note-13 { --rr-accent: #6f3f86; }
+.rr-note mjx-container[jax="CHTML"][display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.rr-note-head {
+  margin: .25rem 0 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rr-rule);
+}
+.rr-series {
+  margin: 0 0 .45rem;
+  color: var(--rr-accent);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.rr-note h1 {
+  margin: 0;
+  color: var(--rr-ink);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.rr-deck {
+  max-width: 680px;
+  margin: .75rem 0 0;
+  color: #465569;
+  font-size: 1.06rem;
+  line-height: 1.65;
+}
+.rr-note h2 {
+  margin: 2rem 0 .7rem;
+  padding-bottom: .18rem;
+  border-bottom: 1px solid #e6ebf2;
+  color: #202a3a;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+.rr-note h3 {
+  margin: 1.45rem 0 .45rem;
+  color: var(--rr-accent);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+.rr-note p,
+.rr-note ul,
+.rr-note ol { margin-bottom: .95rem; }
+.rr-note li + li { margin-top: .35rem; }
+.rr-note table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.2rem;
+  font-size: .92rem;
+}
+.rr-note th,
+.rr-note td {
+  border-bottom: 1px solid #e6ebf2;
+  padding: .48rem .35rem;
+  vertical-align: top;
+}
+.rr-note th {
+  color: var(--rr-accent);
+  font-weight: 700;
+  text-align: left;
+}
+.rr-env,
+.rr-example,
+.rr-aside,
+.rr-proof,
+.rr-warning {
+  margin: 1.15rem 0;
+  padding: .78rem .95rem;
+  border-left: 3px solid var(--rr-accent);
+  background: var(--rr-soft);
+}
+.rr-example { border-left-color: #28735f; background: #f7fcfa; }
+.rr-proof { border-left-color: #6b7280; background: #f8fafc; }
+.rr-warning { border-left-color: #9a4b18; background: #fff9f1; }
+.rr-aside { border-left-color: #9aa7b6; background: #fbfcfe; }
+.rr-env-title {
+  display: block;
+  margin-bottom: .35rem;
+  color: var(--rr-accent);
+  font-weight: 700;
+}
+.rr-small {
+  color: var(--rr-muted);
+  font-size: .9rem;
+}
+.rr-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rr-rule);
+}
+.rr-nav a {
+  max-width: 48%;
+  color: var(--rr-accent);
+  text-decoration: none;
+  line-height: 1.35;
+}
+.rr-nav a:hover { text-decoration: underline; }
+.rr-nav span {
+  display: block;
+  color: var(--rr-muted);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: .68rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: .2rem;
+}
+.rr-next { text-align: right; margin-left: auto; }
+@media (max-width: 720px) {
+  .page-content > .wrapper {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .rr-note { font-size: .97rem; }
+  .rr-note-head { margin-top: 0; }
+  .rr-nav { display: block; }
+  .rr-nav a { display: block; max-width: 100%; }
+  .rr-next { text-align: left; margin-top: .85rem; }
+}
+</style>

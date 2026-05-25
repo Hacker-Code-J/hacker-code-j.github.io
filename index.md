@@ -437,6 +437,18 @@ layout: home
   text-align: right;
 }
 
+.ma-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .idx-math-atlas__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -517,7 +529,7 @@ layout: home
   display: block;
   overflow: hidden;
   color: #64748b;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: .68rem;
   line-height: 1.35;
   text-overflow: ellipsis;
@@ -616,6 +628,24 @@ layout: home
   stroke: #0f766e;
 }
 
+.ma-line--meromorphic {
+  stroke: #7c3aed;
+  stroke-width: 1.15;
+  stroke-dasharray: 5 6;
+  opacity: .72;
+}
+
+.ma-rr-zero-orbit {
+  stroke: #7c3aed;
+  stroke-width: .85;
+  stroke-dasharray: 2 7;
+  opacity: .34;
+}
+
+.ma-rr-torus .ma-rr-zero-orbit {
+  opacity: .28;
+}
+
 .ma-line--soft {
   stroke: #93c5fd;
   opacity: .86;
@@ -635,6 +665,40 @@ layout: home
 
 .ma-edge--a { stroke: #2563eb; }
 .ma-edge--b { stroke: #0f766e; stroke-dasharray: 6 5; }
+
+.ma-quotient-map {
+  stroke: #7c3aed;
+  stroke-width: .9;
+  stroke-dasharray: 4 7;
+  opacity: .34;
+}
+
+.ma-quotient-cell {
+  fill: rgba(219,234,254,.14);
+  stroke: rgba(37,99,235,.24);
+  stroke-width: .7;
+}
+
+.ma-center-collapse-link {
+  stroke: #7c3aed;
+  stroke-width: .7;
+  stroke-dasharray: 3 7;
+  opacity: .22;
+}
+
+.ma-center-collapse-halo {
+  fill: rgba(20,184,166,.13);
+  stroke: #14b8a6;
+  stroke-width: 1.1;
+  opacity: .24;
+}
+
+.ma-edge-quotient {
+  stroke: #475569;
+  stroke-width: .8;
+  stroke-dasharray: 2 5;
+  opacity: .22;
+}
 
 .ma-surface {
   stroke: #2563eb;
@@ -666,13 +730,36 @@ layout: home
   transition: opacity .18s linear, r .18s linear;
 }
 
+.ma-dot--quotient-center {
+  fill: #7c3aed;
+  filter: drop-shadow(0 0 6px rgba(124,58,237,.35));
+}
+
+.ma-dot--quotient-center-image {
+  fill: #0f766e;
+  filter: drop-shadow(0 0 8px rgba(15,118,110,.48));
+}
+
 .ma-dot--soft { fill: #64748b; opacity: .78; }
 .ma-dot--plane { fill: #0f766e; }
 .ma-dot--amber,
 .ma-tracer--amber { fill: #f59e0b; }
-.ma-dot--rose { fill: #be123c; }
+.ma-dot--rose,
+.ma-dot--pole { fill: #be123c; }
+.ma-dot--zero { fill: #7c3aed; filter: drop-shadow(0 0 7px rgba(124,58,237,.38)); }
+.ma-dot--quotient-flat { fill: #2563eb; filter: drop-shadow(0 0 6px rgba(37,99,235,.35)); }
+.ma-dot--quotient-image { fill: #14b8a6; filter: drop-shadow(0 0 7px rgba(20,184,166,.42)); }
+.ma-dot--quotient-edge { fill: #475569; opacity: .68; }
 .ma-dot--navy { fill: var(--c-navy); }
 .ma-dot--sum { fill: #0f766e; }
+
+.ma-rr-sum-halo {
+  fill: rgba(20,184,166,.12);
+  stroke: #14b8a6;
+  stroke-width: 1.2;
+  opacity: .2;
+  transition: opacity .18s linear, r .18s linear;
+}
 
 .ma-tracer {
   fill: #14b8a6;
@@ -716,7 +803,7 @@ layout: home
 
 .ma-label--mono {
   fill: #64748b;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 8px;
   font-weight: 700;
 }
@@ -1038,7 +1125,9 @@ layout: home
     connecting rigorous mathematical analysis with real-world applications.
   </div>
   <div class="idx-intro-sign">
-    <img src="/assets/image/handwriting_sign.png" alt="Welcome Banner">
+    <a href="/assets/image/handwriting_sign.png" target="_blank">
+      <img src="/assets/image/handwriting_sign.png" alt="Welcome Banner">
+    </a>
   </div>
 </div>
 

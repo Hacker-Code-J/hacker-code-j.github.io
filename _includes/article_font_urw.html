@@ -1,0 +1,59 @@
+{% if page.collection == "articles" %}
+<link rel="stylesheet" href="/assets/css/custom.css">
+<style>
+.article-font-urw {
+  font-family: var(--font-urw, "URW Gothic", "URWGothic", system-ui, sans-serif) !important;
+}
+.article-font-urw :where(*):not(mjx-container):not(mjx-container *):not(.MathJax):not(.MathJax *):not(code):not(code *):not(pre):not(pre *):not(.highlight):not(.highlight *) {
+  font-family: var(--font-urw, "URW Gothic", "URWGothic", system-ui, sans-serif) !important;
+}
+.article-font-urw :where(code, code *, pre, pre *, kbd, samp, .highlight, .highlight *) {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace) !important;
+  font-style: normal !important;
+}
+.page-content,
+.page-content > .wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.article-font-urw,
+.article-font-urw .post-header,
+.article-font-urw .post-content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.article-font-urw {
+  overflow-x: hidden;
+}
+.article-font-urw .post-content {
+  overflow-x: auto;
+}
+.article-font-urw mjx-container[jax="CHTML"][display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.article-font-urw :where(div, section, figure, details, summary) {
+  max-width: 100%;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+.article-font-urw :where(img, video, canvas, svg, iframe) {
+  max-width: 100% !important;
+  height: auto;
+}
+.article-font-urw :where(table, pre, .highlight) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.article-font-urw :where(th, td) {
+  overflow-wrap: anywhere;
+}
+</style>
+{% endif %}

@@ -9,32 +9,76 @@
   box-sizing: border-box;
 }
 
-/* Register your self-hosted bold */
+/* Register self-hosted URW Gothic family for site prose. */
 @font-face{
-  font-family: "URWGothic";
-  src: url("/assets/fonts/URWGothic.woff2") format("woff2");
-  font-weight: 700;            /* this file is bold only */
+  font-family: "URW Gothic";
+  src: url("/assets/fonts/URWGothic-Book.otf") format("opentype"), url("/assets/fonts/URWGothic-Book.ttf") format("truetype");
+  font-weight: 100 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "URW Gothic";
+  src: url("/assets/fonts/URWGothic-BookOblique.otf") format("opentype"), url("/assets/fonts/URWGothic-BookOblique.ttf") format("truetype");
+  font-weight: 100 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "URW Gothic";
+  src: url("/assets/fonts/URWGothic-Demi.otf") format("opentype"), url("/assets/fonts/URWGothic-Demi.ttf") format("truetype");
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "URW Gothic";
+  src: url("/assets/fonts/URWGothic-DemiOblique.otf") format("opentype"), url("/assets/fonts/URWGothic-DemiOblique.ttf") format("truetype");
+  font-weight: 600 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "Comic Mono";
+  src: url("/assets/fonts/ComicMono.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "Comic Mono";
+  src: url("/assets/fonts/ComicMono-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root{
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
-  --font-urw: "URWGothic", var(--font-body);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-body: "URW Gothic", "URWGothic", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
+  --font-urw: "URW Gothic", "URWGothic", var(--font-body);
+  --font-mono: "Comic Mono", "ComicMono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Body stays in a readable normal-weight sans */
-html, body { font-family: var(--font-body); }
+html, body { font-family: var(--font-body) !important; }
+body :where(*):not(mjx-container):not(mjx-container *):not(.MathJax):not(.MathJax *):not(code):not(code *):not(pre):not(pre *):not(kbd):not(kbd *):not(samp):not(samp *):not(.highlight):not(.highlight *) {
+  font-family: var(--font-body) !important;
+}
 
 /* Headings/brand in URW Gothic Bold */
 h1, h2, h3, .logo, .site-title {
   font-family: var(--font-urw);
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: -0.01em;     /* optional Avant Garde-like tightness */
 }
 /* Keep code monospace */
-code, pre, kbd, samp { font-family: var(--font-mono) !important; }
+code, code *, pre, pre *, kbd, samp, .highlight, .highlight * { font-family: var(--font-mono) !important; }
+mjx-container, .MathJax, math { font-family: MJXZERO, MJXTEX, "Latin Modern Math", "STIX Two Math", "Cambria Math", serif !important; }
 
 
 /* Right-align the author/name in blockquotes

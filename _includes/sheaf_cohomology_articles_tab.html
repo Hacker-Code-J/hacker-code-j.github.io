@@ -1,0 +1,30 @@
+<!-- -- Sheaf Cohomology -------------------------------------------------- -->
+<div class="art-section" id="sheaf-cohomology">
+  <div class="art-section-header">
+    <span class="art-section-title">Sheaf Cohomology</span>
+  </div>
+
+  <div class="art-equation">
+    $$0\to\mathcal F'\to\mathcal F\to\mathcal F''\to0 \quad\Longrightarrow\quad H^q(X,\mathcal F)\to H^q(X,\mathcal F'')\to H^{q+1}(X,\mathcal F')$$
+  </div>
+
+  <div class="art-quote">
+    <p>Sheaf cohomology measures the precise obstruction to turning compatible local analytic data into global geometric objects.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in sc_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>

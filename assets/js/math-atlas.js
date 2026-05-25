@@ -124,6 +124,46 @@
     setNumber(marker, "cy", point.y);
   }
 
+  function lerpNumber(a, b, mix) {
+    return a + (b - a) * mix;
+  }
+
+  function lerpPoint(a, b, mix) {
+    if (!a || !b) return a || b || [0, 0, 0];
+    return a.map(function (value, index) {
+      return lerpNumber(value, b[index], mix);
+    });
+  }
+
+  function sampledFrame(frames, phase) {
+    if (!frames || !frames.length) return null;
+    var scaled = phase * frames.length;
+    var index = Math.floor(scaled) % frames.length;
+    return {
+      current: frames[index],
+      next: frames[(index + 1) % frames.length],
+      mix: scaled - Math.floor(scaled),
+      index: index
+    };
+  }
+
+  function frameOrbits(frames, pointKey) {
+    if (!frames || !frames.length || !frames[0].zeros) return [];
+    return frames[0].zeros.map(function (_, index) {
+      return frames.map(function (frame) {
+        return frame.zeros[index] && frame.zeros[index][pointKey];
+      }).filter(Boolean);
+    });
+  }
+
+  function curvePath(from, to, bend) {
+    var mx = (from.x + to.x) / 2;
+    var my = (from.y + to.y) / 2 + bend;
+    return "M" + from.x.toFixed(2) + " " + from.y.toFixed(2) +
+      "Q" + mx.toFixed(2) + " " + my.toFixed(2) + " " +
+      to.x.toFixed(2) + " " + to.y.toFixed(2);
+  }
+
   function addGrid(svg) {
     var group = el("g", { class: "ma-bg-grid", "aria-hidden": "true" });
     for (var x = 20; x <= 300; x += 20) {
@@ -193,14 +233,45 @@
     addGrid(svg);
 
     var latticePoints = figure.geometry.lattice_points.map(function (p) { return p.xy; });
-    var map = mapper2(latticePoints, 18, 42, 128, 136, 12);
+    var relation = figure.geometry.quotient_relation || {};
+    var centerData = relation.parallelogram_centers || {};
+    var mapPoints = latticePoints.slice();
+    (centerData.cells || []).forEach(function (cell) {
+      (cell.polygon || []).forEach(function (point) { mapPoints.push(point); });
+    });
+    var map = mapper2(mapPoints, 18, 42, 128, 136, 12);
     var para = figure.geometry.parallelogram.map(map);
     var cycleA = figure.geometry.cycles.a.map(map);
     var cycleB = figure.geometry.cycles.b.map(map);
     var latticeDots = [];
     var edgeA = [];
     var edgeB = [];
+    var centerCells = (centerData.cells || []).map(function (cell, index) {
+      var polygon = (cell.polygon || []).map(map);
+      var center = map(cell.center || [0, 0]);
+      var cellPath = el("path", {
+        d: pathD(polygon) + "Z",
+        class: "ma-quotient-cell"
+      });
+      var dot = el("circle", {
+        cx: center[0].toFixed(2),
+        cy: center[1].toFixed(2),
+        r: "2.4",
+        class: "ma-dot ma-dot--quotient-center"
+      });
+      var link = el("path", { class: "ma-link-line ma-center-collapse-link" });
+      return {
+        cell: cell,
+        center: center,
+        cellPath: cellPath,
+        dot: dot,
+        link: link,
+        phaseOffset: cell.phase_offset || index / 9,
+        bend: (index % 3 - 1) * 11 - (Math.floor(index / 3) - 1) * 6
+      };
+    });
 
+    centerCells.forEach(function (item) { svg.appendChild(item.cellPath); });
     svg.appendChild(el("path", { d: pathD(para) + "Z", class: "ma-surface ma-surface--blue" }));
     latticePoints.forEach(function (point, index) {
       var p = map(point);
@@ -214,6 +285,7 @@
       latticeDots.push(dot);
       svg.appendChild(dot);
     });
+    centerCells.forEach(function (item) { svg.appendChild(item.dot); });
 
     var aPath = el("path", { id: "ma-torus-a", d: pathD(cycleA), class: "ma-line ma-line--accent" });
     var bPath = el("path", { id: "ma-torus-b", d: pathD(cycleB), class: "ma-line ma-line--teal" });
@@ -223,6 +295,29 @@
     edgeB.push(el("path", { d: "M" + para[0][0] + " " + para[0][1] + "L" + para[3][0] + " " + para[3][1], class: "ma-edge ma-edge--b" }));
     edgeB.push(el("path", { d: "M" + para[1][0] + " " + para[1][1] + "L" + para[2][0] + " " + para[2][1], class: "ma-edge ma-edge--b" }));
     append(svg, edgeA.concat(edgeB));
+
+    var quotientTracks = (relation.tracks || []).map(function (track, index) {
+      var link = el("path", { class: "ma-link-line ma-quotient-map" });
+      var flatDot = el("circle", { r: "3.2", class: "ma-dot ma-dot--quotient-flat" });
+      var torusDot = el("circle", { r: "3.4", class: "ma-dot ma-dot--quotient-image" });
+      svg.appendChild(link);
+      svg.appendChild(flatDot);
+      return { track: track, link: link, flatDot: flatDot, torusDot: torusDot, index: index };
+    });
+    var edgePairs = (relation.edge_samples || []).map(function (sample) {
+      var flatA = map(sample.flat_a);
+      var flatB = map(sample.flat_b);
+      var connector = el("path", {
+        d: "M" + flatA[0].toFixed(2) + " " + flatA[1].toFixed(2) +
+          "L" + flatB[0].toFixed(2) + " " + flatB[1].toFixed(2),
+        class: "ma-link-line ma-edge-quotient"
+      });
+      var dotA = el("circle", { cx: flatA[0], cy: flatA[1], r: "2.2", class: "ma-dot ma-dot--quotient-edge" });
+      var dotB = el("circle", { cx: flatB[0], cy: flatB[1], r: "2.2", class: "ma-dot ma-dot--quotient-edge" });
+      var image = el("circle", { r: "3.1", class: "ma-dot ma-dot--quotient-image" });
+      append(svg, [connector, dotA, dotB]);
+      return { sample: sample, connector: connector, dotA: dotA, dotB: dotB, image: image };
+    });
 
     var torus = figure.geometry.torus;
     var meshPaths = torus.mesh_u.concat(torus.mesh_v).map(function (line, index) {
@@ -234,7 +329,19 @@
     });
     var torusA = el("path", { id: "ma-torus-cycle-a", class: "ma-line ma-line--accent ma-line--heavy" });
     var torusB = el("path", { id: "ma-torus-cycle-b", class: "ma-line ma-line--teal ma-line--heavy" });
+    var centerHalo = centerData.torus_point ? el("circle", {
+      r: "8",
+      class: "ma-center-collapse-halo"
+    }) : null;
+    var centerImage = centerData.torus_point ? el("circle", {
+      r: "3.8",
+      class: "ma-dot ma-dot--quotient-center-image"
+    }) : null;
     append(svg, [torusA, torusB]);
+    centerCells.forEach(function (item) { svg.appendChild(item.link); });
+    append(svg, [centerHalo, centerImage]);
+    quotientTracks.forEach(function (item) { svg.appendChild(item.torusDot); });
+    edgePairs.forEach(function (item) { svg.appendChild(item.image); });
     append(svg, [
       // text(24, 30, "C lattice", "ma-label ma-label--small"),
       // text(203, 30, "C/Lambda", "ma-label ma-label--small")
@@ -252,6 +359,22 @@
       });
       torusA.setAttribute("d", path3(torus.cycle_a, 238, 116, 44, rotY, rotX));
       torusB.setAttribute("d", path3(torus.cycle_b, 238, 116, 44, rotY, rotX));
+      var quotientPhase = reduceMotion ? 0.18 : cycle(time, 7.8 / activeBoost, 0.08);
+      quotientTracks.forEach(function (item) {
+        var frame = sampledFrame(item.track.frames, quotientPhase + item.index * 0.11);
+        if (!frame) return;
+        var flat = map(lerpPoint(frame.current.flat, frame.next.flat, frame.mix));
+        var torusPoint = project3(lerpPoint(frame.current.torus, frame.next.torus, frame.mix), 238, 116, 44, rotY, rotX);
+        item.flatDot.setAttribute("cx", flat[0].toFixed(2));
+        item.flatDot.setAttribute("cy", flat[1].toFixed(2));
+        item.torusDot.setAttribute("cx", torusPoint.x.toFixed(2));
+        item.torusDot.setAttribute("cy", torusPoint.y.toFixed(2));
+        var beat = pulse(time, 7.8 / activeBoost, item.index * 0.19, 0.16);
+        item.flatDot.setAttribute("r", (2.7 + beat * 1.2).toFixed(2));
+        item.torusDot.setAttribute("r", (3.0 + beat * 1.5).toFixed(2));
+        item.link.setAttribute("d", curvePath({ x: flat[0], y: flat[1] }, torusPoint, item.index === 1 ? -18 : 18));
+        item.link.style.opacity = (0.22 + beat * 0.58).toFixed(2);
+      });
       moveAlongPath(tracerA, aPath, cycle(time, 5.4 / activeBoost, 0.05));
       moveAlongPath(tracerB, torusB, cycle(time, 6.8 / activeBoost, 0.44));
 
@@ -265,6 +388,46 @@
         edge.style.opacity = (0.45 + bBeat * 0.5).toFixed(2);
         edge.style.strokeWidth = (2.1 + bBeat * 1.3).toFixed(2);
       });
+      edgePairs.forEach(function (item, index) {
+        var torusPoint = project3(item.sample.torus, 238, 116, 44, rotY, rotX);
+        var beat = pulse(time, 4.8 / activeBoost, item.sample.phase_offset || index * 0.14, 0.15);
+        item.connector.style.opacity = (0.16 + beat * 0.46).toFixed(2);
+        item.connector.style.strokeWidth = (0.8 + beat * 1.1).toFixed(2);
+        item.dotA.setAttribute("r", (1.9 + beat * 1.0).toFixed(2));
+        item.dotB.setAttribute("r", (1.9 + beat * 1.0).toFixed(2));
+        item.image.setAttribute("cx", torusPoint.x.toFixed(2));
+        item.image.setAttribute("cy", torusPoint.y.toFixed(2));
+        item.image.setAttribute("r", (2.5 + beat * 1.3).toFixed(2));
+        item.image.style.opacity = (0.3 + beat * 0.58).toFixed(2);
+      });
+      if (centerData.torus_point && centerImage) {
+        var centerTorus = project3(centerData.torus_point, 238, 116, 44, rotY, rotX);
+        var centerBeat = pulse(time, 6.2 / activeBoost, 0.24, 0.17);
+        if (centerHalo) {
+          centerHalo.setAttribute("cx", centerTorus.x.toFixed(2));
+          centerHalo.setAttribute("cy", centerTorus.y.toFixed(2));
+          centerHalo.setAttribute("r", (6.4 + centerBeat * 7.2).toFixed(2));
+          centerHalo.style.opacity = (0.18 + centerBeat * 0.28).toFixed(2);
+        }
+        centerImage.setAttribute("cx", centerTorus.x.toFixed(2));
+        centerImage.setAttribute("cy", centerTorus.y.toFixed(2));
+        centerImage.setAttribute("r", (3.2 + centerBeat * 1.7).toFixed(2));
+        centerImage.style.opacity = (0.72 + centerBeat * 0.28).toFixed(2);
+        centerCells.forEach(function (item, index) {
+          var beat = pulse(time, 6.2 / activeBoost, item.phaseOffset, 0.12);
+          item.cellPath.style.opacity = (0.2 + beat * 0.26).toFixed(2);
+          item.dot.setAttribute("r", (2.1 + beat * 1.4).toFixed(2));
+          item.dot.style.opacity = (0.45 + beat * 0.48).toFixed(2);
+          item.link.setAttribute("d", curvePath(
+            { x: item.center[0], y: item.center[1] },
+            centerTorus,
+            item.bend
+          ));
+          item.link.style.opacity = (0.12 + beat * 0.38).toFixed(2);
+          item.link.style.strokeWidth = (0.55 + beat * 0.85).toFixed(2);
+          item.link.style.strokeDashoffset = reduceMotion ? "0" : (-time * 0.018 - index * 2).toFixed(2);
+        });
+      }
       latticeDots.forEach(function (dot, index) {
         var r = 1.7 + sine(time, 6, index * 0.11) * 0.8;
         dot.setAttribute("r", r.toFixed(2));
@@ -360,63 +523,222 @@
   function renderRiemannRoch(canvas, figure, panel, state) {
     var svg = svgRoot(figure.aria);
     addGrid(svg);
+
+    var motion = figure.geometry.meromorphic || {};
+    var cp1Motion = motion.cp1 || {};
+    var torusMotion = motion.torus || {};
+    var cp1Frames = cp1Motion.frames || [];
+    var torusFrames = torusMotion.frames || [];
+
+    var sphereGeom = figure.geometry.sphere || {};
+    var sphereCx = 75;
+    var sphereCy = 84;
+    var sphereScale = 39;
+    var sphereGroup = el("g", { class: "ma-rr-sphere" });
+    var sphereLines = [];
+    var spherePoints = [];
+    var cp1ZeroMarkers = [];
+    var cp1FlowPaths = [];
+    var cp1OrbitPaths = [];
+
+    (sphereGeom.latitudes || []).forEach(function (line) {
+      var path = el("path", { class: "ma-line ma-line--soft" });
+      sphereLines.push({ element: path, points: line.points });
+      sphereGroup.appendChild(path);
+    });
+    (sphereGeom.longitudes || []).forEach(function (line) {
+      var path = el("path", { class: "ma-line ma-line--ghost" });
+      sphereLines.push({ element: path, points: line.points });
+      sphereGroup.appendChild(path);
+    });
+    (cp1Motion.zero_orbits || frameOrbits(cp1Frames, "sphere")).forEach(function (orbit) {
+      var orbitPath = el("path", { class: "ma-line ma-rr-zero-orbit" });
+      cp1OrbitPaths.push({ element: orbitPath, points: orbit });
+      sphereGroup.appendChild(orbitPath);
+    });
+    ((cp1Frames[0] && cp1Frames[0].zeros) || []).forEach(function () {
+      var path = el("path", { class: "ma-line ma-line--meromorphic" });
+      cp1FlowPaths.push(path);
+      sphereGroup.appendChild(path);
+    });
+    sphereGroup.appendChild(el("circle", {
+      cx: sphereCx,
+      cy: sphereCy,
+      r: sphereScale,
+      class: "ma-sphere-rim"
+    }));
+
+    (sphereGeom.divisor_points || []).forEach(function (point, index) {
+      var dot = el("circle", { r: "3.5", class: "ma-dot ma-dot--pole" });
+      var label = text(0, 0, point.label, "ma-label ma-label--tiny");
+      spherePoints.push({ dot: dot, label: label, point: point, index: index });
+      sphereGroup.appendChild(dot);
+      sphereGroup.appendChild(label);
+    });
+    ((cp1Frames[0] && cp1Frames[0].zeros) || []).forEach(function (zero) {
+      var dot = el("circle", { r: "3.5", class: "ma-dot ma-dot--zero" });
+      var label = text(0, 0, zero.label, "ma-label ma-label--tiny");
+      cp1ZeroMarkers.push({ dot: dot, label: label });
+      sphereGroup.appendChild(dot);
+      sphereGroup.appendChild(label);
+    });
+
     var torus = figure.geometry.torus;
+    var torusGroup = el("g", { class: "ma-rr-torus" });
     var torusPaths = torus.mesh_u.concat(torus.mesh_v).map(function (line, index) {
       var path = el("path", {
         class: index % 4 === 0 ? "ma-line ma-line--soft" : "ma-line ma-line--ghost"
       });
-      svg.appendChild(path);
+      torusGroup.appendChild(path);
       return { path: path, line: line };
     });
+    var torusOrbitPaths = (torusMotion.zero_orbits || frameOrbits(torusFrames, "torus_point")).map(function (orbit) {
+      var path = el("path", { class: "ma-line ma-rr-zero-orbit" });
+      torusGroup.appendChild(path);
+      return { path: path, line: orbit };
+    });
     var abel = el("path", { id: "ma-rr-abel", class: "ma-line ma-line--teal ma-line--heavy" });
-    svg.appendChild(abel);
-    var movingDivisors = figure.geometry.divisor_points.map(function (point) {
-      var dot = el("circle", { r: "4", class: "ma-dot ma-dot--amber" });
+    torusGroup.appendChild(abel);
+    var torusFlowPaths = ((torusFrames[0] && torusFrames[0].zeros) || []).map(function () {
+      var path = el("path", { class: "ma-line ma-line--meromorphic" });
+      torusGroup.appendChild(path);
+      return path;
+    });
+
+    var divisorMarkers = figure.geometry.divisor_points.map(function (point) {
+      var dot = el("circle", { r: "3.7", class: "ma-dot ma-dot--amber" });
       var label = text(0, 0, point.label, "ma-label ma-label--tiny");
-      svg.appendChild(dot);
-      svg.appendChild(label);
+      torusGroup.appendChild(dot);
+      torusGroup.appendChild(label);
       return { dot: dot, label: label, source: point };
     });
-    var sum = el("circle", { r: "4.8", class: "ma-dot ma-dot--sum" });
-    svg.appendChild(sum);
-    var equation = el("rect", { x: "178", y: "62", width: "116", height: "92", rx: "8", class: "ma-equation" });
+    var torusZeroMarkers = ((torusFrames[0] && torusFrames[0].zeros) || []).map(function (zero) {
+      var dot = el("circle", { r: "3.4", class: "ma-dot ma-dot--zero" });
+      var label = text(0, 0, zero.label, "ma-label ma-label--tiny");
+      torusGroup.appendChild(dot);
+      torusGroup.appendChild(label);
+      return { dot: dot, label: label };
+    });
+    var sumHalo = el("circle", { r: "7.2", class: "ma-rr-sum-halo" });
+    var sum = el("circle", { r: "4.3", class: "ma-dot ma-dot--sum" });
+    torusGroup.appendChild(sumHalo);
+    torusGroup.appendChild(sum);
+
     append(svg, [
-      equation,
-      text(191, 88, "g = 1", "ma-label ma-label--small"),
-      text(191, 111, "deg D = 3", "ma-label ma-label--small"),
-      text(191, 134, "l(D)-l(K-D)=3", "ma-label ma-label--small"),
-      // text(30, 34, "D=P+Q+R", "ma-label ma-label--title")
+      sphereGroup,
+      torusGroup
     ]);
-    var tracer = createTracer(svg, "ma-tracer ma-tracer--amber");
+    var tracer = createTracer(svg, "ma-tracer ma-tracer--amber", "2.8");
     canvas.replaceChildren(svg);
 
     register(panel, state, function (time) {
       var activeBoost = state.hover || state.focus ? 1.55 : 1;
-      var rotY = -0.62 + time * 0.00011 * activeBoost;
-      var rotX = 0.68 + Math.sin(time * 0.00038) * 0.06;
-      torusPaths.forEach(function (item) {
-        item.path.setAttribute("d", path3(item.line, 103, 111, 52, rotY, rotX));
+      var phase = reduceMotion ? 0.16 : cycle(time, 8.4 / activeBoost, 0.04);
+      var cpFrame = sampledFrame(cp1Frames, phase);
+      var torusFrame = sampledFrame(torusFrames, phase);
+      var sphereRotY = 0.45 + (reduceMotion ? 0 : time * 0.00018 * activeBoost);
+      var sphereRotX = 0.38 + (reduceMotion ? 0 : Math.sin(time * 0.00034 + state.index) * 0.08);
+      var torusRotY = -0.68 + (reduceMotion ? 0 : time * 0.00012 * activeBoost);
+      var torusRotX = 0.67 + (reduceMotion ? 0 : Math.sin(time * 0.00038) * 0.06);
+
+      sphereLines.forEach(function (line) {
+        line.element.setAttribute("d", path3(line.points, sphereCx, sphereCy, sphereScale, sphereRotY, sphereRotX));
       });
-      abel.setAttribute("d", path3(figure.geometry.abel_path, 103, 111, 52, rotY, rotX));
-      movingDivisors.forEach(function (item, index) {
-        var phase = cycle(time, 7.2 / activeBoost, index * 1.15);
-        var sourceIndex = Math.floor(phase * (figure.geometry.abel_path.length - 1));
-        var point = project3(figure.geometry.abel_path[sourceIndex], 103, 111, 52, rotY, rotX);
+      cp1OrbitPaths.forEach(function (orbit) {
+        orbit.element.setAttribute("d", path3(orbit.points, sphereCx, sphereCy, sphereScale, sphereRotY, sphereRotX));
+      });
+      if (cpFrame) {
+        cp1FlowPaths.forEach(function (path, index) {
+          var pole = sphereGeom.divisor_points && sphereGeom.divisor_points[index];
+          var current = cpFrame.current.zeros[index];
+          var next = cpFrame.next.zeros[index];
+          if (pole && current && next) {
+            var from = project3(pole.sphere, sphereCx, sphereCy, sphereScale, sphereRotY, sphereRotX);
+            var to = project3(lerpPoint(current.sphere, next.sphere, cpFrame.mix), sphereCx, sphereCy, sphereScale, sphereRotY, sphereRotX);
+            path.setAttribute("d", curvePath(from, to, index ? -8 : 8));
+          }
+          path.style.opacity = (0.48 + pulse(time, 8.4 / activeBoost, index * 0.18, 0.2) * 0.34).toFixed(2);
+        });
+      }
+      spherePoints.forEach(function (item) {
+        var projected = project3(item.point.sphere, sphereCx, sphereCy, sphereScale, sphereRotY, sphereRotX);
+        var beat = pulse(time, 6.4 / activeBoost, item.index * 0.9, 0.14);
+        item.dot.setAttribute("cx", projected.x.toFixed(2));
+        item.dot.setAttribute("cy", projected.y.toFixed(2));
+        item.dot.setAttribute("r", (3.1 + beat * 1.1).toFixed(2));
+        item.label.setAttribute("x", (projected.x + 5).toFixed(2));
+        item.label.setAttribute("y", (projected.y - 5).toFixed(2));
+      });
+      if (cpFrame) {
+        cp1ZeroMarkers.forEach(function (item, index) {
+          var current = cpFrame.current.zeros[index];
+          var next = cpFrame.next.zeros[index];
+          if (!current || !next) return;
+          var projected = project3(lerpPoint(current.sphere, next.sphere, cpFrame.mix), sphereCx, sphereCy, sphereScale, sphereRotY, sphereRotX);
+          var beat = pulse(time, 8.4 / activeBoost, index * 0.23, 0.16);
+          item.dot.setAttribute("cx", projected.x.toFixed(2));
+          item.dot.setAttribute("cy", projected.y.toFixed(2));
+          item.dot.setAttribute("r", (3.3 + beat * 1.5).toFixed(2));
+          item.label.setAttribute("x", (projected.x + 5).toFixed(2));
+          item.label.setAttribute("y", (projected.y - 5).toFixed(2));
+        });
+      }
+
+      torusPaths.forEach(function (item) {
+        item.path.setAttribute("d", path3(item.line, 224, 92, 34, torusRotY, torusRotX));
+      });
+      torusOrbitPaths.forEach(function (item) {
+        item.path.setAttribute("d", path3(item.line, 224, 92, 34, torusRotY, torusRotX));
+      });
+      abel.setAttribute("d", path3(figure.geometry.abel_path, 224, 92, 34, torusRotY, torusRotX));
+      if (torusFrame) {
+        torusFlowPaths.forEach(function (path, index) {
+          var pole = figure.geometry.divisor_points[index];
+          var current = torusFrame.current.zeros[index];
+          var next = torusFrame.next.zeros[index];
+          if (pole && current && next) {
+            var from = project3(pole.torus_point, 224, 92, 34, torusRotY, torusRotX);
+            var to = project3(lerpPoint(current.torus_point, next.torus_point, torusFrame.mix), 224, 92, 34, torusRotY, torusRotX);
+            path.setAttribute("d", curvePath(from, to, index === 1 ? -10 : 10));
+          }
+          path.style.opacity = (0.42 + pulse(time, 8.4 / activeBoost, index * 0.15, 0.2) * 0.4).toFixed(2);
+        });
+      }
+      divisorMarkers.forEach(function (item, index) {
+        var point = project3(item.source.torus_point, 224, 92, 34, torusRotY, torusRotX);
         item.dot.setAttribute("cx", point.x.toFixed(2));
         item.dot.setAttribute("cy", point.y.toFixed(2));
-        item.dot.setAttribute("r", (3.5 + pulse(time, 7.2, index * 1.15, 0.12) * 1.8).toFixed(2));
-        item.label.setAttribute("x", (point.x + 6).toFixed(2));
-        item.label.setAttribute("y", (point.y - 6).toFixed(2));
+        item.dot.setAttribute("r", (3.2 + sine(time, 6.8 / activeBoost, index * 0.17) * 0.75).toFixed(2));
+        item.label.setAttribute("x", (point.x + 5).toFixed(2));
+        item.label.setAttribute("y", (point.y - 5).toFixed(2));
       });
-      var sumPoint = project3(figure.geometry.abel_sum, 103, 111, 52, rotY, rotX);
+      if (torusFrame) {
+        torusZeroMarkers.forEach(function (item, index) {
+          var current = torusFrame.current.zeros[index];
+          var next = torusFrame.next.zeros[index];
+          if (!current || !next) return;
+          var point = project3(lerpPoint(current.torus_point, next.torus_point, torusFrame.mix), 224, 92, 34, torusRotY, torusRotX);
+          var beat = pulse(time, 8.4 / activeBoost, index * 0.19, 0.15);
+          item.dot.setAttribute("cx", point.x.toFixed(2));
+          item.dot.setAttribute("cy", point.y.toFixed(2));
+          item.dot.setAttribute("r", (3.25 + beat * 1.35).toFixed(2));
+          item.label.setAttribute("x", (point.x + 5).toFixed(2));
+          item.label.setAttribute("y", (point.y - 5).toFixed(2));
+        });
+      }
+      var sumSource = torusFrame && torusFrame.current.zero_sum_point ? torusFrame.current.zero_sum_point : figure.geometry.abel_sum;
+      var sumPoint = project3(sumSource, 224, 92, 34, torusRotY, torusRotX);
+      var haloBeat = pulse(time, 7.2, 0.84, 0.12);
+      sumHalo.setAttribute("cx", sumPoint.x.toFixed(2));
+      sumHalo.setAttribute("cy", sumPoint.y.toFixed(2));
+      sumHalo.setAttribute("r", (6.8 + haloBeat * 3.6).toFixed(2));
+      sumHalo.style.opacity = (0.14 + haloBeat * 0.44).toFixed(2);
       sum.setAttribute("cx", sumPoint.x.toFixed(2));
       sum.setAttribute("cy", sumPoint.y.toFixed(2));
-      moveAlongPath(tracer, abel, cycle(time, 7.2 / activeBoost, 0.52));
-      var beat = pulse(time, 7.2, 0.84, 0.12);
-      equation.style.strokeWidth = (1 + beat * 1.6).toFixed(2);
-      equation.style.opacity = (0.78 + beat * 0.22).toFixed(2);
+      moveAlongPath(tracer, abel, phase);
     });
   }
+
 
   function renderMatrix(svg, rows, x, y, cell, className, maxRows) {
     var visibleRows = rows.slice(0, maxRows || rows.length);
@@ -515,6 +837,7 @@
     var edgePaths = [];
     var vertexDots = [];
     var faces = [];
+
     geom.vertices.forEach(function (vertex) {
       vertexMap[vertex.id] = {
         x: 34 + vertex.x * 94,
