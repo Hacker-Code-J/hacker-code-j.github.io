@@ -97,8 +97,8 @@ for a, b in [(2, 2), (0, 0)]:
 
 ## C proof obligations
 
-1. `fe_is_canonical(x)` must be correct for the chosen limb order.
-2. `fe_add`, `fe_sub`, `fe_mul`, and `fe_sqr` must document output ranges.
+1. `fe256_is_canonical(x)` must be correct for the chosen limb order.
+2. `fe256_add`, `fe256_sub`, `fe256_mul`, and `fe256_sqr` must document output ranges.
 3. Curve validation must reject noncanonical encodings unless the protocol explicitly permits reduction.
 4. All parameter constants must be generated from exact integers, not decimal transcription by hand.
 

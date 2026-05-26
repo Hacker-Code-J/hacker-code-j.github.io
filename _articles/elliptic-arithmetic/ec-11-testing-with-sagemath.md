@@ -25,10 +25,10 @@ The bignum testing article already explains differential testing against exact i
 
 | Layer | SageMath reference | C target |
 |---|---|---|
-| Field | arithmetic in `GF(p)` | `fe_add`, `fe_mul`, `fe_sqr`, `fe_inv` |
-| Affine point | `EllipticCurve(GF(p), [a,b])` | public/spec addition and validation |
-| Jacobian point | explicit coordinate conversion | `ec_jac_double`, `ec_jac_add_mixed` |
-| Scalar multiplication | `k*P` | secret/public multiplication routines |
+| Field | arithmetic in `GF(p)` | `fe256_add`, `fe256_mul`, `fe256_sqr`, `fe256_inv` |
+| Affine point | `EllipticCurve(GF(p), [a,b])` | `p256_affine_on_curve`, public/spec addition, validation |
+| Jacobian point | explicit coordinate conversion | `p256_jac_double`, `p256_jac_add_mixed` |
+| Scalar multiplication | `k*P` | `p256_scalar_mul_public` and separate secret-scalar routines |
 
 ## Edge cases
 
@@ -69,11 +69,12 @@ print(from_jac(X, Y, Z) == E(5, 1))
 
 ```c
 /* C test harness prints hex limbs; SageMath parses and checks them. */
+fe256_t a, b, c;
 for (uint32_t i = 0; i < trials; i++) {
-    random_fe(&a);
-    random_fe(&b);
-    fe_mul(&c, &a, &b);
-    print_case("mul", &a, &b, &c);
+    p256_random_fe_for_test(&a);
+    p256_random_fe_for_test(&b);
+    fe256_mul(&c, &a, &b);
+    p256_print_case("mul", &a, &b, &c);
 }
 ```
 

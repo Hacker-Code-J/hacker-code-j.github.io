@@ -62,6 +62,8 @@ $$
 
 This is why [Montgomery arithmetic](/articles/bn-07-montgomery-arithmetic/) is the natural bridge from bignum to ECC.
 
+Proof-audit note: the representation choice applies to constants as well as variables. If point formulas operate on Montgomery residues, curve constants, affine input coordinates, and helpers such as `fe256_mul_small(..., 3u)` or `fe256_half` must be represented or interpreted in the same field representation. Silently mixing canonical and Montgomery residues invalidates the formula even when every individual field routine is correct.
+
 ## Constant-time conditional move
 
 ```c
@@ -78,9 +80,9 @@ Precondition: `take` is 0 or 1. Postcondition: `r` is unchanged if `take=0`, and
 
 ## Two range examples
 
-If `fe_add` returns a value below $$2p$$, then a later `fe_mul` must either accept inputs below $$2p$$ or the addition result must be canonicalized. If `fe_mul` accepts only $$<p$$, feeding it a lazy sum is a contract violation.
+If `fe256_add` returns a value below $$2p$$, then a later `fe256_mul` must either accept inputs below $$2p$$ or the addition result must be canonicalized. If `fe256_mul` accepts only $$<p$$, feeding it a lazy sum is a contract violation.
 
-If `fe_half` receives odd $$x$$, it may compute $$(x+p)/2$$. The addition $$x+p$$ must fit the temporary representation. For the P-256 word model this is a nine-word proof: eight low words plus one carry word, followed by a right shift.
+If `fe256_half` receives odd $$x$$, it may compute $$(x+p)/2$$. The addition $$x+p$$ must fit the temporary representation. For the P-256 word model this is a nine-word proof: eight low words plus one carry word, followed by a right shift.
 
 ## SageMath contract model
 

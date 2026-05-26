@@ -76,7 +76,7 @@ int p256_affine_add_spec(p256_affine_t *r, const p256_affine_t *p, const p256_af
 }
 ```
 
-This is useful for tests and public validation paths. It is unsuitable as the main scalar-multiplication primitive because `fe_inv` is expensive, often variable-time unless carefully implemented, and exceptional-case branching is hard to make secret-independent.
+This is useful for tests and public validation paths. It is unsuitable as the main scalar-multiplication primitive because `fe256_inv` is expensive, often variable-time unless carefully implemented, and exceptional-case branching is hard to make secret-independent.
 
 ## SageMath formula check
 

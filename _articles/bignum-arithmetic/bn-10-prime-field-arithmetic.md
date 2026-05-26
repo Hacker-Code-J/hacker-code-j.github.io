@@ -60,8 +60,8 @@ Then $$u\bmod p$$ is the inverse. Classical Euclid is variable-time; constant-ti
 For $$p=2^{256}-2^{224}+2^{192}+2^{96}-1$$, reduction can exploit the sparse relation defining $$2^{256}$$ modulo $$p$$. The teaching implementation keeps the first version auditable: field elements are eight little-endian `uint32_t` words, and a word product is decomposed into 16-bit halves before it is accumulated.
 
 ```c
-typedef uint32_t fe_word_t;
-typedef struct { fe_word_t v[8]; } fe_p256;
+typedef uint32_t word_t;
+typedef struct { word_t v[8]; } fe256_t;
 ```
 
 This type has mathematical radix $$B=2^{32}$$. Its multiplication proof is the 32-by-32 decomposition from the schoolbook multiplication article.
@@ -77,13 +77,13 @@ typedef struct { uint32_t v[8]; } fe_25519;
 ## C API boundary
 
 ```c
-void fe_add(fe_p256 *r, const fe_p256 *a, const fe_p256 *b);
-void fe_mul(fe_p256 *r, const fe_p256 *a, const fe_p256 *b);
-void fe_sqr(fe_p256 *r, const fe_p256 *a);
-void fe_inv(fe_p256 *r, const fe_p256 *a);
-void fe_to_mont(fe_p256 *r, const fe_p256 *a);
-void fe_from_mont(fe_p256 *r, const fe_p256 *a);
-void fe_mont_mul(fe_p256 *r, const fe_p256 *a, const fe_p256 *b);
+void fe256_add(fe256_t *r, const fe256_t *a, const fe256_t *b);
+void fe256_mul(fe256_t *r, const fe256_t *a, const fe256_t *b);
+void fe256_sqr(fe256_t *r, const fe256_t *a);
+void fe256_inv(fe256_t *r, const fe256_t *a);
+void fe256_to_mont(fe256_t *r, const fe256_t *a);
+void fe256_from_mont(fe256_t *r, const fe256_t *a);
+void fe256_mont_mul(fe256_t *r, const fe256_t *a, const fe256_t *b);
 ```
 
 The type fixes the modulus and word count. That is safer than a generic `(limbs, n, modulus)` interface in elliptic-curve code.

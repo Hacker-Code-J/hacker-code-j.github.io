@@ -138,7 +138,7 @@ for k in range(1, 8):
 
 ## Proof obligation
 
-Each temporary must have a range compatible with the field API. If `fe_add` returns $$<2p$$ and `fe_mul` accepts only canonical residues, the formula is invalid as written. Either canonicalize between operations or design the field layer to accept the documented lazy ranges.
+Each temporary must have a range compatible with the field API. If `fe256_add` returns $$<2p$$ and `fe256_mul` accepts only canonical residues, the formula is invalid as written. Either canonicalize between operations or design the field layer to accept the documented lazy ranges.
 The C function also needs an aliasing contract. The clarity-first formulas should be treated as out-of-place unless every assignment schedule has been proved safe when the output aliases an input; scalar-multiplication code should use separate temporaries for doubled and added states when that proof is absent.
 
 <nav class="ec-nav">

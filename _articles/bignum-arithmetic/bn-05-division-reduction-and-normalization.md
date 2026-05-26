@@ -47,6 +47,8 @@ $$
 $$
 
 is at most a small correction away from the true quotient digit.
+
+Proof-audit note: in the 32-bit-only teaching model, the numerator $$u_{j+m}B+u_{j+m-1}$$ is a mathematical two-word value, not a C object stored in a wider integer type. A C implementation must either implement a two-word quotient estimator using only `uint32_t` operations or keep general division out of the secret-dependent arithmetic path.
 </div>
 
 ## Quotient correction

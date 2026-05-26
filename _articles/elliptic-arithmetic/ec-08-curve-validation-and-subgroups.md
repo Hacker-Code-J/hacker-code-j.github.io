@@ -40,7 +40,7 @@ For a decoded affine public point $$Q=(x,y)$$:
 3. check $$y^2=x^3+ax+b$$;
 4. check subgroup membership, commonly $$[n]Q=\mathcal O$$ or a validated equivalent.
 
-For a curve with cofactor $$h=1$$, the on-curve check plus non-infinity already puts a point in the prime-order group. For $$h>1$$, the subgroup condition is a separate security condition, not a cosmetic extra.
+For a domain parameter set with prime base-point order $$n$$ and cofactor $$h=1$$, the on-curve check plus non-infinity already puts a point in the prime-order group because $$\#E(\mathbb F_p)=n$$. This is the P-256 situation. For $$h>1$$, or when the full curve order is not the prime order used by the protocol, the subgroup condition is a separate security condition, not a cosmetic extra.
 
 ```c
 uint32_t p256_validate_public(const p256_affine_t *q) {

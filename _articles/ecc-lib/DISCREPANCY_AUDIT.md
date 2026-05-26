@@ -35,6 +35,24 @@ This audit compares the public bignum and elliptic arithmetic notes with the int
 - `bn-13-minimal-cryptographic-bignum-library.md`: corrected in this pass. The type sketch now explicitly defines `limb_t` as `uint32_t`, so the generic library outline still teaches the 32-bit word model.
 - The workspace remains internal-only and must stay out of `articles.markdown`.
 
+## Second proof-level review pass
+
+- `bn-05-division-reduction-and-normalization.md`: missing hypothesis/implementation note. The Knuth-style quotient estimate uses a mathematical two-limb numerator; under the 32-bit-only teaching model a C implementation must not pack that numerator into a wider C type. The article should say that a two-word division estimator or an avoided-public-only division path is required.
+- `ec-05-field-arithmetic-interface.md`: missing representation-mixing warning. If field elements are stored in Montgomery form, constants and small multipliers used by point formulas must be represented or interpreted consistently; canonical and Montgomery residues must not be silently mixed.
+- `ec-08-curve-validation-and-subgroups.md`: missing group-order hypothesis. The cofactor-one shortcut is correct for P-256 because the domain parameter order is prime and `h=1`; the article should not state it as a prime-subgroup conclusion without that prime-order condition.
+- Structural conclusion remains unchanged: the order is coherent and no article rename, split, or merge is needed.
+
+## Third proof-level review pass
+
+- `bn-10-prime-field-arithmetic.md`, `ec-01-fields-and-curve-equations.md`, `ec-02-affine-group-law.md`, `ec-04-jacobian-addition-and-doubling.md`, `ec-05-field-arithmetic-interface.md`, and `ec-11-testing-with-sagemath.md`: stale generic API names remained in proof notes or test snippets. They were not wide-type violations, but they obscured that the teaching model is the P-256 `fe256_t`/`p256_*` interface rather than a second abstract field API.
+- Structural conclusion remains unchanged: the article order is coherent and no rename, split, or merge is needed.
+
+## Fourth proof-level review pass
+
+- Rechecked the current bignum and elliptic article stack after the previous corrections. Forbidden-type scans, stale 16-bit teaching-limb scans, Sage/Python `assert` scans, and stale generic API-name scans found no remaining violations.
+- Rechecked representative SageMath examples for affine addition/doubling, Jacobian doubling/mixed addition, and subgroup validation. The examples match their stated conclusions.
+- No additional article restructuring is needed. The current order remains coherent and the public teaching model remains the 32-bit P-256 `fe256_t`/`p256_*` model.
+
 ## Correction pass
 
 The public articles now use the eight-word P-256-compatible `uint32_t` model for teaching. Sixteen-bit values appear only as internal half-words for product decomposition. Article snippets and prose now distinguish three things: the actual correctness-first ecc-lib implementation, the mathematical proof obligations, and the stronger constant-time requirements needed before production use.
