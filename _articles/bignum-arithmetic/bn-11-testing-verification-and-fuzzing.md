@@ -49,7 +49,7 @@ def value(a, w):
 ## Example: addition vectors
 
 ```python
-w, n = 16, 16
+w, n = 32, 8
 B = 2^w
 cases = [
     (0, 0),
@@ -65,7 +65,7 @@ for a, b in cases:
 ## Example: Montgomery vectors
 
 ```python
-w, n = 16, 8
+w, n = 32, 4
 B, R = 2^w, 2^(w*n)
 m = 2^127 - 1
 mp = (-inverse_mod(m, B)) % B
@@ -74,6 +74,20 @@ for x, y in [(1, 1), (2, 3), (m-1, m-1), (123456789, 987654321)]:
     zt = xt*yt*inverse_mod(R, m) % m
     print(zt == x*y*R % m)
 ```
+
+## P-256 vector shape
+
+Because the teaching model uses 32-bit words, P-256 vectors are emitted as eight little-endian words:
+
+```python
+p = 2^256 - 2^224 + 2^192 + 2^96 - 1
+def words(x, n=8):
+    return [hex((Integer(x) >> (32*i)) & 0xffffffff) for i in range(n)]
+for x, y in [(1, 2), (p-2, p-3)]:
+    print(words((x*y) % p))
+```
+
+This keeps the article vectors and the P-256 C harness in the same representation.
 
 ## Differential testing loop
 
@@ -91,7 +105,7 @@ Unsigned wraparound is defined and will not be reported as undefined behavior. S
 
 ## Proof audit notes
 
-Every test file should identify which theorem or invariant it stresses. For example, a multiplication test with all-one limbs targets the accumulator bound, with `z` stored in `uint32_t` for a 16-bit-limb implementation:
+Every test file should identify which theorem or invariant it stresses. For example, a multiplication test with all-one limbs targets the accumulator bound, with each 32-by-32 product represented as two `uint32_t` words:
 
 $$
 z=a_i b_j+r_{i+j}+c<B^2.

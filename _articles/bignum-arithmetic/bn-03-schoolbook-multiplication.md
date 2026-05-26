@@ -28,21 +28,35 @@ $$
 
 A full product needs $$2n$$ limbs. A modular multiplication may reduce during the product, but the unreduced schoolbook product is the reference algorithm.
 
-## Clarity-first product with a 32-bit accumulator
+## Clarity-first product with two-word products
 
 ```c
-void bn_mul_n(limb_t *r, const limb_t *a, const limb_t *b, uint32_t n) {
-    for (uint32_t i = 0; i < 2u*n; i++) r[i] = 0;
+static uint32_t bn_add_word_at(limb_t *r, uint32_t len, uint32_t pos, limb_t x) {
+    if (x == 0u) return 0u;
+    while (pos < len) {
+        limb_t old = r[pos];
+        r[pos] = old + x;
+        if (r[pos] >= old) return 0u;
+        x = 1u;
+        pos++;
+    }
+    return 1u;
+}
+
+void bn_mul_n(limb_t *scratch, const limb_t *a, const limb_t *b, uint32_t n) {
+    uint32_t out_len = 2u * n;
+    uint32_t scratch_len = out_len + 1u;
+    for (uint32_t i = 0; i < scratch_len; i++) scratch[i] = 0;
 
     for (uint32_t i = 0; i < n; i++) {
-        dlimb_t carry = 0;
         for (uint32_t j = 0; j < n; j++) {
-            dlimb_t z = (dlimb_t)a[i] * b[j] + r[i+j] + carry;
-            r[i+j] = (limb_t)z;
-            carry = z >> BN_LIMB_BITS;
+            limb_t lo, hi;
+            bn_mul_word(a[i], b[j], &lo, &hi);
+            (void)bn_add_word_at(scratch, scratch_len, i + j, lo);
+            (void)bn_add_word_at(scratch, scratch_len, i + j + 1u, hi);
         }
-        r[i+n] = (limb_t)carry;
     }
+    /* The product is in scratch[0..out_len-1]; scratch[out_len] must be zero. */
 }
 ```
 
@@ -51,28 +65,44 @@ This code is compact but its safety relies on a bound.
 <div class="bn-proof" markdown="1">
 <span class="bn-env-title">Inner accumulator bound</span>
 
-At each inner step,
+Each call to `bn_mul_word` returns `lo` and `hi` such that
 
 $$
-z=a_i b_j+r_{i+j}+c.
+a_i b_j=\texttt{lo}+\texttt{hi}B,\qquad B=2^{32}.
 $$
 
-We have $$a_i b_j\le B^2-2B+1$$, $$r_{i+j}\le B-1$$, and the incoming carry from the previous step is at most $$B-1$$. Therefore
-
-$$
-z\le B^2-1<B^2.
-$$
-
-So `uint32_t` is sufficient for 16-bit limbs, and the new carry `z >> BN_LIMB_BITS` is a limb.
+Adding `lo` at position $$i+j$$ and `hi` at position $$i+j+1$$ preserves the convolution value. The helper `bn_add_word_at` is the correctness-first helper used by the P-256 test workspace: it propagates a one-word addend by repeated `uint32_t` addition and comparison, then returns when no carry remains. Its loop invariant is that `x` is the pending carry into the current word. The scratch buffer has one extra word, so a carry past the public `2n` product words is observable during testing instead of being silently discarded. For a valid product below $$B^{2n}$$, that extra word must finish as zero.
 </div>
 
-## Why `r[i+n] = carry` is safe here
+## Half-word product lemma
 
-For the loop order above, `r[i+n]` has not yet been written by any previous row: row $$k<i$$ writes no farther than `r[k+n]`, and $$k+n\le i+n-1$$. The previous high carry at `r[i+n-1]` is included during the last inner iteration, where `j=n-1`. The invariant after finishing row $$i$$ is that the low $$i+n+1$$ limbs equal the sum of rows $$0,\ldots,i$$, so direct assignment of the new carry to `r[i+n]` is safe for this specific schedule.
+A fixed-field implementation can expose 32-bit words while still using only 32-bit C operations. The proof obligation changes: a word product is no longer one accumulator value. Write
 
-Changing the loop order invalidates this argument and requires a new proof.
+$$
+x=x_0+x_1 2^{16},\qquad y=y_0+y_1 2^{16},\qquad 0\le x_i,y_i<2^{16}.
+$$
 
-This skeleton also assumes `r` does not overlap `a` or `b`. If in-place multiplication is part of the API, compute into a separate `2*n`-limb temporary and copy after the product is complete.
+Then compute four 16-by-16 products $$p_{00},p_{01},p_{10},p_{11}$$. The middle carry
+
+$$
+m=(p_{00} \operatorname{div} 2^{16})+(p_{01} \bmod 2^{16})+(p_{10} \bmod 2^{16})
+$$
+
+is less than $$3\cdot 2^{16}$$, so its low half contributes to the low output word and its high half is at most $$2$$. The high output word is
+
+$$
+p_{11}+(p_{01} \operatorname{div} 2^{16})+(p_{10} \operatorname{div} 2^{16})+(m \operatorname{div} 2^{16}),
+$$
+
+which is still below $$2^{32}$$. This lemma is the normal teaching path in these notes: public bignum words are 32-bit, while primitive products are discharged through 16-bit halves.
+
+## Why carry scheduling is part of the proof
+
+The clarity-first loop above is deliberately simple: it adds each two-word product into a zeroed `2*n + 1` scratch buffer and propagates carries immediately. This mirrors the internal test implementation, not a production constant-time multiplier. If the product operands are secret, replace the early-exit carry helper with a fixed public-suffix pass and review the generated code. Faster row-wise schedules are possible, but each one must restate where the high word of every product is stored and why carry propagation cannot run past the scratch buffer.
+
+Changing the loop order invalidates the proof and requires a new bound.
+
+This skeleton assumes `scratch` has length at least `2*n + 1` and does not overlap `a` or `b`. If in-place multiplication is part of the public API, compute into a separate scratch buffer and copy the low `2*n` product words after the product is complete.
 
 ## Example: two-limb product
 
@@ -91,15 +121,15 @@ Take $$a_i=b_i=B-1$$ for all $$i$$. The coefficient of $$B^{n-1}$$ before carryi
 ## Test vectors with SageMath
 
 ```python
-def to_limbs(x, n, w=16):
+def to_limbs(x, n, w=32):
     B = 2^w
     return [(x // B^i) % B for i in range(n)]
 
-def from_limbs(a, w=16):
+def from_limbs(a, w=32):
     B = 2^w
     return sum(Integer(a[i]) * B^i for i in range(len(a)))
 
-w, n = 16, 8
+w, n = 32, 8
 B = 2^w
 vectors = [
     (B^n-1, B^n-1),
@@ -111,7 +141,7 @@ for x, y in vectors:
 
 ## Cryptographic note
 
-Schoolbook multiplication has fixed loop counts for fixed $$n$$. That is good for constant-time arithmetic. Do not replace it with algorithms whose recursion shape depends on operand size when operand size is secret or variable in a protocol transcript.
+Schoolbook multiplication has a fixed outer convolution shape for fixed $$n$$. That is only a starting point for constant-time arithmetic: the correctness-first carry helper above exits early, so it is suitable for the internal test workspace but not for secret-dependent production multiplication. A production routine needs fixed public carry propagation, fixed memory traversal, and compiler-output review.
 
 <nav class="bn-nav">
   <a href="/articles/bn-02-addition-subtraction-and-comparison/"><span>Previous</span>Bignum Arithmetic 02: Addition, Subtraction, and Comparison</a>

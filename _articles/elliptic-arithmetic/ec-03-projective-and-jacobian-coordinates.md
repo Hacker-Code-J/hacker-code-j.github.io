@@ -47,15 +47,15 @@ $$
 Y^2=X^3+aXZ^4+bZ^6.
 $$
 
-The affine point $$(x,y)$$ is represented by $$(x:y:1)$$. The identity can be represented by any agreed exceptional encoding with $$Z=0$$; use one canonical internal encoding, for example $$(1:1:0)$$.
+The affine point $$(x,y)$$ is represented by $$(x:y:1)$$. The identity can be represented by any agreed exceptional encoding with $$Z=0$$; use one canonical internal encoding. The P-256 test implementation uses $$(0:1:0)$$.
 
 ```c
 typedef struct {
-    fe_t X, Y, Z;
-} ec_jac_t;
+    fe256_t X, Y, Z;
+} p256_jac_t;
 
-static int ec_jac_is_infinity(const ec_jac_t *p) {
-    return fe_is_zero(&p->Z);
+static uint32_t p256_jac_is_infinity(const p256_jac_t *p) {
+    return fe256_is_zero(&p->Z);
 }
 ```
 

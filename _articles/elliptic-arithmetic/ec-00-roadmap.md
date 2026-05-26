@@ -19,7 +19,7 @@ short: "A roadmap from prime-field arithmetic to constant-time elliptic-curve sc
 <p class="ec-deck">An elliptic-curve library is a stack: machine words implement field elements, field elements implement points, points implement scalar multiplication, and protocols add validation rules above that stack.</p>
 </header>
 
-These notes continue the [bignum arithmetic series](/articles/bn-00-roadmap/). The bignum layer defines limbs, baseline radix $$B=2^{16}$$, Montgomery reduction, canonicalization, and constant-time C idioms. The elliptic layer uses that substrate to implement the group law on a curve over a finite field.
+These notes continue the [bignum arithmetic series](/articles/bn-00-roadmap/). The bignum layer defines 32-bit words, radix $$B=2^{32}$$, half-word product decomposition, Montgomery reduction, canonicalization, and constant-time C idioms. The elliptic layer uses that substrate to implement the group law on a curve over a finite field.
 
 The reference spine is Hankerson, Menezes, and Vanstone, *Guide to Elliptic Curve Cryptography*: finite-field arithmetic in Chapter 2, point formulas and scalar multiplication in Chapter 3, domain-parameter and protocol checks in Chapter 4, and implementation/security issues in Chapter 5.
 
@@ -64,7 +64,7 @@ $$
 
 is nonsingular because $$4\cdot 2^3+27\cdot 2^2=140\equiv 4\pmod {17}$$. Small-field examples make every exceptional case visible: infinity, inverses, doubling with $$y=0$$, and points that are not on the curve.
 
-**Implementation-scale prime.** For a 256-bit prime curve under the 32-bit-only profile, a field element may be represented by sixteen 16-bit limbs. Multiplication first produces a value below $$B^{32}$$ with $$B=2^{16}$$, then a reduction routine returns a residue in a documented range. The elliptic formulas do not see the raw integer; they see the field API.
+**Implementation-scale prime.** The teaching and implementation-test model for P-256 represents a 256-bit field element as eight little-endian `uint32_t` words with $$B=2^{32}$$. Every 32-by-32 product is decomposed into 16-bit partial products before carry propagation. The elliptic formulas see only the field API, but the field proof must match this word representation.
 
 ## SageMath as oracle
 

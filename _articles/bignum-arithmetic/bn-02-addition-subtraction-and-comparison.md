@@ -39,18 +39,19 @@ $$
 ```c
 #include <stdint.h>
 
-typedef uint16_t limb_t;
-typedef uint32_t dlimb_t;
-enum { BN_LIMB_BITS = 16 };
+typedef uint32_t limb_t;
 
 uint32_t bn_add_n(limb_t *r, const limb_t *a, const limb_t *b, uint32_t n) {
-    dlimb_t carry = 0;
+    uint32_t carry = 0;
     for (uint32_t i = 0; i < n; i++) {
-        dlimb_t s = (dlimb_t)a[i] + b[i] + carry;
-        r[i] = (limb_t)s;
-        carry = s >> BN_LIMB_BITS;
+        limb_t s = a[i] + b[i];
+        uint32_t c1 = (s < a[i]);
+        limb_t t = s + carry;
+        uint32_t c2 = (t < s);
+        r[i] = t;
+        carry = c1 | c2;
     }
-    return (uint32_t)carry;
+    return carry;
 }
 ```
 
@@ -84,9 +85,11 @@ Here $$\beta=1$$ means `a < b` and the result is the two's-complement residue mo
 uint32_t bn_sub_n(limb_t *r, const limb_t *a, const limb_t *b, uint32_t n) {
     uint32_t borrow = 0;
     for (uint32_t i = 0; i < n; i++) {
-        dlimb_t sub = (dlimb_t)b[i] + borrow;
-        borrow = ((dlimb_t)a[i] < sub);
-        r[i] = (limb_t)((dlimb_t)a[i] - sub);
+        limb_t bi = b[i] + borrow;
+        uint32_t bcarry = (bi < b[i]);
+        uint32_t need = (a[i] < bi) | bcarry;
+        r[i] = a[i] - bi;
+        borrow = need;
     }
     return borrow;
 }
@@ -134,7 +137,7 @@ def value(a, w):
     B = 2^w
     return sum(a[i] * B^i for i in range(len(a)))
 
-w, n = 16, 8
+w, n = 32, 8
 B = 2^w
 cases = [(B^n-1, 1), (B^2+5, B^2+7), (0, B^n-1)]
 for x, y in cases:

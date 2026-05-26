@@ -35,12 +35,12 @@ $$
 2a_i a_j\le 2(B-1)^2=2B^2-4B+2.
 $$
 
-This does not fit in $$2w$$ bits in general. A 16-bit limb implementation cannot simply compute `2 * ((uint32_t)ai * aj)` and assume it is below $$2^{32}$$. The product must be doubled with carry handling.
+This does not fit in $$2w$$ bits in general. A 32-bit-word implementation cannot compute `2 * (ai * aj)` in C at all, because the product already spans two words. The two-word product must be doubled with explicit carry handling.
 
 <div class="bn-warning" markdown="1">
 <span class="bn-env-title">Common squaring bug</span>
 
-For 16-bit limbs, `((uint32_t)x * y) << 1` discards the top bit when $$xy\ge 2^{31}$$. The mathematical term may need 33 bits. Correct code either accumulates cross products one at a time with carries or uses a representation whose bounds leave headroom.
+For 32-bit words, `x * y` in `uint32_t` keeps only the low word of the product. Shifting or doubling that truncated value loses the high word. Correct code either uses the two-word product helper and doubles with carries, or simply calls multiplication for squaring.
 </div>
 
 ## Safe strategy
@@ -48,14 +48,14 @@ For 16-bit limbs, `((uint32_t)x * y) << 1` discards the top bit when $$xy\ge 2^{
 A safe first implementation uses multiplication for squaring:
 
 ```c
-void bn_sqr_n(limb_t *r, const limb_t *a, uint32_t n) {
-    bn_mul_n(r, a, a, n);
+void bn_sqr_n(limb_t *scratch, const limb_t *a, uint32_t n) {
+    bn_mul_n(scratch, a, a, n);
 }
 ```
 
 Only optimize after the test suite can compare both implementations across edge cases.
 
-This wrapper inherits the aliasing contract of `bn_mul_n`. If `r == a` is allowed by the public API, square into a temporary product buffer first; otherwise the multiplication loop can overwrite limbs before they are read.
+This wrapper inherits the aliasing and scratch contract of `bn_mul_n`: `scratch` has length at least `2*n + 1` and must not overlap the input. If an in-place public API is desired, wrap this routine with a separate temporary product buffer and copy the low `2*n` product words afterward.
 
 ## Specialized accumulation pattern
 
@@ -95,7 +95,7 @@ For a specialized squaring routine, write down:
 
 ```python
 for n in [1, 2, 4, 8]:
-    B = 2^16
+    B = 2^32
     tests = [0, 1, B^n - 1, B^(n-1), B^(n-1) + B - 1]
     for x in tests:
         print(x*x < B^(2*n))

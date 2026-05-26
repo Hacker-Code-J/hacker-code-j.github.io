@@ -32,12 +32,13 @@ $$
 In C, a field element is not an integer modulo $$p$$ in the abstract. It is a fixed-size representation with a stated range. A canonical residue satisfies $$0\le x<p$$. A lazy residue may satisfy $$0\le x<cp$$ for a small constant $$c$$. The field API must say which one it accepts.
 
 ```c
+typedef uint32_t word_t;
 typedef struct {
-    uint16_t limb[16]; /* little-endian 16-bit limbs, value < p unless documented otherwise */
-} fe_t;
+    word_t v[8];       /* P-256: little-endian 32-bit words */
+} fe256_t;
 ```
 
-This connects directly to [bignum limb representation](/articles/bn-01-limbs-radix-and-word-size/) and [prime-field arithmetic](/articles/bn-10-prime-field-arithmetic/).
+This representation has mathematical radix $$B=2^{32}$$, but multiplication must still split each word into 16-bit halves so that every primitive product and carry fits in `uint32_t`. This connects directly to [bignum limb representation](/articles/bn-01-limbs-radix-and-word-size/) and [prime-field arithmetic](/articles/bn-10-prime-field-arithmetic/).
 
 ## Short Weierstrass curves
 
@@ -73,10 +74,10 @@ An affine point is either $$\mathcal O$$, the point at infinity, or a pair $$(x,
 
 ```c
 typedef struct {
-    fe_t x;
-    fe_t y;
-    uint32_t infinity; /* public flag for decoded/public points */
-} ec_affine_t;
+    fe256_t x;
+    fe256_t y;
+    uint32_t infinity; /* public flag for decoded/public P-256 points */
+} p256_affine_t;
 ```
 
 For secret-dependent intermediate values, prefer a representation that can be selected with masks. A public decoded key may branch on `infinity`; a scalar-multiplication loop may not branch on a secret point state unless the state is public by construction.

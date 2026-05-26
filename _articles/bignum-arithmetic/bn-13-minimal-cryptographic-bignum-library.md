@@ -37,6 +37,8 @@ sage/            SageMath vector scripts
 ## Type sketch
 
 ```c
+typedef uint32_t limb_t;
+
 #define BN_MAX_LIMBS 256
 
 typedef struct {
@@ -114,7 +116,7 @@ A minimal C bignum library can be correct and useful for research, tests, and ed
 
 ```python
 p = 2^127 - 1
-R = 2^(16*8)
+R = 2^(32*4)
 x, y = 123456789, 987654321
 print((x*y) % p == (x * R % p) * (y * R % p) * inverse_mod(R, p)^2 % p)
 print(power_mod(x, 65537, p) == pow(x, 65537, p))

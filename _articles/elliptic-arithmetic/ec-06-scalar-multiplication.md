@@ -36,6 +36,8 @@ $$
 
 This proves correctness, but a branch on $$b$$ leaks scalar bits.
 
+For a correctness-only P-256 test harness with public fixed scalars, it is acceptable to compute the doubled state and the added state, then branch to copy the public choice. That is the role of a public test routine. It must not be reused for ECDH or ECDSA secret scalars; secret-scalar code needs mask selection or a formula schedule whose memory access and control flow do not depend on scalar bits.
+
 ## Ladder-style constant-time shape
 
 For a short-Weierstrass implementation with incomplete addition formulas, do not merely write "Montgomery ladder" and assume safety. A useful invariant is still
@@ -48,17 +50,17 @@ but the update must be implemented with formulas that are valid for all states r
 
 ```c
 for (uint32_t i = scalar_bits; i-- > 0;) {
-    ec_jac_t d0, d1, s;
-    uint32_t bit = scalar_get_bit(k, i);
-    ec_double(&d0, &r0);       /* [2u]P */
-    ec_add(&s, &r0, &r1);      /* [2u+1]P */
-    ec_double(&d1, &r1);       /* [2u+2]P */
-    ec_jac_select(&r0, &d0, &s, bit);
-    ec_jac_select(&r1, &s, &d1, bit);
+    p256_jac_t d0, d1, s;
+    uint32_t bit = p256_scalar_get_bit(k, i);
+    p256_jac_double(&d0, &r0);       /* [2u]P */
+    p256_jac_add_complete(&s, &r0, &r1); /* [2u+1]P, complete or proved safe */
+    p256_jac_double(&d1, &r1);       /* [2u+2]P */
+    p256_jac_select(&r0, &d0, &s, bit);
+    p256_jac_select(&r1, &s, &d1, bit);
 }
 ```
 
-This is a constant-operation-count pattern, not automatically a complete implementation. The proof must still show that `ec_add` is valid for the pair `(r0,r1)` in every iteration, or replace it with complete formulas for the chosen curve model. Montgomery curves such as Curve25519 have their own x-coordinate ladder formulas; those are not the same as generic short-Weierstrass Jacobian addition.
+In this sketch, `p256_jac_add_complete` denotes a complete addition primitive, or an addition primitive whose exceptional cases have been discharged by an invariant proof. A correctness-test implementation that only provides public scalar multiplication with mixed addition does not automatically provide this production secret-scalar ladder. This is a constant-operation-count pattern, not automatically a complete implementation. The proof must still show that `p256_jac_add_complete` is actually complete for the states reached by the loop, or replace it with a formula whose exceptional cases are discharged by an explicit invariant. Montgomery curves such as Curve25519 have their own x-coordinate ladder formulas; those are not the same as generic short-Weierstrass Jacobian addition.
 
 ## Fixed-window multiplication
 
@@ -71,11 +73,11 @@ static uint32_t ct_eq_u32(uint32_t x, uint32_t y) {
     return (z >> 31) ^ 1u;
 }
 
-static void ec_select_table(ec_jac_t *r, const ec_jac_t table[], uint32_t len, uint32_t idx) {
-    ec_jac_set_infinity(r);
+static void p256_select_table(p256_jac_t *r, const p256_jac_t table[], uint32_t len, uint32_t idx) {
+    p256_jac_set_infinity(r);
     for (uint32_t i = 0; i < len; i++) {
         uint32_t take = ct_eq_u32(i, idx);
-        ec_jac_cmov(r, &table[i], take);
+        p256_jac_cmov(r, &table[i], take);
     }
 }
 ```

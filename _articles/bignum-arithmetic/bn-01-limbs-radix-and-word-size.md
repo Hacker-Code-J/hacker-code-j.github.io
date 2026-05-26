@@ -3,7 +3,7 @@ title: "Bignum Arithmetic 01: Limbs, Radix, and Word Size"
 layout: page
 categories: Computing
 tags: [bignum-arithmetic, C, cryptography]
-topics: radix 2^w, uint16_t, uint32_t, overflow bounds
+topics: radix 2^w, uint32_t, half-word products, overflow bounds
 short: "The value map, limb order, unsigned C arithmetic, and exact accumulator bounds."
 ---
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -29,13 +29,12 @@ The representation is canonical for length $$n$$ when each limb is reduced modul
 
 ## C type contract
 
-| Limb type | Radix | Product accumulator | Portable status |
+| Public word type | Mathematical radix | Product representation | Portable status |
 |---|---:|---|---|
-| `uint8_t` | $$2^8$$ | `uint16_t` | useful for tiny tests |
-| `uint16_t` | $$2^{16}$$ | `uint32_t` | baseline for this 32-bit-only series |
-| `uint32_t` | $$2^{32}$$ | two-word product | not used as a limb here because one product needs twice as many value bits |
+| `uint32_t` | $$2^{32}$$ | two `uint32_t` words from four 16-by-16 products | teaching model |
+| 16-bit half-word value | $$2^{16}$$ | one `uint32_t` product | internal multiplication device, not the public limb type |
 
-Unsigned overflow is defined modulo $$2^w$$ for the unsigned type width. Signed overflow is undefined behavior. Therefore limb arithmetic uses unsigned types only, and conversion from a wider unsigned accumulator to a limb is an intentional low-word extraction.
+Unsigned overflow is defined modulo $$2^{32}$$ for `uint32_t`. Signed overflow is undefined behavior. Therefore word arithmetic uses unsigned types only. A cast or assignment to `uint32_t` is low-word extraction; a 32-by-32 product is represented by explicit low and high words rather than by a wider C type.
 
 <div class="bn-proof" markdown="1">
 <span class="bn-env-title">Product bound</span>
@@ -46,7 +45,7 @@ $$
 xy\le (B-1)^2=B^2-2B+1<B^2.
 $$
 
-So a single product fits in an unsigned type of at least $$2w$$ value bits. With the series choice $$w=16$$, `uint32_t` is sufficient. A 32-bit limb would need a two-word mathematical product, so it is not the baseline implementation.
+So a single product fits in an unsigned type of at least $$2w$$ value bits. With the series choice $$w=32$$, no allowed C type can hold the whole product. The implementation therefore represents the product as two `uint32_t` words, obtained by splitting each input word into 16-bit halves.
 </div>
 
 ## Little-endian limbs
@@ -62,48 +61,57 @@ where $$c_i\in\{0,1\}$$ is the carry into limb $$i$$.
 
 Big-endian byte serialization is a separate API layer. Mixing serialization order with arithmetic order is a common source of off-by-one and endian bugs.
 
-## Example: exact 16-by-16 multiply
+## Example: exact 32-by-32 multiply from half-words
 
-For `uint16_t x, y`, define
+For `uint32_t x, y`, write
 
 $$
-xy=\ell+hB,
-\qquad 0\le \ell,h<B,
-\qquad B=2^{16}.
+x=x_0+x_1 2^{16},\qquad y=y_0+y_1 2^{16},\qquad 0\le x_i,y_i<2^{16}.
 $$
 
-A `uint32_t` accumulator gives both halves without using any wider C type:
+The product is represented as `hi:lo`, two 32-bit words:
 
 ```c
 #include <stdint.h>
 
-typedef uint16_t limb_t;
-typedef uint32_t dlimb_t;
-enum { BN_LIMB_BITS = 16 };
+typedef uint32_t limb_t;
+enum { BN_WORD_BITS = 32, BN_HALF_BITS = 16, BN_HALF_MASK = 0xffffu };
 
-static inline limb_t lo_limb(dlimb_t x) { return (limb_t)x; }
-static inline limb_t hi_limb(dlimb_t x) { return (limb_t)(x >> BN_LIMB_BITS); }
+static void bn_mul_word(limb_t x, limb_t y, limb_t *lo, limb_t *hi) {
+    limb_t x0 = x & BN_HALF_MASK;
+    limb_t x1 = x >> BN_HALF_BITS;
+    limb_t y0 = y & BN_HALF_MASK;
+    limb_t y1 = y >> BN_HALF_BITS;
+
+    limb_t p00 = x0 * y0;
+    limb_t p01 = x0 * y1;
+    limb_t p10 = x1 * y0;
+    limb_t p11 = x1 * y1;
+    limb_t mid = (p00 >> BN_HALF_BITS)
+               + (p01 & BN_HALF_MASK)
+               + (p10 & BN_HALF_MASK);
+
+    *lo = (p00 & BN_HALF_MASK) | ((mid & BN_HALF_MASK) << BN_HALF_BITS);
+    *hi = p11 + (p01 >> BN_HALF_BITS) + (p10 >> BN_HALF_BITS)
+        + (mid >> BN_HALF_BITS);
+}
 ```
 
-The cast to `limb_t` is not a bug; it is reduction modulo $$B$$, exactly the low limb.
-
-## Example: why the baseline does not use 32-bit limbs
-
-If a limb stored values modulo $$2^{32}$$, then one product could be as large as
-
-$$
-(2^{32}-1)^2<2^{2\cdot 32}.
-$$
-
-That product can still be represented with two `uint32_t` words, but every multiply-add routine must become a multiword arithmetic routine. The baseline therefore uses $$w=16$$: one product plus one output limb plus one carry fits in a single `uint32_t`.
+Every multiplication above is a 16-by-16 product below $$2^{32}$$. The shift counts are strictly smaller than 32, and the final high word is less than $$2^{32}$$ by the half-word product bound.
 
 ## SageMath bound check
 
 ```python
-for w in [8, 16]:
+for w in [16, 32]:
     B = 2^w
     print((B - 1)^2 < B^2)
     print((B - 1) + (B - 1) + 1 < 2*B)
+
+# Maximal 32-by-32 product represented by two 32-bit words.
+x = y = 2^32 - 1
+lo = (x*y) % 2^32
+hi = (x*y) // 2^32
+print(hex(lo), hex(hi))
 ```
 
 This confirms the inequalities, but the C proof still depends on the actual type widths. A build should assert them.
@@ -113,7 +121,6 @@ This confirms the inequalities, but the C proof still depends on the actual type
 #include <limits.h>
 
 _Static_assert(CHAR_BIT == 8, "this code assumes 8-bit bytes");
-_Static_assert(sizeof(uint16_t) * CHAR_BIT == 16, "uint16_t must be 16 bits");
 _Static_assert(sizeof(uint32_t) * CHAR_BIT == 32, "uint32_t must be 32 bits");
 ```
 

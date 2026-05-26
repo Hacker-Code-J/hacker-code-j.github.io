@@ -24,12 +24,12 @@ Chapter 5 of the reference book separates efficient implementation from secure i
 ## Constant-time swap
 
 ```c
-static void fe_swap(fe_t *a, fe_t *b, uint32_t bit) {
+static void fe256_swap(fe256_t *a, fe256_t *b, uint32_t bit) {
     uint32_t mask = 0u - bit;
-    for (uint32_t i = 0; i < 16; i++) {
-        uint16_t t = (uint16_t)(mask & (a->limb[i] ^ b->limb[i]));
-        a->limb[i] ^= t;
-        b->limb[i] ^= t;
+    for (uint32_t i = 0; i < P256_WORDS; i++) {
+        word_t t = mask & (a->v[i] ^ b->v[i]);
+        a->v[i] ^= t;
+        b->v[i] ^= t;
     }
 }
 ```
@@ -59,8 +59,8 @@ Public-key validation can branch on decoded public coordinates. Secret scalar mu
 ## API rule
 
 ```c
-int ec_mul_public(ec_affine_t *r, const scalar_t *k_public, const ec_affine_t *p_public);
-int ec_mul_secret(ec_affine_t *r, const scalar_t *k_secret, const ec_affine_t *p_public);
+int p256_mul_public(p256_affine_t *r, const word_t k_public[P256_WORDS], const p256_affine_t *p_public);
+int p256_mul_secret(p256_affine_t *r, const word_t k_secret[P256_WORDS], const p256_affine_t *p_public);
 ```
 
 Separate APIs make review easier. If a function accepts a secret scalar, its documentation must state constant-time expectations and excluded microarchitectural assumptions.

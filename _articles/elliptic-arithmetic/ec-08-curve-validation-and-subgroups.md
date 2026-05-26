@@ -43,11 +43,10 @@ For a decoded affine public point $$Q=(x,y)$$:
 For a curve with cofactor $$h=1$$, the on-curve check plus non-infinity already puts a point in the prime-order group. For $$h>1$$, the subgroup condition is a separate security condition, not a cosmetic extra.
 
 ```c
-int ec_validate_public(const ec_affine_t *q) {
-    if (q->infinity) return 0;
-    if (!fe_is_canonical(&q->x) || !fe_is_canonical(&q->y)) return 0;
-    if (!ec_affine_on_curve(q)) return 0;
-    return ec_affine_in_prime_subgroup(q);
+uint32_t p256_validate_public(const p256_affine_t *q) {
+    if (q->infinity != 0u) return 0u;
+    if (p256_affine_on_curve(q) == 0u) return 0u;
+    return 1u; /* P-256 has cofactor 1; other curves may need an explicit subgroup check. */
 }
 ```
 

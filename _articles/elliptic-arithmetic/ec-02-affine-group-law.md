@@ -68,7 +68,7 @@ and $$2P=(6,3)$$.
 ## C shape: specification, not inner loop
 
 ```c
-int ec_affine_add(ec_affine_t *r, const ec_affine_t *p, const ec_affine_t *q) {
+int p256_affine_add_spec(p256_affine_t *r, const p256_affine_t *p, const p256_affine_t *q) {
     if (p->infinity) { *r = *q; return 1; }
     if (q->infinity) { *r = *p; return 1; }
     /* Public/specification path: compare x, handle inverse/doubling, invert denominator. */

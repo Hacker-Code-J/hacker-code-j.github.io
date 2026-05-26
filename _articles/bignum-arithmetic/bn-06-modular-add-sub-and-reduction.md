@@ -94,7 +94,7 @@ A field implementation may allow $$0\le x<2p$$ between additions to save reducti
 ## SageMath range test
 
 ```python
-B = 2^16
+B = 2^32
 n = 4
 m = B^n - 189
 for a in [0, 1, m-1, m//2]:

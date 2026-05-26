@@ -25,7 +25,7 @@ The goal is not a universal ECC framework. The goal is a small primitive library
 
 ```text
 ec_word.h       fixed-width types, carry helpers, constant-time masks
-ec_field.h      fe_t and field operations modulo p
+ec_field.h      fe256_t and field operations modulo the P-256 prime
 ec_scalar.h     arithmetic modulo subgroup order n
 ec_point.h      affine/Jacobian point types and group operations
 ec_mul.h        scalar multiplication APIs
@@ -39,13 +39,13 @@ At the mathematical boundary, the field layer realizes $$\mathbb F_p$$, the poin
 ## API boundary
 
 ```c
-int ec_public_key_validate(const ec_affine_t *q);
-int ec_mul_base(ec_affine_t *r, const scalar_t *k_secret);
-int ec_mul_public(ec_affine_t *r, const scalar_t *k_public, const ec_affine_t *p_public);
-int ec_ecdh_raw(ec_affine_t *r, const scalar_t *d_secret, const ec_affine_t *q_public);
+int p256_public_key_validate(const p256_affine_t *q);
+int p256_mul_base(p256_affine_t *r, const word_t k_secret[P256_WORDS]);
+int p256_mul_public(p256_affine_t *r, const word_t k_public[P256_WORDS], const p256_affine_t *p_public);
+int p256_ecdh_raw(p256_affine_t *r, const word_t d_secret[P256_WORDS], const p256_affine_t *q_public);
 ```
 
-`ec_ecdh_raw` should not perform KDF or protocol transcript handling. It should validate or require validated input according to its name and documentation.
+`p256_ecdh_raw` should not perform KDF or protocol transcript handling. It should validate or require validated input according to its name and documentation.
 
 ## Fixed-size allocation
 
@@ -62,11 +62,19 @@ Avoid dynamic allocation in the arithmetic core. Fixed-size structs make lifetim
 Use SageMath to generate constants as limb arrays:
 
 ```python
-def limbs(x, n=16, w=16):
-    B = 2^w
-    return [(Integer(x) // B^i) % B for i in range(n)]
-p = 2^256 - 2^32 - 977
-print([hex(v) for v in limbs(p)])
+def words(x, n=8):
+    return [hex((Integer(x) >> (32*i)) & 0xffffffff) for i in range(n)]
+
+p = 2^256 - 2^224 + 2^192 + 2^96 - 1
+n = Integer("ffffffff00000000ffffffffffffffffbce6faada7179e84f3b9cac2fc632551", 16)
+b = Integer("5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b", 16)
+gx = Integer("6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296", 16)
+gy = Integer("4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5", 16)
+print(words(p))
+print(words(n))
+print(words(b))
+print(words(gx))
+print(words(gy))
 ```
 
 ## Production boundary

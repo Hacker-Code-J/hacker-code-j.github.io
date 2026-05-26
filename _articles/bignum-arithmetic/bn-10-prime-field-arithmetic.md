@@ -55,35 +55,50 @@ $$
 
 Then $$u\bmod p$$ is the inverse. Classical Euclid is variable-time; constant-time variants require careful bounded iteration.
 
-## Example: NIST-style pseudo-Mersenne prime
+## Example: P-256 prime
 
-For $$p=2^{256}-2^{224}+2^{192}+2^{96}-1$$, reduction can exploit the sparse relation defining $$2^{256}$$ modulo $$p$$. But the field implementation must prove that every fold and carry returns to its stated range.
+For $$p=2^{256}-2^{224}+2^{192}+2^{96}-1$$, reduction can exploit the sparse relation defining $$2^{256}$$ modulo $$p$$. The teaching implementation keeps the first version auditable: field elements are eight little-endian `uint32_t` words, and a word product is decomposed into 16-bit halves before it is accumulated.
+
+```c
+typedef uint32_t fe_word_t;
+typedef struct { fe_word_t v[8]; } fe_p256;
+```
+
+This type has mathematical radix $$B=2^{32}$$. Its multiplication proof is the 32-by-32 decomposition from the schoolbook multiplication article.
 
 ## Example: Curve25519-style prime
 
-For $$p=2^{255}-19$$ in this 32-bit-only profile, a uniform implementation can use sixteen 16-bit limbs. The high bit of the top limb is unused for canonical residues, and reduction must fold the excess using only 32-bit multiply-add steps.
+For $$p=2^{255}-19$$ in the same 32-bit-word model, a uniform implementation can use eight `uint32_t` words. The high bit of the top word is unused for canonical residues, and reduction must fold the excess using only bounded shifts, additions, and the small public multiplier 19.
+
+```c
+typedef struct { uint32_t v[8]; } fe_25519;
+```
 
 ## C API boundary
 
 ```c
-typedef struct { uint16_t v[16]; } fe_p256;
-
 void fe_add(fe_p256 *r, const fe_p256 *a, const fe_p256 *b);
 void fe_mul(fe_p256 *r, const fe_p256 *a, const fe_p256 *b);
 void fe_sqr(fe_p256 *r, const fe_p256 *a);
 void fe_inv(fe_p256 *r, const fe_p256 *a);
+void fe_to_mont(fe_p256 *r, const fe_p256 *a);
+void fe_from_mont(fe_p256 *r, const fe_p256 *a);
+void fe_mont_mul(fe_p256 *r, const fe_p256 *a, const fe_p256 *b);
 ```
 
-The type fixes the modulus and limb count. That is safer than a generic `(limbs, n, modulus)` interface in elliptic-curve code.
+The type fixes the modulus and word count. That is safer than a generic `(limbs, n, modulus)` interface in elliptic-curve code.
 
 ## SageMath verification
 
 ```python
-p = 2^255 - 19
+p = 2^256 - 2^224 + 2^192 + 2^96 - 1
 F = GF(p)
+def words(x):
+    return [hex((Integer(x) >> (32*i)) & 0xffffffff) for i in range(8)]
 for a in [1, 2, 19, p-2]:
-    print(int(F(a)^(-1)) == power_mod(a, p-2, p))
-    print((a * power_mod(a, p-2, p)) % p == 1)
+    inv = power_mod(a, p-2, p)
+    print(words(inv))
+    print((a * inv) % p == 1)
 ```
 
 ## Cryptographic warning

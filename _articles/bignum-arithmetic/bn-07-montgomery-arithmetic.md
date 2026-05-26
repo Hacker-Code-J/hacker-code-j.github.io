@@ -70,17 +70,12 @@ void mont_redc(limb_t *r, limb_t *t,
                const limb_t *m, limb_t m0inv, uint32_t n) {
     /* API contract: n <= BN_MAX_LIMBS and t has 2*n + 1 limbs. */
     for (uint32_t i = 0; i < n; i++) {
-        limb_t q = (limb_t)((dlimb_t)t[i] * m0inv);
-        dlimb_t carry = 0;
+        limb_t q = t[i] * m0inv; /* low word modulo B */
         for (uint32_t j = 0; j < n; j++) {
-            dlimb_t z = (dlimb_t)q * m[j] + t[i+j] + carry;
-            t[i+j] = (limb_t)z;
-            carry = z >> BN_LIMB_BITS;
-        }
-        for (uint32_t k = i + n; k <= 2u*n; k++) {
-            dlimb_t z = (dlimb_t)t[k] + carry;
-            t[k] = (limb_t)z;
-            carry = z >> BN_LIMB_BITS;
+            limb_t lo, hi;
+            bn_mul_word(q, m[j], &lo, &hi);
+            bn_add_word_at(t, 2u*n + 1u, i + j, lo);
+            bn_add_word_at(t, 2u*n + 1u, i + j + 1u, hi);
         }
     }
     limb_t high = t[2u*n];        /* under T < mR, high is 0 or 1 */
@@ -93,7 +88,7 @@ void mont_redc(limb_t *r, limb_t *t,
 
 The final canonicalization must also account for the extra high limb `t[2*n]`. The REDC candidate is below $$2m$$, but it can still be at least $$B^n$$ when $$m$$ is close to $$B^n$$. In that case the low `n` limbs alone may look smaller than `m`, so the high limb must force selection of the subtracted result.
 
-The carry propagation loop has a public bound and continues through the extra limb even after `carry` becomes zero. Its safety is part of the REDC invariant: under $$0\le T<mR$$, the represented intermediate stays below $$2mR<2R^2$$, so no limb beyond `t[2*n]` is required. Production code should make `BN_MAX_LIMBS` an enforced compile-time or API-level bound.
+This skeleton uses the same correctness-first carry helper as the schoolbook product. The internal P-256 test code specializes the cancellation word to the active low word, because the low word of the P-256 prime is $$B-1$$ and therefore $$m'=1$$. Its safety is part of the REDC invariant: under $$0\le T<mR$$, the represented intermediate stays below $$2mR<2R^2$$, so no limb beyond `t[2*n]` is required. Production code should make `BN_MAX_LIMBS` an enforced compile-time or API-level bound and use fixed public-loop canonicalization instead of value-dependent helper exits.
 
 ## Computing `m0inv`
 
@@ -103,9 +98,13 @@ $$
 x_{k+1}=x_k(2-m_0x_k)\pmod {2^{2^k}}.
 $$
 
+## P-256 word-model note
+
+For P-256 with $$B=2^{32}$$ and $$n=8$$, the low word of the modulus is $$B-1$$. Hence $$m_0^{-1}\equiv -1\pmod B$$ and $$m'\equiv 1\pmod B$$, so the cancellation word at each REDC step is just the active low word. This simplifies the choice of `q`, but it does not remove the word-product proof: each `q*m[j]` product still has to be computed by 16-bit partial products when the implementation uses no wider C integer type.
+
 ## Example: RSA-style modulus
 
-For a 2048-bit odd modulus under the 32-bit-only profile, $$w=16$$, $$n=128$$, and $$R=2^{2048}$$. Every modular multiplication in exponentiation can be performed as Montgomery multiplication after converting the base to $$xR\bmod m$$ and converting the final result by multiplying by 1.
+For a 2048-bit odd modulus under this 32-bit teaching model, $$w=32$$, $$n=64$$, and $$R=2^{2048}$$. Every modular multiplication in exponentiation can be performed as Montgomery multiplication after converting the base to $$xR\bmod m$$ and converting the final result by multiplying by 1.
 
 ## Example: Diffie-Hellman prime field
 
@@ -122,7 +121,7 @@ def mont_params(m, w, n):
     return B, R, mp, (R^2 % m)
 
 m = 2^127 - 1
-B, R, mp, R2 = mont_params(m, 16, 8)
+B, R, mp, R2 = mont_params(m, 32, 4)
 x, y = 123456789, 987654321
 xt = x*R % m
 yt = y*R % m

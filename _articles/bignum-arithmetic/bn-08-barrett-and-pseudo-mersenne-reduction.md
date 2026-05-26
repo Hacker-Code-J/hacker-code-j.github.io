@@ -78,14 +78,14 @@ Here $$2^{448}\equiv 2^{224}+1\pmod p$$. A high limb chunk folds into two lower 
 
 ```c
 /* Conceptual fold for p = 2^255 - 19, not a complete field implementation. */
-void fold_25519(limb_t out[16], const limb_t in[32]) {
-    /* Split at bit 255, fold high part multiplied by 19, then carry. */
+void fold_25519(limb_t out[8], const limb_t in[16]) {
+    /* Split at bit 255 across eight 32-bit words, fold high bits by 19, then carry. */
     (void)out;
     (void)in;
 }
 ```
 
-The omitted details are exactly the important ones: bit 255 cuts through the top 16-bit limb. A 32-bit-only production representation may use uniform 16-bit limbs or another carefully proved sub-32-bit radix, but it cannot rely on a scalar product wider than `uint32_t`.
+The omitted details are exactly the important ones: bit 255 cuts through the top 32-bit word. The high one-bit slice and the upper eight input words must be folded using only `uint32_t` additions, shifts by less than 32, and bounded multiplication by the small public constant 19.
 
 ## SageMath reduction check
 

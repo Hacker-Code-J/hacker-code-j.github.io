@@ -37,28 +37,28 @@ Y_3=A(D-X_3)-C^2/2,\qquad
 Z_3=BZ_1.
 $$
 
-The division by 2 is multiplication by $$2^{-1}\bmod p$$. For odd prime fields this is well-defined, but the field API should expose `fe_half` with a range proof.
+The division by 2 is multiplication by $$2^{-1}\bmod p$$. For odd prime fields this is well-defined, but the field API should expose `fe256_half` with a range proof.
 
 ```c
-static void ec_jac_double(ec_jac_t *r, const ec_jac_t *p) {
-    fe_t z2, xmz2, xpz2, A, B, C, D, twoD, C2;
-    fe_sqr(&z2, &p->Z);
-    fe_sub(&xmz2, &p->X, &z2);
-    fe_add(&xpz2, &p->X, &z2);
-    fe_mul(&A, &xmz2, &xpz2);
-    fe_mul_small(&A, &A, 3);
-    fe_add(&B, &p->Y, &p->Y);
-    fe_sqr(&C, &B);
-    fe_mul(&D, &C, &p->X);
-    fe_add(&twoD, &D, &D);
-    fe_sqr(&r->X, &A);
-    fe_sub(&r->X, &r->X, &twoD);
-    fe_sqr(&C2, &C);
-    fe_half(&C2, &C2);
-    fe_sub(&D, &D, &r->X);
-    fe_mul(&r->Y, &A, &D);
-    fe_sub(&r->Y, &r->Y, &C2);
-    fe_mul(&r->Z, &B, &p->Z);
+static void p256_jac_double_core(p256_jac_t *r, const p256_jac_t *p) {
+    fe256_t z2, xmz2, xpz2, A, B, C, D, twoD, C2;
+    fe256_sqr(&z2, &p->Z);
+    fe256_sub(&xmz2, &p->X, &z2);
+    fe256_add(&xpz2, &p->X, &z2);
+    fe256_mul(&A, &xmz2, &xpz2);
+    fe256_mul_small(&A, &A, 3u);
+    fe256_add(&B, &p->Y, &p->Y);
+    fe256_sqr(&C, &B);
+    fe256_mul(&D, &C, &p->X);
+    fe256_add(&twoD, &D, &D);
+    fe256_sqr(&r->X, &A);
+    fe256_sub(&r->X, &r->X, &twoD);
+    fe256_sqr(&C2, &C);
+    fe256_half(&C2, &C2);
+    fe256_sub(&D, &D, &r->X);
+    fe256_mul(&r->Y, &A, &D);
+    fe256_sub(&r->Y, &r->Y, &C2);
+    fe256_mul(&r->Z, &B, &p->Z);
 }
 ```
 
@@ -139,6 +139,7 @@ for k in range(1, 8):
 ## Proof obligation
 
 Each temporary must have a range compatible with the field API. If `fe_add` returns $$<2p$$ and `fe_mul` accepts only canonical residues, the formula is invalid as written. Either canonicalize between operations or design the field layer to accept the documented lazy ranges.
+The C function also needs an aliasing contract. The clarity-first formulas should be treated as out-of-place unless every assignment schedule has been proved safe when the output aliases an input; scalar-multiplication code should use separate temporaries for doubled and added states when that proof is absent.
 
 <nav class="ec-nav">
   <a href="/articles/ec-03-projective-and-jacobian-coordinates/"><span>Previous</span>Elliptic Arithmetic 03: Projective and Jacobian Coordinates</a>
