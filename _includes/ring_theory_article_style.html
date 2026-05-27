@@ -1,0 +1,190 @@
+<style>
+.post-title { display: none; }
+.page-content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.page-content > .wrapper,
+.post,
+.post-content {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.rt-note {
+  --rt-ink: #17211c;
+  --rt-muted: #607067;
+  --rt-rule: #d7e2dc;
+  --rt-soft: #f6faf7;
+  --rt-accent: #2f6d4f;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 830px;
+  margin: 0 auto;
+  color: var(--rt-ink);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+.rt-note *,
+.rt-note *::before,
+.rt-note *::after { box-sizing: border-box; }
+.rt-note-00 { --rt-accent: #2f6d4f; }
+.rt-note-01 { --rt-accent: #315f7a; }
+.rt-note-02 { --rt-accent: #7a562c; }
+.rt-note-03 { --rt-accent: #315f42; }
+.rt-note-04 { --rt-accent: #6d4f7c; }
+.rt-note-05 { --rt-accent: #2e6870; }
+.rt-note-06 { --rt-accent: #74602c; }
+.rt-note-07 { --rt-accent: #7a3f48; }
+.rt-note-08 { --rt-accent: #4e6540; }
+.rt-note-09 { --rt-accent: #385d84; }
+.rt-note-10 { --rt-accent: #684b32; }
+.rt-note-appendix { --rt-accent: #556170; }
+.rt-note mjx-container[jax="CHTML"][display="true"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.rt-note-head {
+  margin: .25rem 0 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rt-rule);
+}
+.rt-series {
+  margin: 0 0 .45rem;
+  color: var(--rt-accent);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.rt-note h1 {
+  margin: 0;
+  color: var(--rt-ink);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.06;
+  overflow-wrap: anywhere;
+}
+.rt-deck {
+  max-width: 730px;
+  margin: .75rem 0 0;
+  color: #4b5f54;
+  font-size: 1.06rem;
+  line-height: 1.65;
+}
+.rt-note h2 {
+  margin: 2rem 0 .7rem;
+  padding-bottom: .18rem;
+  border-bottom: 1px solid #e3ece7;
+  color: #202a25;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+.rt-note h3 {
+  margin: 1.45rem 0 .45rem;
+  color: var(--rt-accent);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+.rt-note p,
+.rt-note ul,
+.rt-note ol { margin-bottom: .95rem; }
+.rt-note li + li { margin-top: .35rem; }
+.rt-note table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.2rem;
+  font-size: .92rem;
+}
+.rt-note th,
+.rt-note td {
+  border-bottom: 1px solid #e3ece7;
+  padding: .5rem .38rem;
+  vertical-align: top;
+}
+.rt-note th {
+  color: var(--rt-accent);
+  font-weight: 700;
+  text-align: left;
+}
+.rt-env,
+.rt-example,
+.rt-proof,
+.rt-warning,
+.rt-aside {
+  margin: 1.15rem 0;
+  padding: .8rem .95rem;
+  border-left: 3px solid var(--rt-accent);
+  background: var(--rt-soft);
+}
+.rt-example { border-left-color: #28735f; background: #f6fbf8; }
+.rt-proof { border-left-color: #6b7280; background: #f8fafc; }
+.rt-warning { border-left-color: #9a4b18; background: #fff9f1; }
+.rt-aside { border-left-color: #8fa1a6; background: #fbfcfb; }
+.rt-env-title {
+  display: block;
+  margin-bottom: .35rem;
+  color: var(--rt-accent);
+  font-weight: 700;
+}
+.rt-small {
+  color: var(--rt-muted);
+  font-size: .9rem;
+}
+.rt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .75rem;
+  margin: 1rem 0 1.35rem;
+}
+.rt-card {
+  border: 1px solid #e1e9e4;
+  border-radius: 8px;
+  padding: .82rem .9rem;
+  background: #fff;
+}
+.rt-card a {
+  color: var(--rt-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.rt-card a:hover { text-decoration: underline; }
+.rt-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rt-rule);
+}
+.rt-nav a,
+.rt-nav span {
+  display: block;
+  min-width: 0;
+}
+.rt-nav a {
+  flex: 1;
+  color: var(--rt-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.rt-nav a:hover { text-decoration: underline; }
+.rt-nav .rt-next { text-align: right; }
+.rt-nav a span {
+  color: var(--rt-muted);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+@media (max-width: 640px) {
+  .rt-note { font-size: .97rem; line-height: 1.68; }
+  .rt-nav { display: grid; grid-template-columns: 1fr; }
+  .rt-nav .rt-next { text-align: left; }
+}
+</style>

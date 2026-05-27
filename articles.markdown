@@ -320,6 +320,7 @@ permalink: /articles/
 {%- assign math_articles   = site.articles | where_exp: "item", "item.path contains '/mathematics/'"  | sort: 'title' -%}
 {%- assign df_articles     = site.articles | where_exp: "item", "item.path contains '/differential-forms/'" | sort: 'title' -%}
 {%- assign sc_articles     = site.articles | where_exp: "item", "item.path contains '/sheaf-cohomology/'" | sort: 'title' -%}
+{%- assign rt_articles     = site.articles | where_exp: "item", "item.path contains '/ring-theory/'" | sort: 'title' -%}
 {%- assign rr_articles     = site.articles | where_exp: "item", "item.path contains '/riemann-roch/'" | sort: 'title' -%}
 {%- assign crypto_articles = site.articles | where_exp: "item", "item.path contains '/cryptography/'" | sort: 'title' -%}
 {%- assign ps_articles     = site.articles | where_exp: "item", "item.path contains '/provable-security/'" | sort: 'title' -%}
@@ -338,6 +339,7 @@ permalink: /articles/
         <option value="mathematics">Mathematics ({{ math_articles | size }})</option>
         <option value="differential-forms">Differential Forms ({{ df_articles | size }})</option>
         <option value="sheaf-cohomology">Sheaf Cohomology ({{ sc_articles | size }})</option>
+        <option value="ring-theory">Ring Theory ({{ rt_articles | size }})</option>
         <option value="riemann-roch">Riemann-Roch ({{ rr_articles | size }})</option>
       </optgroup>
       <optgroup label="Cryptography">
@@ -361,6 +363,7 @@ permalink: /articles/
       <a class="art-nav-link active" id="tab-mathematics" role="tab" aria-selected="true" aria-controls="mathematics" href="#mathematics">Mathematics <span class="nav-count">{{ math_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-differential-forms" role="tab" aria-selected="false" aria-controls="differential-forms" href="#differential-forms">Differential Forms <span class="nav-count">{{ df_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-sheaf-cohomology" role="tab" aria-selected="false" aria-controls="sheaf-cohomology" href="#sheaf-cohomology">Sheaf Cohomology <span class="nav-count">{{ sc_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-ring-theory" role="tab" aria-selected="false" aria-controls="ring-theory" href="#ring-theory">Ring Theory <span class="nav-count">{{ rt_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-riemann-roch" role="tab" aria-selected="false" aria-controls="riemann-roch" href="#riemann-roch">Riemann-Roch <span class="nav-count">{{ rr_articles | size }}</span></a>
     </div>
     <div class="art-nav-group">
@@ -385,7 +388,7 @@ permalink: /articles/
 
 <script>
 (function () {
-  const ids = ["mathematics", "differential-forms", "sheaf-cohomology", "riemann-roch", "cryptography", "provable-security", "coding-theory", "bignum-arithmetic", "elliptic-arithmetic", "programming", "etc"];
+  const ids = ["mathematics", "differential-forms", "sheaf-cohomology", "ring-theory", "riemann-roch", "cryptography", "provable-security", "coding-theory", "bignum-arithmetic", "elliptic-arithmetic", "programming", "etc"];
   const links = Array.from(document.querySelectorAll(".art-nav-link[role=tab]"));
   const categorySelect = document.getElementById("art-category-select");
 
@@ -530,6 +533,37 @@ permalink: /articles/
 </div>
 
 {% include sheaf_cohomology_articles_tab.html %}
+
+<!-- ── Ring Theory ────────────────────────────────────────────────────── -->
+<div class="art-section" id="ring-theory">
+  <div class="art-section-header">
+    <span class="art-section-title">Ring Theory</span>
+  </div>
+
+  <div class="art-equation">
+    $$A \longmapsto \operatorname{Spec} A,\qquad \mathcal O_{\operatorname{Spec} A}(D(f))=A_f,\qquad \widetilde M(D(f))=M_f$$
+  </div>
+
+  <div class="art-quote">
+    <p>Prime ideals are the points, localization is restriction to an open set, and sheaves are the mechanism that turns local algebra into geometry.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in rt_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
 
 <!-- ── Riemann-Roch ───────────────────────────────────────────────────── -->
 
