@@ -6,6 +6,9 @@ title: Complex Analysis and Riemann Surfaces - A Graduate Path to Algebraic Geom
 authors: Gunhee Cho with contributions by Bae Dongsong, Junhyuk Boo, Byungjoo Jeon, Yonghyun Ji, Sumin Kim, Namho Kim, Minseung Kwak, Hojae Jung, Hyunsoo Yoo, and Hyunmin Yoon
 venue: NONE #International Conference on Amazing Research (ICAR 2025)
 link: https://arxiv.org/abs/2601.06868
+archive: arXiv
+archive_id: "2601.06868"
+archive_note: "arXiv:2601.06868"
 # pdf: /assets/papers/sample-paper.pdf
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
@@ -41,6 +44,13 @@ link: https://arxiv.org/abs/2601.06868
 - **Algebraic-geometry-first:** divisors/line bundles → sheaves/cohomology → Riemann–Roch → Jacobians -->
 
 These are notes that develop complex analysis with a computation-first approach and use it as a pathway into **Riemann surfaces** and core ideas in **algebraic geometry**—divisors, line bundles, sheaves, and cohomology—culminating in topics such as **Jacobians** and the **Riemann–Roch theorem**.
+
+## Archive information
+
+- **Archive**: arXiv
+- **Identifier**: [arXiv:2601.06868](https://arxiv.org/abs/2601.06868)
+- **Type**: preprint / graduate lecture notes
+- **Scope**: a computation-first path from classical complex analysis to compact Riemann surfaces, sheaves, cohomology, Riemann-Roch, and Jacobians.
 
 ## Complex analysis essentials
 - **Cauchy–Riemann equations** for $$f=u+iv$$ on $$\mathbb{C}$$:

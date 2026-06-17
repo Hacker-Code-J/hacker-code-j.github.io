@@ -271,6 +271,15 @@ layout: home
   transform: translateX(2px);
 }
 
+.idx-entry.past {
+  border-left-color: #e5e7eb;
+}
+
+.idx-entry.past:hover {
+  background: #f9fafb;
+  border-left-color: #9ca3af;
+}
+
 .entry-year {
   display: inline-block;
   margin-right: .45rem;
@@ -291,6 +300,12 @@ layout: home
   border-color: #bbf7d0;
 }
 
+.entry-year.muted {
+  color: #9ca3af;
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
 .entry-title {
   color: var(--c-navy);
   font-size: .98em;
@@ -301,12 +316,24 @@ layout: home
 
 .entry-title:hover { color: var(--c-accent); text-decoration: underline; }
 
+.idx-entry.past .entry-title {
+  color: #6b7280;
+}
+
+.idx-entry.past .entry-title:hover {
+  color: #4b5563;
+}
+
 .entry-short {
   max-width: 72ch;
   margin-top: .18rem;
   color: var(--c-muted);
   font-size: .86em;
   line-height: 1.55;
+}
+
+.idx-entry.past .entry-short {
+  color: #9ca3af;
 }
 
 .entry-links {
@@ -1235,9 +1262,20 @@ layout: home
 
 <div class="idx-section-list">
 {% for project in site.projects reversed %}
-<div class="idx-entry">
+{% assign project_end = project.year | split: ' - ' | last | downcase %}
+{% assign project_expired = false %}
+{% unless project_end contains '20xx' %}
+  {% assign project_end_year = project_end | split: '.' | first %}
+  {% assign project_end_month = project_end | split: '.' | last %}
+  {% assign project_end_stamp = project_end_year | append: project_end_month | plus: 0 %}
+  {% assign current_stamp = site.time | date: '%Y%m' | plus: 0 %}
+  {% if project_end_stamp < current_stamp %}
+    {% assign project_expired = true %}
+  {% endif %}
+{% endunless %}
+<div class="idx-entry{% if project_expired %} past{% endif %}">
   <div>
-    <span class="entry-year">{{ project.year }}</span>
+    <span class="entry-year{% if project_expired %} muted{% endif %}">{{ project.year }}</span>
     <a href="{{ project.url | relative_url }}" class="entry-title">{{ project.project }}</a>
   </div>
   <div class="entry-short">{{ project.short }}</div>

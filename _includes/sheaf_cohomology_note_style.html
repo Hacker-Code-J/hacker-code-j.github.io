@@ -42,7 +42,8 @@
 .sc-note-10 { --sc-accent: #2f6b3f; }
 .sc-note-11 { --sc-accent: #8a4a35; }
 .sc-note-12 { --sc-accent: #4f6475; }
-.sc-note mjx-container[jax="CHTML"][display="true"] {
+.sc-note mjx-container[jax="CHTML"][display="true"],
+.sc-note mjx-container[jax="SVG"][display="true"] {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -172,6 +173,26 @@
   min-width: 0;
   overflow-wrap: anywhere;
 }
+.sc-bridge-table {
+  margin: 1rem 0 1.2rem;
+  border-top: 1px solid #e6ebf2;
+}
+.sc-bridge-row {
+  display: grid;
+  grid-template-columns: minmax(110px, .8fr) minmax(180px, 1.15fr) minmax(210px, 1.35fr);
+  gap: .75rem;
+  padding: .48rem 0;
+  border-bottom: 1px solid #e6ebf2;
+  align-items: start;
+}
+.sc-bridge-row span {
+  min-width: 0;
+}
+.sc-bridge-head {
+  color: var(--sc-accent);
+  font-weight: 700;
+  font-size: .88rem;
+}
 .sc-nav {
   display: flex;
   justify-content: space-between;
@@ -205,6 +226,12 @@
   }
   .sc-note { font-size: .97rem; }
   .sc-note-head { margin-top: 0; }
+  .sc-note th,
+  .sc-note td {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
   .sc-coverage-row {
     display: block;
     padding: .65rem 0;
@@ -221,6 +248,27 @@
     font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
     font-size: .82rem;
     margin-top: .15rem;
+  }
+  .sc-bridge-row {
+    display: block;
+    padding: .68rem 0;
+  }
+  .sc-bridge-head { display: none; }
+  .sc-bridge-row span { display: block; }
+  .sc-bridge-row span:first-child {
+    color: var(--sc-accent);
+    font-weight: 700;
+    margin-bottom: .2rem;
+  }
+  .sc-bridge-row span:nth-child(2)::before {
+    content: "Calculus: ";
+    color: var(--sc-muted);
+    font-weight: 700;
+  }
+  .sc-bridge-row span:nth-child(3)::before {
+    content: "Čech/sheaf: ";
+    color: var(--sc-muted);
+    font-weight: 700;
   }
   .sc-nav { display: block; }
   .sc-nav a { display: block; max-width: 100%; }

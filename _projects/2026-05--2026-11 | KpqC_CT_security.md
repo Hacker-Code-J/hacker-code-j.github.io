@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Verification technology for PQC implementation and development of verification services
-list: 2026.04 - 2026.12 | Research on verification technology for PQC implementation and development of verification services
-year: 2026.04 - 2026.12
-project: Verification technology for PQC implementation and development of verification services
-# git: 
+title: Research on the Security for Constant-Time KpqC Implementations
+list: 2026.05 - 2026.11 | Research on the Security for the Constant-Time KpqC
+year: 2026.05 - 2026.11
+project: Research on the Security for the Constant-Time Implementation of KpqC
+# git:
 short: >-
-  I research on verification technology for PQC implementation and development of verification services
+  I research the security of constant-time implementations for Korean Quantum-quantum Cryptography (KpqC). 
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -32,9 +32,24 @@ short: >-
   </div>
 </div>
 
-<div id="content" style="display: none;">
-  <!-- Content goes here - add your markdown content inside this div -->
-</div>
+<!-- %, focusing on implementation-level leakage risks and verification methods.
+<link rel="stylesheet" href="/assets/css/custom.css">
+
+## Project scope
+
+This project studies the security of constant-time implementations for Korean Quantum-quantum Cryptography (KpqC). The focus is on implementation-level assurance: identifying secret-dependent behavior, evaluating timing and side-channel leakage risks, and organizing verification methods that support secure deployment.
+
+## Research focus
+
+- Constant-time implementation review for KpqC primitives.
+- Analysis of secret-dependent branches, memory accesses, and arithmetic paths.
+- Timing-leakage and side-channel risk assessment.
+- Verification workflows for implementation security.
+- Documentation of security assumptions, test methods, and mitigation strategies.
+
+## Practical goal
+
+The goal is to connect cryptographic security requirements with concrete implementation evidence. A KpqC implementation should not only be mathematically sound; it should also avoid observable behavior that depends on secret data. -->
 
 <script>
 const correctPassword = "wjssmdgktlsdkzkfmxm"; // Change this to your desired password

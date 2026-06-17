@@ -320,15 +320,16 @@ permalink: /articles/
 {%- assign math_articles   = site.articles | where_exp: "item", "item.path contains '/mathematics/'"  | sort: 'title' -%}
 {%- assign df_articles     = site.articles | where_exp: "item", "item.path contains '/differential-forms/'" | sort: 'title' -%}
 {%- assign sc_articles     = site.articles | where_exp: "item", "item.path contains '/sheaf-cohomology/'" | sort: 'title' -%}
+{%- assign cech_articles   = site.articles | where_exp: "item", "item.path contains '/cech-cohomology/'" | sort: 'title' -%}
 {%- assign rt_articles     = site.articles | where_exp: "item", "item.path contains '/ring-theory/'" | sort: 'title' -%}
 {%- assign rr_articles     = site.articles | where_exp: "item", "item.path contains '/riemann-roch/'" | sort: 'title' -%}
-{%- assign crypto_articles = site.articles | where_exp: "item", "item.path contains '/cryptography/'" | sort: 'title' -%}
+{% comment %}{%- assign crypto_articles = site.articles | where_exp: "item", "item.path contains '/cryptography/'" | sort: 'title' -%}{% endcomment %}
 {%- assign ps_articles     = site.articles | where_exp: "item", "item.path contains '/provable-security/'" | sort: 'title' -%}
 {%- assign ct_articles     = site.articles | where_exp: "item", "item.path contains '/coding-theory/'" | sort: 'title' -%}
 {%- assign bn_articles     = site.articles | where_exp: "item", "item.path contains '/bignum-arithmetic/'" | sort: 'title' -%}
 {%- assign ec_articles     = site.articles | where_exp: "item", "item.path contains '/elliptic-arithmetic/'" | sort: 'title' -%}
-{%- assign prog_articles   = site.articles | where_exp: "item", "item.path contains '/programmings/'" | sort: 'title' -%}
-{%- assign etc_articles    = site.articles | where_exp: "item", "item.path contains '/etc/'"          | sort: 'title' -%}
+{% comment %}{%- assign prog_articles   = site.articles | where_exp: "item", "item.path contains '/programmings/'" | sort: 'title' -%}{% endcomment %}
+{% comment %}{%- assign etc_articles    = site.articles | where_exp: "item", "item.path contains '/etc/'"          | sort: 'title' -%}{% endcomment %}
 
 <div class="art-library">
 <nav class="art-nav" aria-label="Article sections">
@@ -338,23 +339,30 @@ permalink: /articles/
       <optgroup label="Mathematics">
         <option value="mathematics">Mathematics ({{ math_articles | size }})</option>
         <option value="differential-forms">Differential Forms ({{ df_articles | size }})</option>
+        <option value="cech-cohomology">Čech Cohomology ({{ cech_articles | size }})</option>
         <option value="sheaf-cohomology">Sheaf Cohomology ({{ sc_articles | size }})</option>
         <option value="ring-theory">Ring Theory ({{ rt_articles | size }})</option>
         <option value="riemann-roch">Riemann-Roch ({{ rr_articles | size }})</option>
       </optgroup>
-      <optgroup label="Cryptography">
-        <option value="cryptography">Cryptography ({{ crypto_articles | size }})</option>
+      {% comment %}
+      <option value="cryptography">Cryptography ({{ crypto_articles | size }})</option>
+      {% endcomment %}
+      <optgroup label="Information Theory and Cryptography">
         <option value="provable-security">Provable Security ({{ ps_articles | size }})</option>
         <option value="coding-theory">Coding Theory ({{ ct_articles | size }})</option>
       </optgroup>
       <optgroup label="Computing">
         <option value="bignum-arithmetic">Bignum Arithmetic ({{ bn_articles | size }})</option>
         <option value="elliptic-arithmetic">Elliptic Arithmetic ({{ ec_articles | size }})</option>
+        {% comment %}
         <option value="programming">Programming ({{ prog_articles | size }})</option>
+        {% endcomment %}
       </optgroup>
+      {% comment %}
       <optgroup label="Miscellaneous">
         <option value="etc">E.T.C. ({{ etc_articles | size }})</option>
       </optgroup>
+      {% endcomment %}
     </select>
   </div>
   <div class="art-nav-inner" role="tablist" aria-label="Article categories">
@@ -362,13 +370,17 @@ permalink: /articles/
       <span class="art-nav-group-label">Mathematics</span>
       <a class="art-nav-link active" id="tab-mathematics" role="tab" aria-selected="true" aria-controls="mathematics" href="#mathematics">Mathematics <span class="nav-count">{{ math_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-differential-forms" role="tab" aria-selected="false" aria-controls="differential-forms" href="#differential-forms">Differential Forms <span class="nav-count">{{ df_articles | size }}</span></a>
+      <a class="art-nav-link" id="tab-cech-cohomology" role="tab" aria-selected="false" aria-controls="cech-cohomology" href="#cech-cohomology">Čech Cohomology <span class="nav-count">{{ cech_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-sheaf-cohomology" role="tab" aria-selected="false" aria-controls="sheaf-cohomology" href="#sheaf-cohomology">Sheaf Cohomology <span class="nav-count">{{ sc_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-ring-theory" role="tab" aria-selected="false" aria-controls="ring-theory" href="#ring-theory">Ring Theory <span class="nav-count">{{ rt_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-riemann-roch" role="tab" aria-selected="false" aria-controls="riemann-roch" href="#riemann-roch">Riemann-Roch <span class="nav-count">{{ rr_articles | size }}</span></a>
     </div>
     <div class="art-nav-group">
+      <span class="art-nav-group-label">Information Theory and Cryptography</span>
+      {% comment %}
       <span class="art-nav-group-label">Cryptography</span>
       <a class="art-nav-link" id="tab-cryptography" role="tab" aria-selected="false" aria-controls="cryptography" href="#cryptography">Cryptography <span class="nav-count">{{ crypto_articles | size }}</span></a>
+      {% endcomment %}
       <a class="art-nav-link" id="tab-provable-security" role="tab" aria-selected="false" aria-controls="provable-security" href="#provable-security">Provable Security <span class="nav-count">{{ ps_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-coding-theory" role="tab" aria-selected="false" aria-controls="coding-theory" href="#coding-theory">Coding Theory <span class="nav-count">{{ ct_articles | size }}</span></a>
     </div>
@@ -376,19 +388,23 @@ permalink: /articles/
       <span class="art-nav-group-label">Computing</span>
       <a class="art-nav-link" id="tab-bignum-arithmetic" role="tab" aria-selected="false" aria-controls="bignum-arithmetic" href="#bignum-arithmetic">Bignum Arithmetic <span class="nav-count">{{ bn_articles | size }}</span></a>
       <a class="art-nav-link" id="tab-elliptic-arithmetic" role="tab" aria-selected="false" aria-controls="elliptic-arithmetic" href="#elliptic-arithmetic">Elliptic Arithmetic <span class="nav-count">{{ ec_articles | size }}</span></a>
+      {% comment %}
       <a class="art-nav-link" id="tab-programming" role="tab" aria-selected="false" aria-controls="programming" href="#programming">Programming <span class="nav-count">{{ prog_articles | size }}</span></a>
+      {% endcomment %}
     </div>
+    {% comment %}
     <div class="art-nav-group">
       <span class="art-nav-group-label">Miscellaneous</span>
       <a class="art-nav-link" id="tab-etc" role="tab" aria-selected="false" aria-controls="etc" href="#etc">E.T.C. <span class="nav-count">{{ etc_articles | size }}</span></a>
     </div>
+    {% endcomment %}
   </div>
 </nav>
 <div class="art-content">
 
 <script>
 (function () {
-  const ids = ["mathematics", "differential-forms", "sheaf-cohomology", "ring-theory", "riemann-roch", "cryptography", "provable-security", "coding-theory", "bignum-arithmetic", "elliptic-arithmetic", "programming", "etc"];
+  const ids = ["mathematics", "differential-forms", "cech-cohomology", "sheaf-cohomology", "ring-theory", "riemann-roch", "provable-security", "coding-theory", "bignum-arithmetic", "elliptic-arithmetic"];
   const links = Array.from(document.querySelectorAll(".art-nav-link[role=tab]"));
   const categorySelect = document.getElementById("art-category-select");
 
@@ -532,6 +548,42 @@ permalink: /articles/
   </ul>
 </div>
 
+<!-- ── Cech Cohomology ───────────────────────────────────────────────── -->
+<div class="art-section" id="cech-cohomology">
+  <div class="art-section-header">
+    <span class="art-section-title">Čech Cohomology</span>
+  </div>
+
+  <div class="art-equation">
+    $$
+    C^q(\mathfrak U,\mathcal F)=
+    \prod_{i_0<\cdots<i_q}\mathcal F(U_{i_0\cdots i_q}),
+    \qquad
+    \check H^q=\ker\delta/\operatorname{im}\delta
+    $$
+  </div>
+
+  <div class="art-quote">
+    <p>Čech cohomology is the computational face of sheaf cohomology: write sections on overlaps, apply the alternating coboundary, and keep the classes that cannot be patched away.</p>
+  </div>
+
+  <ul class="art-list">
+    {%- for item in cech_articles -%}
+    <li class="art-row">
+      <a class="art-title-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- if item.topics -%}
+      <p class="art-topics">{{ item.topics }}</p>
+      {%- endif -%}
+      <div class="art-right">
+        {%- if item.tags -%}
+        <div class="art-chips">{%- for tag in item.tags -%}<span class="art-chip">{{ tag }}</span>{%- endfor -%}</div>
+        {%- endif -%}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
 {% include sheaf_cohomology_articles_tab.html %}
 
 <!-- ── Ring Theory ────────────────────────────────────────────────────── -->
@@ -573,7 +625,15 @@ permalink: /articles/
   </div>
 
   <div class="art-equation">
-    $$\ell(D)-\ell(K-D)=\deg(D)+1-g$$
+    $$
+    \begin{aligned}
+      \ell(D)-\ell(K-D) &= \deg D + 1 - g, \\ & \\
+      \chi\!\left(X,\mathcal O_X(D)\right)
+        &= h^0\!\left(X,\mathcal O_X(D)\right)
+         - h^1\!\left(X,\mathcal O_X(D)\right) %\\
+        % &= \deg D + 1 - g,\\
+    \end{aligned}
+    $$
   </div>
 
   <div class="art-quote">
@@ -597,7 +657,8 @@ permalink: /articles/
   </ul>
 </div>
 
-<!-- ── Cryptography ───────────────────────────────────────────────────── -->
+{% comment %}
+── Cryptography ─────────────────────────────────────────────────────
 <div class="art-section" id="cryptography">
   <div class="art-section-header">
     <span class="art-section-title">Cryptography</span>
@@ -628,6 +689,7 @@ permalink: /articles/
     {%- endfor -%}
   </ul>
 </div>
+{% endcomment %}
 
 
 <!-- -- Provable Security -------------------------------------------------- -->
@@ -699,7 +761,14 @@ permalink: /articles/
     <span class="art-section-title">Bignum Arithmetic</span>
   </div>
   <div class="art-equation">
-    $$\operatorname{val}_B(a)=\sum_{i=0}^{n-1}a_iB^i,\qquad B=2^{16}$$
+    $$
+    \begin{aligned}
+      a &= \sum_{i=0}^{n-1} a_iB^i,\qquad
+      b = \sum_{i=0}^{n-1} b_iB^i,\qquad B=2^{32}
+      % ,\\ 0 &\le a_i,b_i < B,
+      % \\ \operatorname{mul}_m(a,b) &= (a\cdot b)\bmod m
+    \end{aligned}
+    $$
   </div>
   <div class="art-quote">
     <p>A cryptographic bignum primitive is a proof-carrying C program: every word operation must preserve the integer invariant and the leakage boundary.</p>
@@ -747,7 +816,8 @@ permalink: /articles/
     {%- endfor -%}
   </ul>
 </div>
-<!-- ── Programming ───────────────────────────────────────────────────── -->
+{% comment %}
+── Programming ─────────────────────────────────────────────────────
 <div class="art-section" id="programming">
   <div class="art-section-header">
     <span class="art-section-title">Programming</span>
@@ -779,8 +849,10 @@ permalink: /articles/
     {%- endfor -%}
   </ul>
 </div>
+{% endcomment %}
 
-<!-- ── E.T.C. ────────────────────────────────────────────────────────── -->
+{% comment %}
+── E.T.C. ──────────────────────────────────────────────────────────
 <div class="art-section" id="etc">
   <div class="art-section-header">
     <span class="art-section-title">E.T.C.</span>
@@ -803,6 +875,7 @@ permalink: /articles/
     {%- endfor -%}
   </ul>
 </div>
+{% endcomment %}
 
 </div>
 </div>
