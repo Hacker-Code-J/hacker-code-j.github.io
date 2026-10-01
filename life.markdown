@@ -219,6 +219,7 @@ locations:
 }
 .diary-photo-wrap a {
   display: block;
+  cursor: zoom-in;
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid var(--d-border);
@@ -233,6 +234,66 @@ locations:
   height: 115px;
   object-fit: cover;
   display: block;
+}
+
+/* ── Photo viewer ────────────────────────────────────── */
+html.diary-lightbox-open { overflow: hidden; }
+.diary-lightbox {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 4.75rem 1rem 1rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+}
+.diary-lightbox[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+}
+.diary-lightbox::backdrop { background: rgba(0, 0, 0, .88); }
+.diary-lightbox img {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 8rem);
+  max-height: calc(100dvh - 8rem);
+  object-fit: contain;
+}
+.diary-lightbox-caption {
+  margin: 0;
+  font-size: .9rem;
+  text-align: center;
+}
+.diary-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 50%;
+  background: #282421;
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.diary-lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 /* ── Entry note (for future text) ────────────────────── */
@@ -401,7 +462,7 @@ locations:
       <div class="diary-gallery">
         {% for photo in day.items %}
         <div class="diary-photo-wrap">
-          <a href="{{ photo.image | relative_url | escape }}" target="_blank" rel="noopener">
+          <a href="{{ photo.image | relative_url | escape }}">
             <img src="{{ photo.image | relative_url | escape }}" alt="{{ category }} · {{ day.name }}">
           </a>
         </div>
@@ -446,3 +507,48 @@ locations:
   {% endfor %}
 </div>
 {% endfor %}
+
+<dialog id="diary-lightbox" class="diary-lightbox" aria-label="사진 크게 보기" aria-describedby="diary-lightbox-caption" hidden>
+  <button class="diary-lightbox-close" type="button" aria-label="사진 닫기" autofocus>×</button>
+  <img id="diary-lightbox-image" alt="">
+  <p id="diary-lightbox-caption" class="diary-lightbox-caption"></p>
+</dialog>
+
+<script>
+(() => {
+  const dialog = document.getElementById('diary-lightbox');
+  if (typeof dialog.showModal !== 'function') return;
+
+  const image = document.getElementById('diary-lightbox-image');
+  const caption = document.getElementById('diary-lightbox-caption');
+  const closeButton = dialog.querySelector('.diary-lightbox-close');
+  let opener = null;
+  dialog.hidden = false;
+
+  document.querySelectorAll('.diary-photo-wrap a').forEach(link => {
+    link.setAttribute('aria-haspopup', 'dialog');
+    link.setAttribute('aria-controls', dialog.id);
+    link.addEventListener('click', event => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+
+      event.preventDefault();
+      opener = link;
+      image.src = link.href;
+      image.alt = link.querySelector('img').alt;
+      caption.textContent = image.alt;
+      dialog.showModal();
+      document.documentElement.classList.add('diary-lightbox-open');
+    });
+  });
+
+  closeButton.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('diary-lightbox-open');
+    image.removeAttribute('src');
+    if (opener) opener.focus({ preventScroll: true });
+  });
+})();
+</script>
