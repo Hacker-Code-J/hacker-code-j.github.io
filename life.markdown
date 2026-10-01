@@ -2,6 +2,79 @@
 layout: page
 title: Life
 permalink: /life/
+# Add photos here with a quoted YYYY-MM-DD date, category (Places/Food), and image path.
+# Within each year, Places stays on the left and Food on the right.
+# Photos with the same date are grouped within their category column.
+photos:
+  - date: "2026-08-20"
+    category: Places
+    image: /assets/life/places/20260820-1.jpg
+  - date: "2026-08-20"
+    category: Places
+    image: /assets/life/places/20260820-2.jpg
+  - date: "2023-07-03"
+    category: Places
+    image: /assets/life/places/20230703.jpg
+  - date: "2023-07-03"
+    category: Places
+    image: /assets/life/places/20230703-2.jpg
+  - date: "2023-05-03"
+    category: Places
+    image: /assets/life/places/20230503.jpg
+  - date: "2023-05-03"
+    category: Places
+    image: /assets/life/places/20230503-2.jpg
+  - date: "2023-04-03"
+    category: Places
+    image: /assets/life/places/20230403.jpg
+  - date: "2023-04-03"
+    category: Places
+    image: /assets/life/places/20230403-2.jpg
+  - date: "2023-04-03"
+    category: Places
+    image: /assets/life/places/20230403-3.jpg
+  - date: "2023-06-23"
+    category: Food
+    image: /assets/life/foods/20230623.jpg
+  - date: "2023-05-13"
+    category: Food
+    image: /assets/life/foods/20230513.jpg
+  - date: "2023-05-13"
+    category: Food
+    image: /assets/life/foods/20230513-2.jpg
+  - date: "2023-03-28"
+    category: Food
+    image: /assets/life/foods/20230328.jpg
+  - date: "2023-03-28"
+    category: Food
+    image: /assets/life/foods/20230328-2.jpg
+  - date: "2022-10-16"
+    category: Places
+    image: /assets/life/places/20221016.jpg
+  - date: "2022-10-19"
+    category: Food
+    image: /assets/life/foods/20221019.jpg
+# Optional location information for a dated Places group.
+locations:
+  "2026-08-20":
+    name: 샤롯데씨어터
+    address: 서울특별시 송파구 올림픽로 240
+    event: 뮤지컬 겨울왕국
+  "2023-07-03":
+    name: 건국대학교 서울캠퍼스
+    address: 서울특별시 광진구 능동로 120
+    event: 제2회 CO-Week ACADEMY(코위크 아카데미)
+    period: "2023. 7. 3. ~ 7. 7."
+  "2023-05-03":
+    name: 국민대학교
+    address: 서울특별시 성북구 정릉로 77
+  "2023-04-03":
+    name: 국민대학교
+    address: 서울특별시 성북구 정릉로 77
+  "2022-10-16":
+    event: 2022 계룡 세계 군 문화 엑스포
+    address: 충청남도 계룡시 신도안면 석계리 1-5
+    map_query: 충청남도 계룡시 신도안면 석계리 1-5
 ---
 <link rel="stylesheet" href="/assets/css/custom.css">
 
@@ -58,6 +131,51 @@ permalink: /life/
   background: var(--d-border);
 }
 
+/* ── Daily post ──────────────────────────────────────── */
+.diary-entry {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--d-border);
+  border-radius: 10px;
+}
+.diary-entry .diary-date {
+  margin: 0 0 .8rem;
+  font-size: 1rem;
+  color: var(--d-brown);
+}
+.diary-location {
+  margin: .75rem 0 0;
+  font-size: .8rem;
+  line-height: 1.6;
+  color: var(--d-brown);
+}
+.diary-location a {
+  color: var(--d-accent);
+  text-decoration: underline;
+}
+.diary-event {
+  display: block;
+  margin-bottom: .5rem;
+}
+.diary-map-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .3rem .8rem;
+  margin-top: .2rem;
+}
+.diary-map-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  white-space: nowrap;
+}
+.diary-map-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
 /* ── Side-by-side columns ────────────────────────────── */
 .diary-columns {
   display: flex;
@@ -65,7 +183,7 @@ permalink: /life/
   align-items: flex-start;
   margin-bottom: 1.2rem;
 }
-.diary-col { flex: 1; min-width: 0; }
+.diary-col { flex: 1; min-width: 0; width: 100%; }
 
 @media (max-width: 560px) {
   .diary-columns { flex-direction: column; gap: 1rem; }
@@ -92,13 +210,12 @@ permalink: /life/
 
 /* ── Photo grid ──────────────────────────────────────── */
 .diary-gallery {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: .45rem;
 }
 .diary-photo-wrap {
-  flex: 1 1 110px;
-  max-width: 170px;
+  min-width: 0;
 }
 .diary-photo-wrap a {
   display: block;
@@ -116,12 +233,6 @@ permalink: /life/
   height: 115px;
   object-fit: cover;
   display: block;
-}
-.diary-photo-date {
-  font-size: .67em;
-  color: var(--d-muted);
-  text-align: center;
-  margin-top: .22rem;
 }
 
 /* ── Entry note (for future text) ────────────────────── */
@@ -272,156 +383,66 @@ permalink: /life/
 
 <!-- </div> -->
 
-<!-- ════════════════════════════════════
-     2023
-     ════════════════════════════════════ -->
-<div class="diary-year"><span>2023</span></div>
-
-<!-- <div class="diary-note">Write about 2023 here.</div> -->
-
+{% assign years = page.photos | group_by_exp: "photo", "photo.date | slice: 0, 4" | sort: "name" | reverse %}
+{% assign categories = "Places,Food" | split: "," %}
+{% for year in years %}
+<div class="diary-year"><span>{{ year.name }}</span></div>
 <div class="diary-columns">
-
-  <!-- ── Places ── -->
+  {% for category in categories %}
   <div class="diary-col">
-    <div class="diary-label">Places</div>
-    <div class="diary-gallery">
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230703.jpg" target="_blank">
-          <img src="/assets/life/places/20230703.jpg" alt="Place · 2023-07-03">
-        </a>
-        <div class="diary-photo-date">Jul 3</div>
+    <div class="diary-label">{{ category }}</div>
+    {% assign category_photos = year.items | where: "category", category %}
+    {% assign days = category_photos | group_by: "date" | sort: "name" | reverse %}
+    {% for day in days %}
+    <article class="diary-entry" aria-labelledby="diary-date-{{ category | slugify }}-{{ day.name }}">
+      <h2 class="diary-date" id="diary-date-{{ category | slugify }}-{{ day.name }}">
+        <time datetime="{{ day.name }}">{{ day.name | date: "%b %-d" }}</time>
+      </h2>
+      <div class="diary-gallery">
+        {% for photo in day.items %}
+        <div class="diary-photo-wrap">
+          <a href="{{ photo.image | relative_url | escape }}" target="_blank" rel="noopener">
+            <img src="{{ photo.image | relative_url | escape }}" alt="{{ category }} · {{ day.name }}">
+          </a>
+        </div>
+        {% endfor %}
       </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230703-2.jpg" target="_blank">
-          <img src="/assets/life/places/20230703-2.jpg" alt="Place · 2023-07-03">
-        </a>
-        <div class="diary-photo-date">Jul 3</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230503.jpg" target="_blank">
-          <img src="/assets/life/places/20230503.jpg" alt="Place · 2023-05-03">
-        </a>
-        <div class="diary-photo-date">May 3</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230503-2.jpg" target="_blank">
-          <img src="/assets/life/places/20230503-2.jpg" alt="Place · 2023-05-03">
-        </a>
-        <div class="diary-photo-date">May 3</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230403.jpg" target="_blank">
-          <img src="/assets/life/places/20230403.jpg" alt="Place · 2023-04-03">
-        </a>
-        <div class="diary-photo-date">Apr 3</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230403-2.jpg" target="_blank">
-          <img src="/assets/life/places/20230403-2.jpg" alt="Place · 2023-04-03">
-        </a>
-        <div class="diary-photo-date">Apr 3</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20230403-3.jpg" target="_blank">
-          <img src="/assets/life/places/20230403-3.jpg" alt="Place · 2023-04-03">
-        </a>
-        <div class="diary-photo-date">Apr 3</div>
-      </div>
-
-    </div>
+      {% assign location = page.locations[day.name] %}
+      {% if category == "Places" and location %}
+      {% assign map_query = location.name | append: ", " | append: location.address %}
+      {% assign map_query = location.map_query | default: map_query %}
+      {% assign naver_query = location.map_query | default: location.name %}
+      <p class="diary-location">
+        {% if location.event %}
+        <span class="diary-event">
+          <strong>{{ location.event | escape }}</strong>
+          {% if location.period %}<br>개최기간: {{ location.period | escape }}{% endif %}
+        </span>
+        {% endif %}
+        <span class="diary-place">{% if location.name %}{{ location.name | escape }} ({{ location.address | escape }}){% else %}{{ location.address | escape }}{% endif %}</span>
+        <span class="diary-map-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query={{ map_query | url_encode | escape }}" target="_blank" rel="noopener" aria-label="{{ location.name | default: location.event | escape }} Google 지도 (새 창)">
+            <svg class="diary-map-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="#4285f4" d="M21.6 12.23c0-.71-.06-1.39-.18-2.05H12v3.88h5.38c-.23 1.25-.94 2.31-2 3.02v2.51h3.24c1.9-1.75 2.98-4.33 2.98-7.36Z"/>
+              <path fill="#34a853" d="M12 22c2.7 0 4.96-.9 6.61-2.43l-3.23-2.51c-.9.6-2.05.96-3.38.96-2.6 0-4.81-1.76-5.6-4.12H3.06v2.59A10 10 0 0 0 12 22Z"/>
+              <path fill="#fbbc05" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.51H3.06a10 10 0 0 0 0 8.98Z"/>
+              <path fill="#ea4335" d="M12 5.98c1.47 0 2.79.51 3.83 1.51l2.88-2.88A9.6 9.6 0 0 0 12 2a10 10 0 0 0-8.94 5.51L6.4 10.1c.79-2.36 3-4.12 5.6-4.12Z"/>
+            </svg>
+            <span>Google 지도</span>
+          </a>
+          <a href="https://map.naver.com/p/search/{{ naver_query | url_encode | replace: '+', '%20' | escape }}" target="_blank" rel="noopener" aria-label="{{ location.name | default: location.event | escape }} 네이버 지도 (새 창)">
+            <svg class="diary-map-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect width="24" height="24" rx="4" fill="#03c75a"/>
+              <path fill="#fff" d="M6 6h4l4 6V6h4v12h-4l-4-6v6H6Z"/>
+            </svg>
+            <span>네이버 지도</span>
+          </a>
+        </span>
+      </p>
+      {% endif %}
+    </article>
+    {% endfor %}
   </div>
-
-  <!-- ── Food ── -->
-  <div class="diary-col">
-    <div class="diary-label">Food</div>
-    <div class="diary-gallery">
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20230623.jpg" target="_blank">
-          <img src="/assets/life/foods/20230623.jpg" alt="Food · 2023-06-23">
-        </a>
-        <div class="diary-photo-date">Jun 23</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20230513.jpg" target="_blank">
-          <img src="/assets/life/foods/20230513.jpg" alt="Food · 2023-05-13">
-        </a>
-        <div class="diary-photo-date">May 13</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20230513-2.jpg" target="_blank">
-          <img src="/assets/life/foods/20230513-2.jpg" alt="Food · 2023-05-13">
-        </a>
-        <div class="diary-photo-date">May 13</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20230328.jpg" target="_blank">
-          <img src="/assets/life/foods/20230328.jpg" alt="Food · 2023-03-28">
-        </a>
-        <div class="diary-photo-date">Mar 28</div>
-      </div>
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20230328-2.jpg" target="_blank">
-          <img src="/assets/life/foods/20230328-2.jpg" alt="Food · 2023-03-28">
-        </a>
-        <div class="diary-photo-date">Mar 28</div>
-      </div>
-
-    </div>
-  </div>
-
+  {% endfor %}
 </div>
-
-<!-- ════════════════════════════════════
-     2022
-     ════════════════════════════════════ -->
-<div class="diary-year"><span>2022</span></div>
-
-<!-- <div class="diary-note">Write about 2022 here.</div> -->
-
-<div class="diary-columns">
-
-  <!-- ── Places ── -->
-  <div class="diary-col">
-    <div class="diary-label">Places</div>
-    <div class="diary-gallery">
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/places/20221016.jpg" target="_blank">
-          <img src="/assets/life/places/20221016.jpg" alt="Place · 2022-10-16">
-        </a>
-        <div class="diary-photo-date">Oct 16</div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ── Food ── -->
-  <div class="diary-col">
-    <div class="diary-label">Food</div>
-    <div class="diary-gallery">
-
-      <div class="diary-photo-wrap">
-        <a href="/assets/life/foods/20221019.jpg" target="_blank">
-          <img src="/assets/life/foods/20221019.jpg" alt="Food · 2022-10-19">
-        </a>
-        <div class="diary-photo-date">Oct 19</div>
-      </div>
-
-    </div>
-  </div>
-
-
-
-</div>
+{% endfor %}
